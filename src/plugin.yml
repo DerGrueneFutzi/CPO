@@ -1,0 +1,5 @@
+name: CDsPluginPack
+main: net.gmx.teamterrian.CDsPluginPack.CDsPluginPack
+version: 1.0dev
+depend: [ProtocolLib, PermissionsEx, Essentials]
+soft-depend: [NBTEditor, WorldEdit]
