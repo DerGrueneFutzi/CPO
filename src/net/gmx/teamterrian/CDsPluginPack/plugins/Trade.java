@@ -1,6 +1,5 @@
 ﻿package net.gmx.teamterrian.CDsPluginPack.plugins;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +12,7 @@ import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CDPluginEnableEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDInvalidArgsException;
+import net.gmx.teamterrian.CDsPluginPack.tools.CDArrayList;
 import net.gmx.teamterrian.CDsPluginPack.tools.CDHashMap;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
 import net.gmx.teamterrian.CDsPluginPack.tools.VarTools;
@@ -116,14 +116,14 @@ public class Trade extends CDPlugin
 		air = new ItemStack(Material.AIR);
 		redWool = new ItemStack(Material.WOOL, 1, (short) 14);
 		startItems = new ItemStack[54];
-		slotsLeft = new ArrayList<Integer>();
-		slotsRight = new ArrayList<Integer>();
-		slotsEmpty = new ArrayList<Integer>();
-		slotsWoolLeft = new ArrayList<Integer>();
-		slotsWoolRight = new ArrayList<Integer>();
+		slotsLeft = new CDArrayList<Integer>();
+		slotsRight = new CDArrayList<Integer>();
+		slotsEmpty = new CDArrayList<Integer>();
+		slotsWoolLeft = new CDArrayList<Integer>();
+		slotsWoolRight = new CDArrayList<Integer>();
 		emptysLeft = new ItemStack[18];
 		emptysRight = new ItemStack[18];
-		emptyList = new ArrayList<ItemStack>();
+		emptyList = new CDArrayList<ItemStack>();
 		tradeTitle = "Trade§0";
 		
 		ItemMeta meta;
@@ -354,7 +354,7 @@ public class Trade extends CDPlugin
 	
 	private List<ItemStack> pickout(List<ItemStack> input)
 	{
-		List<ItemStack> i = new ArrayList<ItemStack>(input);
+		List<ItemStack> i = new CDArrayList<ItemStack>(input);
 		i.removeAll(emptyList);
 		return i;
 	}	
@@ -395,9 +395,9 @@ public class Trade extends CDPlugin
 	}
 	private List<ItemStack> getItems(Inventory vi, boolean left, boolean removeNull)
 	{
-		List<ItemStack> t = new ArrayList<ItemStack>();
+		List<ItemStack> t = new CDArrayList<ItemStack>();
 		for(int i = 0; i < 18; i++) t.add(vi.getItem((left ? slotsLeft : slotsRight).get(i)));
-		List<ItemStack> back = new ArrayList<ItemStack>();
+		List<ItemStack> back = new CDArrayList<ItemStack>();
 		if(removeNull) for(ItemStack i : t) if(i != null) back.add(i.clone());
 		return (removeNull ? back : t);
 	}
@@ -417,7 +417,7 @@ public class Trade extends CDPlugin
 	}
 	private void setWool(Inventory vi, boolean left, boolean green)
 	{
-		List<Integer> t = new ArrayList<Integer>(left ? slotsWoolLeft : slotsWoolRight);
+		List<Integer> t = new CDArrayList<Integer>(left ? slotsWoolLeft : slotsWoolRight);
 		ItemStack i = (green ? greenWool : redWool).clone();
 		for(Integer z : t) vi.setItem(z, i);
 	}

@@ -1,6 +1,5 @@
 ﻿package net.gmx.teamterrian.CDsPluginPack.plugins;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import net.gmx.teamterrian.CDsPluginPack.CDPlugin;
@@ -9,6 +8,7 @@ import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginCommand;
 import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CDPluginEnableEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
+import net.gmx.teamterrian.CDsPluginPack.tools.CDArrayList;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
 import net.gmx.teamterrian.CDsPluginPack.tools.VarTools;
 
@@ -71,7 +71,7 @@ public class LevelConverter extends CDPlugin
 		berry = new ItemStack(Material.NETHER_STALK);
 		ItemMeta meta = berry.getItemMeta();
 		meta.setDisplayName(ChatColor.DARK_PURPLE + "Waldbeere");
-		List<String> lores = new ArrayList<String>();
+		List<String> lores = new CDArrayList<String>();
 		lores.add(ChatColor.COLOR_CHAR + "iWährung von Terrian");
 		meta.setLore(lores);
 		berry.setItemMeta(meta);

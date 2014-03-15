@@ -2,7 +2,6 @@
 
 import java.io.IOException;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -25,6 +24,7 @@ import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDException;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDInvalidArgsException;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDNoPermissionException;
+import net.gmx.teamterrian.CDsPluginPack.tools.CDArrayList;
 import net.gmx.teamterrian.CDsPluginPack.tools.CDHashMap;
 import net.gmx.teamterrian.CDsPluginPack.tools.Data;
 import net.gmx.teamterrian.CDsPluginPack.tools.Dependencys;
@@ -244,7 +244,7 @@ public class GroupMail extends CDPlugin
 		if(groups.get(args[1]) != null)
 			sender.sendMessage(mbeg + ChatColor.RED + "Group already exists");
 		else {
-			groups.put(args[1], new ArrayList<User>());
+			groups.put(args[1], new CDArrayList<User>());
 			sender.sendMessage(mbeg + ChatColor.GREEN + "Group created");
 		}
 	}
@@ -347,7 +347,7 @@ public class GroupMail extends CDPlugin
 		{
 			groupCompound = list.get(i);
 			groupList = (NBTTagList) groupCompound.get("Members");
-			playerList = new ArrayList<User>();
+			playerList = new CDArrayList<User>();
 			for(int ii = 0; ii < groupList.size(); ii++)
 			{
 				if((p = d.ess.getOfflineUser(groupList.f(ii))) == null) throw new Exception("Player " + groupList.f(ii) + " not found");
@@ -369,7 +369,7 @@ public class GroupMail extends CDPlugin
 	}
 	private List<String> subArray(String[] args, int start)
 	{
-		List<String> back = new ArrayList<String>();
+		List<String> back = new CDArrayList<String>();
 		for(int i = start; i < args.length; i++)
 			back.add(args[i]);
 		return back;

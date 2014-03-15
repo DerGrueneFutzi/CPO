@@ -3,7 +3,6 @@
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +14,7 @@ import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginPacket;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CDPluginDisableEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CDPluginEnableEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
+import net.gmx.teamterrian.CDsPluginPack.tools.CDArrayList;
 import net.gmx.teamterrian.CDsPluginPack.tools.CDHashMap;
 import net.gmx.teamterrian.CDsPluginPack.tools.Data;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
@@ -56,7 +56,7 @@ public class MoreEnderChests extends CDPlugin
 	echestTitle = " - Page ";
 	int size = 6;
 	boolean lock = false;
-	List<Player> dontClose = new ArrayList<Player>();
+	List<Player> dontClose = new CDArrayList<Player>();
 	
 	public MoreEnderChests(PluginHandler handler)
 	{
@@ -365,7 +365,7 @@ public class MoreEnderChests extends CDPlugin
 	private Inventory toInv(Inventory[] input, String owner)
 	{
 		Inventory back = Bukkit.createInventory(Bukkit.getPlayerExact(owner), size * 54, "Enderchest");
-		List<ItemStack> items = new ArrayList<ItemStack>();
+		List<ItemStack> items = new CDArrayList<ItemStack>();
 		for(Inventory i : input)
 		{
 			if(i == null) continue;
@@ -477,7 +477,7 @@ public class MoreEnderChests extends CDPlugin
 		Inventory inv;
 		inv = loadNBT(name, true);
 		if(inv == null) inv = loadNBT(name, false);
-		List<ItemStack> items = new ArrayList<ItemStack>();
+		List<ItemStack> items = new CDArrayList<ItemStack>();
 		for(ItemStack item : inv.getContents()) if(item != null) items.add(item);
 		int counter;
 		boolean found = true;

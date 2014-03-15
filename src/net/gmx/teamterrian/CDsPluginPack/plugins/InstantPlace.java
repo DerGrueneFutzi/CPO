@@ -1,6 +1,5 @@
 package net.gmx.teamterrian.CDsPluginPack.plugins;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.ChatColor;
@@ -16,10 +15,11 @@ import net.gmx.teamterrian.CDsPluginPack.PluginHandler;
 import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginCommand;
 import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
+import net.gmx.teamterrian.CDsPluginPack.tools.CDArrayList;
 
 public class InstantPlace extends CDPlugin
 {
-	List<Player> players = new ArrayList<Player>();
+	List<Player> players = new CDArrayList<Player>();
 	
 	public InstantPlace(PluginHandler handler)
 	{

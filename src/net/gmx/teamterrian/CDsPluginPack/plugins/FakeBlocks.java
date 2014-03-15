@@ -2,7 +2,6 @@ package net.gmx.teamterrian.CDsPluginPack.plugins;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -37,6 +36,7 @@ import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDNoPermissionExcepti
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDNullSelectionException;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDPlayerNotFoundException;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDUnsupportedPacketModifierException;
+import net.gmx.teamterrian.CDsPluginPack.tools.CDArrayList;
 import net.gmx.teamterrian.CDsPluginPack.tools.CDHashMap;
 import net.gmx.teamterrian.CDsPluginPack.tools.Data;
 import net.gmx.teamterrian.CDsPluginPack.tools.Dependencys;
@@ -280,7 +280,7 @@ public class FakeBlocks extends CDPlugin
 
 class FBBlockData
 {
-	List<FBPermData> blocks = new ArrayList<FBPermData>();
+	List<FBPermData> blocks = new CDArrayList<FBPermData>();
 	
 	public void addFakeBlock(String perm, Location l)
 	{

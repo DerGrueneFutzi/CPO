@@ -1,6 +1,5 @@
 ﻿package net.gmx.teamterrian.CDsPluginPack.plugins;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -19,12 +18,13 @@ import net.gmx.teamterrian.CDsPluginPack.PluginHandler;
 import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginCommand;
 import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginPacket;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
+import net.gmx.teamterrian.CDsPluginPack.tools.CDArrayList;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
 
 public class SeeSpawner extends CDPlugin
 {
 	Log clog;
-	List<Player> see = new ArrayList<Player>();
+	List<Player> see = new CDArrayList<Player>();
 	
 	public SeeSpawner(PluginHandler handler)
 	{

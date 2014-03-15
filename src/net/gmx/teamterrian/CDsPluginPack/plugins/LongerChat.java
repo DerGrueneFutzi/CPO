@@ -1,6 +1,5 @@
 ﻿package net.gmx.teamterrian.CDsPluginPack.plugins;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +8,7 @@ import net.gmx.teamterrian.CDsPluginPack.PluginHandler;
 import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginCommand;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDInvalidArgsException;
+import net.gmx.teamterrian.CDsPluginPack.tools.CDArrayList;
 import net.gmx.teamterrian.CDsPluginPack.tools.CDHashMap;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
 
@@ -66,7 +66,7 @@ public class LongerChat extends CDPlugin
 	private void addNew(Player p)
 	{
 		clog.log("Adding new Line to LC from " + p.getName(), this);
-		if(!messages.containsKey(p)) messages.put(p, new ArrayList<String>());
+		if(!messages.containsKey(p)) messages.put(p, new CDArrayList<String>());
 		List<String> add = messages.get(p);
 		add.add("");
 		messages.put(p, add);
@@ -79,7 +79,7 @@ public class LongerChat extends CDPlugin
 		if(message.length() == 0) p.sendMessage(ChatColor.RED + "[CDPP][LongerChat] No Input");
 		message = message.substring(1);
 		if(!p.hasPermission("cdpp.longerchat")) return;
-		if(!messages.containsKey(p)) { messages.put(p, new ArrayList<String>()); addNew(p); }
+		if(!messages.containsKey(p)) { messages.put(p, new CDArrayList<String>()); addNew(p); }
 		if(message.charAt(0) == '$') message = " " + message.substring(1);
 		if(message.charAt(message.length() - 1) == '$') message = message.substring(0, message.length() - 1) + " ";
 		List<String> temp = messages.get(p);

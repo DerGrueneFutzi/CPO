@@ -1,6 +1,5 @@
 ﻿package net.gmx.teamterrian.CDsPluginPack.plugins;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +21,7 @@ import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDException;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDInvalidArgsException;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDWorldNotFoundException;
+import net.gmx.teamterrian.CDsPluginPack.tools.CDArrayList;
 import net.gmx.teamterrian.CDsPluginPack.tools.CDHashMap;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
 import net.gmx.teamterrian.CDsPluginPack.tools.VarTools;
@@ -88,7 +88,7 @@ public class EntityRemove extends CDPlugin
 	}
 	public static List<Entity> getEntitys(Location[] boxes, List<EntityType> types, World w)
 	{
-		List<Entity> back = new ArrayList<Entity>();
+		List<Entity> back = new CDArrayList<Entity>();
 		for(Entity e : w.getEntities())
 			if(types.contains(e.getType()) && checkPosition(e.getLocation(), getCoordsArray(boxes[0], boxes[1])))
 				back.add(e);
@@ -97,7 +97,7 @@ public class EntityRemove extends CDPlugin
 	
 	public static List<EntityType> getTypeList(String s) throws CDInvalidArgsException
 	{
-		List<EntityType> back = new ArrayList<EntityType>();
+		List<EntityType> back = new CDArrayList<EntityType>();
 		switch(s)
 		{
 			case "a":

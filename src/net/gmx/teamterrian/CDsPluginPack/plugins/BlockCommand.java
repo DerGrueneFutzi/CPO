@@ -3,7 +3,6 @@
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -37,6 +36,7 @@ import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDInvalidArgsException;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDNoPermissionException;
 import net.gmx.teamterrian.CDsPluginPack.plugins.BlockCommand.TriggerType;
+import net.gmx.teamterrian.CDsPluginPack.tools.CDArrayList;
 import net.gmx.teamterrian.CDsPluginPack.tools.CDHashMap;
 import net.gmx.teamterrian.CDsPluginPack.tools.Data;
 import net.gmx.teamterrian.CDsPluginPack.tools.Dependencys;
@@ -790,7 +790,7 @@ class BCBlockData
 	
 	public List<String> makeTriggerList()
 	{
-		List<String> list = new ArrayList<String>();
+		List<String> list = new CDArrayList<String>();
 		list.add(getTriggers().size() + " Triggers are on this block");
 		for(TriggerType trigger : getTriggers())
 		{
@@ -801,7 +801,7 @@ class BCBlockData
 	}
 	public List<String> makeCommandList()
 	{
-		List<String> list = new ArrayList<String>();
+		List<String> list = new CDArrayList<String>();
 		int size;
 		BCTriggerData triggerData;
 		BCCommandData commandData;
@@ -835,7 +835,7 @@ class BCTriggerData
 	
 	public BCTriggerData()
 	{
-		this.commandData = new ArrayList<BCCommandData>();
+		this.commandData = new CDArrayList<BCCommandData>();
 		this.blockCooldowns = new BCTimestamp();
 	}
 	public BCTriggerData(List<BCCommandData> commandData)

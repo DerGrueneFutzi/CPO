@@ -1,13 +1,18 @@
 package net.gmx.teamterrian.CDsPluginPack.tools;
 
 import java.util.ArrayList;
-
+import java.util.Collection;
 import org.bukkit.entity.Player;
 
 public class CDArrayList<E> extends ArrayList<E>
 {
 	private static final long serialVersionUID = -1198161659015956750L;
 	
+	public CDArrayList() { }
+	public CDArrayList(Collection<E> col)
+	{
+		super(col);
+	}
 	public boolean contains(Object o)
 	{
 		if(!(o instanceof Player)) return super.contains(o);

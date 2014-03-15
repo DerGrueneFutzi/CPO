@@ -6,7 +6,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 import net.gmx.teamterrian.CDsPluginPack.CDPlugin;
@@ -17,6 +16,7 @@ import net.gmx.teamterrian.CDsPluginPack.handle.events.CDPluginDisableEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CDPluginEnableEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDInvalidArgsException;
+import net.gmx.teamterrian.CDsPluginPack.tools.CDArrayList;
 import net.gmx.teamterrian.CDsPluginPack.tools.Data;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
 import net.minecraft.server.v1_7_R1.NBTTagCompound;
@@ -35,7 +35,7 @@ import org.bukkit.permissions.PermissionDefault;
 public class BetaUsers extends CDPlugin
 {
 	Log clog;
-	private List<String> users = new ArrayList<String>();
+	private List<String> users = new CDArrayList<String>();
 	private List<ItemStack> items;
 	
 	public BetaUsers(PluginHandler handler)
@@ -202,7 +202,7 @@ public class BetaUsers extends CDPlugin
 		clog.log("Begin loading Items", this);
 		NBTTagCompound base = Data.load(getDir() + getDirectorys()[0] + "/data.dat", this);
 		if(base == null) return;
-		List<ItemStack> back = new ArrayList<ItemStack>();
+		List<ItemStack> back = new CDArrayList<ItemStack>();
 		NBTTagList inventoryTag = (NBTTagList) base.get("Items");
 		for (int i = 0; i < inventoryTag.size(); i++)
 			back.add(CraftItemStack.asCraftMirror(net.minecraft.server.v1_7_R1.ItemStack.createStack((NBTTagCompound)inventoryTag.get(i))));

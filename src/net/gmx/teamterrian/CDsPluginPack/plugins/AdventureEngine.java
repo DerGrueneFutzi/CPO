@@ -3,7 +3,6 @@
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +14,7 @@ import net.gmx.teamterrian.CDsPluginPack.handle.events.CDPluginDisableEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CDPluginEnableEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDInvalidArgsException;
+import net.gmx.teamterrian.CDsPluginPack.tools.CDArrayList;
 import net.gmx.teamterrian.CDsPluginPack.tools.CDHashMap;
 import net.gmx.teamterrian.CDsPluginPack.tools.Data;
 import net.gmx.teamterrian.CDsPluginPack.tools.Dependencys;
@@ -132,10 +132,10 @@ public class AdventureEngine extends CDPlugin
 	private boolean process(CommandSender sender, String[] args) throws CDInvalidArgsException
 	{
 		if(args.length < 2) return false;
-		List<String[]> cmds = new ArrayList<String[]>();
-		List<String> connections = new ArrayList<String>();
+		List<String[]> cmds = new CDArrayList<String[]>();
+		List<String> connections = new CDArrayList<String>();
 		List<String> arguments = toList(args);
-		List<String> temp = new ArrayList<String>();
+		List<String> temp = new CDArrayList<String>();
 		while(arguments.size() != 0)
 		{
 			try
@@ -167,10 +167,10 @@ public class AdventureEngine extends CDPlugin
 	private List<String> make(List<String[]> ccmds, List<String> cconnections, CommandSender p, Inventory cinv, boolean test) throws CDInvalidArgsException
 	{
 		boolean fullCheck = true;
-		List<String[]> cmds = new ArrayList<String[]>(ccmds);
-		List<String> connections = new ArrayList<String>(cconnections);
+		List<String[]> cmds = new CDArrayList<String[]>(ccmds);
+		List<String> connections = new CDArrayList<String>(cconnections);
 		Inventory inv = null;
-		List<String> messages = new ArrayList<String>();
+		List<String> messages = new CDArrayList<String>();
 		String message[] = new String[] { null };
 		if(cinv != null)
 			if(!test) inv = cinv;
@@ -575,7 +575,7 @@ public class AdventureEngine extends CDPlugin
 	
 	private List<String> toList(String[] arr)
 	{
-		List<String> back = new ArrayList<String>();
+		List<String> back = new CDArrayList<String>();
 		for(String s : arr) back.add(s);
 		return back;
 	}

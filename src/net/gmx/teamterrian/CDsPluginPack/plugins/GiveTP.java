@@ -1,7 +1,6 @@
 ﻿package net.gmx.teamterrian.CDsPluginPack.plugins;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +26,7 @@ import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CDPluginEnableEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDInvalidArgsException;
+import net.gmx.teamterrian.CDsPluginPack.tools.CDArrayList;
 import net.gmx.teamterrian.CDsPluginPack.tools.CDHashMap;
 import net.gmx.teamterrian.CDsPluginPack.tools.Data;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
@@ -302,7 +302,7 @@ public class GiveTP extends CDPlugin
 	}
 	private ItemStack checkContains(Collection<ItemStack> itemSet)
 	{
-		List<ItemStack> items = new ArrayList<ItemStack>(itemSet);
+		List<ItemStack> items = new CDArrayList<ItemStack>(itemSet);
 		ItemStack toBack;
 		for(ItemStack i : items)
 			if((toBack = checkContains(i)) != null) return toBack;
