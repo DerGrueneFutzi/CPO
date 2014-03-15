@@ -4,9 +4,9 @@ import net.gmx.teamterrian.CDsPluginPack.CDPlugin;
 import net.gmx.teamterrian.CDsPluginPack.PluginHandler;
 import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginEvent;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
-import net.gmx.teamterrian.CDsPluginPack.tools.Player;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerLoginEvent.Result;
 import org.bukkit.permissions.Permission;
@@ -33,10 +33,10 @@ public class NoNodusRelog extends CDPlugin
 	@CDPluginEvent
 	public void onPlayerLogin(PlayerLoginEvent e)
 	{
-		Player p = Player.getPlayer(e.getPlayer());
-		((BugTracker) (handler.plugins.get(BugTracker.class))).checkBug(Player.getPlayer(e.getPlayer()), ((Trade) (handler.plugins.get(Trade.class))).prefix);
+		Player p = e.getPlayer();
+		((BugTracker) (handler.plugins.get(BugTracker.class))).checkBug(e.getPlayer(), ((Trade) (handler.plugins.get(Trade.class))).prefix);
 		String s = p.getName();
-		for(Player pl : Player.getPlayers(Bukkit.getServer().getOnlinePlayers()))
+		for(Player pl : Bukkit.getServer().getOnlinePlayers())
 			if(pl.getName().equals(s))
 			{
 				pl.kickPlayer("You logged in from another location");

@@ -6,6 +6,7 @@ import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 
@@ -19,7 +20,6 @@ import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginCommand;
 import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginPacket;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
-import net.gmx.teamterrian.CDsPluginPack.tools.Player;
 
 public class SeeSpawner extends CDPlugin
 {
@@ -44,7 +44,7 @@ public class SeeSpawner extends CDPlugin
 	@CDPluginCommand(commands = { "seespawner cdpp.seespawner 1" })
 	public void onCommand(CommandEvent e)
 	{
-		Player p = Player.getPlayer(e.getSender());
+		Player p = (Player) e.getSender();
 		if(see.contains(p)) see.remove(p);
 		else see.add(p);
 		e.getSender().sendMessage(ChatColor.GOLD + "SpawnerVisibility changed");

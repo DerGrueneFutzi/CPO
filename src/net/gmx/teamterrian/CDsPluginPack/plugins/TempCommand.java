@@ -9,6 +9,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginCommand;
+import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 
@@ -24,7 +25,6 @@ import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDNoPermissionExcepti
 import net.gmx.teamterrian.CDsPluginPack.tools.Dependencys;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
 import net.gmx.teamterrian.CDsPluginPack.tools.Dependencys.Dependency;
-import net.gmx.teamterrian.CDsPluginPack.tools.Player;
 import net.gmx.teamterrian.CDsPluginPack.tools.VarTools;
 
 public class TempCommand extends CDPlugin
@@ -103,7 +103,7 @@ public class TempCommand extends CDPlugin
 			removeTask(r);
 			return;
 		}
-		messagePlayer(Player.getPlayer(Bukkit.getPlayer(p)), c, time);
+		messagePlayer(Bukkit.getPlayer(p), c, time);
 		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(handler.getCDPP(), r, time);
 	}
 	
@@ -246,7 +246,7 @@ public class TempCommand extends CDPlugin
 		}
 		String p = (String) o[0];
 		clog.log("Set " + c.name() +  "-Mode false for " + p, this);
-		if(messagePlayer) messagePlayer(Player.getPlayer(Bukkit.getPlayerExact(p)), (command) o[1]);
+		if(messagePlayer) messagePlayer(Bukkit.getPlayerExact(p), (command) o[1]);
 		switch(c)
 		{
 			case FLY:

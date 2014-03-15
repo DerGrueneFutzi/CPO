@@ -6,9 +6,9 @@ import net.gmx.teamterrian.CDsPluginPack.CDPlugin;
 import net.gmx.teamterrian.CDsPluginPack.PluginHandler;
 import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginPacket;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
-import net.gmx.teamterrian.CDsPluginPack.tools.Player;
 
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 
@@ -61,7 +61,7 @@ public class PbTextBlock extends CDPlugin
 	@CDPluginPacket(types = { "cchat" })
 	public void onPacket(PacketEvent e)
 	{
-		Player p = Player.getPlayer(e.getPlayer());
+		Player p = e.getPlayer();
 		if(doAction(e)) return;
 		if(p.hasPermission("cdpp.PbTB.disable")) return;
 		doBlock(e);
@@ -72,11 +72,11 @@ public class PbTextBlock extends CDPlugin
 	{
 		try
 		{
-			int i = ((ItemHelp) handler.plugins.get(ItemHelp.class)).isHelp(null, Player.getPlayer(e.getPlayer()), e);
+			int i = ((ItemHelp) handler.plugins.get(ItemHelp.class)).isHelp(null, e.getPlayer(), e);
 			if(i == 2) return true;
 			else if (i == 0) return false;
 			e.setCancelled(true);
-			if(i == 3) ((TempCommand) handler.plugins.get(TempCommand.class)).checkTask(Player.getPlayer(e.getPlayer()), e.getPacket().getStrings().read(0).substring(1));
+			if(i == 3) ((TempCommand) handler.plugins.get(TempCommand.class)).checkTask(e.getPlayer(), e.getPacket().getStrings().read(0).substring(1));
 			else ((MoreEnderChests) handler.plugins.get(MoreEnderChests.class)).doInv(e.getPacket().getStrings().read(0));
 			return true;
 		}
@@ -84,7 +84,7 @@ public class PbTextBlock extends CDPlugin
 	}
 	private boolean doBlock(PacketEvent e)
 	{
-		Player p = Player.getPlayer(e.getPlayer());
+		Player p = e.getPlayer();
 		String message = e.getPacket().getStrings().read(0);
 		PermissionUser u = PermissionsEx.getUser(p);
 		String[] perms = u.getPermissions("world");

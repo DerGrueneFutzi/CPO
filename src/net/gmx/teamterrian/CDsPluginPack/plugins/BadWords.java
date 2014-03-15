@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 
@@ -23,7 +24,6 @@ import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDInvalidArgsException;
 import net.gmx.teamterrian.CDsPluginPack.tools.Data;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
-import net.gmx.teamterrian.CDsPluginPack.tools.Player;
 import net.gmx.teamterrian.CDsPluginPack.tools.VarTools;
 import net.minecraft.server.v1_7_R1.NBTCompressedStreamTools;
 import net.minecraft.server.v1_7_R1.NBTTagCompound;
@@ -96,7 +96,7 @@ public class BadWords extends CDPlugin
 	public void onPacket(PacketEvent e)
 	{
 		PacketContainer pc = e.getPacket();
-		Player p = Player.getPlayer(e.getPlayer());
+		Player p = e.getPlayer();
 		if(p.hasPermission("cdpp.bw.disable")) return;
 		String s;
 		try { if((s = replaceString(pc.getStrings().read(0).toLowerCase(), badWords)) != null)

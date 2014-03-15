@@ -3,6 +3,7 @@
 import java.util.Iterator;
 
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.server.ServerListPingEvent;
@@ -15,7 +16,6 @@ import net.gmx.teamterrian.CDsPluginPack.CDPlugin;
 import net.gmx.teamterrian.CDsPluginPack.PluginHandler;
 import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginEvent;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
-import net.gmx.teamterrian.CDsPluginPack.tools.Player;
 
 public class ExtendedVanish extends CDPlugin
 {
@@ -45,18 +45,18 @@ public class ExtendedVanish extends CDPlugin
 		try { players = e.iterator(); }
 		catch (UnsupportedOperationException x) { return; }
 		while (players.hasNext())
-			if (ess.getUser(Player.getPlayer(players.next())).isVanished())
+			if (ess.getUser((Player) players.next()).isVanished())
 				players.remove();
 	}
 	
 	@CDPluginEvent
 	public void onPlayerLogin(PlayerLoginEvent e)
 	{
-		Player p = Player.getPlayer(e.getPlayer());
+		Player p = e.getPlayer();
 		if(!p.hasPermission("cdpp.ev.silentjoin")) return;
 		try
 		{
-			ess.getUser(p.real).setVanished(true);
+			ess.getUser(p).setVanished(true);
 			p.getActivePotionEffects().clear();
 		}
 		catch (NullPointerException x) {}
@@ -64,7 +64,7 @@ public class ExtendedVanish extends CDPlugin
 	@CDPluginEvent
 	public void onPlayerJoin(PlayerJoinEvent e)
 	{
-		Player p = Player.getPlayer(e.getPlayer());
+		Player p = e.getPlayer();
 		if(ess.getUser(p).isVanished())
 			p.sendMessage(ChatColor.LIGHT_PURPLE + "§l[Extended Vanish] You were automatically vanished. To unvanish type " + ChatColor.ITALIC + "/vanish");
 	}

@@ -1,6 +1,7 @@
 ﻿package net.gmx.teamterrian.CDsPluginPack.plugins;
 
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.permissions.Permission;
@@ -11,7 +12,6 @@ import net.gmx.teamterrian.CDsPluginPack.PluginHandler;
 import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginCommand;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
-import net.gmx.teamterrian.CDsPluginPack.tools.Player;
 
 public class ItemInfo extends CDPlugin
 {
@@ -36,7 +36,7 @@ public class ItemInfo extends CDPlugin
 	{
 		ItemStack i;
 		ItemMeta m;
-		Player p = Player.getPlayer(e.getSender());
+		Player p = (Player) e.getSender();
 		if((i = p.getItemInHand()) == null || (m = i.getItemMeta()) == null) return;
 		p.sendMessage("Name -> " + m.getDisplayName().replace('&', '$').replace('§', '$').replace('\r', '%'));
 		if(m.getLore() != null)

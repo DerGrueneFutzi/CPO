@@ -16,7 +16,6 @@ import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDNoPermissionException;
 import net.gmx.teamterrian.CDsPluginPack.tools.Data;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
-import net.gmx.teamterrian.CDsPluginPack.tools.Player;
 import net.gmx.teamterrian.CDsPluginPack.tools.VarTools;
 import net.minecraft.server.v1_7_R1.NBTCompressedStreamTools;
 import net.minecraft.server.v1_7_R1.NBTTagCompound;
@@ -27,6 +26,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.v1_7_R1.inventory.CraftItemStack;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
@@ -92,7 +92,7 @@ public class ItemHelp extends CDPlugin
 	{
 		CommandSender sender = e.getSender();
 		String[] args = e.getArgs();
-		if(args.length == 0) getHelp(Player.getPlayer(sender));
+		if(args.length == 0) getHelp((Player) sender);
 		else
 			if(!sender.hasPermission("cdpp.itemhelp.set")) throw new CDNoPermissionException(false);
 			else 
@@ -104,9 +104,9 @@ public class ItemHelp extends CDPlugin
 					case "load":
 						load(sender); return;
 					case "rem":
-						remHelp(Player.getPlayer(sender)); return;
+						remHelp((Player) sender); return;
 				}
-				setHelp(Player.getPlayer(sender), VarTools.SB(args, 0).replace('&', '§'));
+				setHelp((Player) sender, VarTools.SB(args, 0).replace('&', '§'));
 			}
 	}
 	

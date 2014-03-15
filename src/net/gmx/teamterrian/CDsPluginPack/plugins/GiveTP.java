@@ -12,6 +12,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.v1_7_R1.inventory.CraftItemStack;
+import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerRespawnEvent;
@@ -29,7 +30,7 @@ import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDInvalidArgsException;
 import net.gmx.teamterrian.CDsPluginPack.tools.Data;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
-import net.gmx.teamterrian.CDsPluginPack.tools.Player;
+import net.gmx.teamterrian.CDsPluginPack.tools.VarTools;
 import net.minecraft.server.v1_7_R1.NBTTagCompound;
 import net.minecraft.server.v1_7_R1.NBTTagList;
 import net.minecraft.server.v1_7_R1.NBTTagString;
@@ -102,15 +103,15 @@ public class GiveTP extends CDPlugin
 	private boolean give(String[] args)
 	{
 		if(args.length < 3) return false;
-		Player p = Player.getPlayer(Bukkit.getPlayer(args[1]));
+		Player p = Bukkit.getPlayer(args[1]);
 		if(p == null) return true;
 		give(p, args[2], true);	
 		return true;
 	}
 	private boolean set(String[] args, CommandSender sender)
 	{
-		if(args.length < 1 || !Player.isPlayer(sender)) return false;
-		Player p = Player.getPlayer(sender);
+		if(args.length < 1 || !VarTools.isPlayer(sender)) return false;
+		Player p = (Player) sender;
 		ItemStack i = p.getItemInHand();
 		if(i == null || i.getType() == Material.AIR) {
 			p.sendMessage("You have to have an item in your hand");
@@ -260,14 +261,14 @@ public class GiveTP extends CDPlugin
 	public void onPlayerRespawn(PlayerRespawnEvent e)
 	{
 		if(e.getPlayer().hasPermission("cdpp.gtp.default"))
-			give(Player.getPlayer(e.getPlayer()), "default", false);
+			give(e.getPlayer(), "default", false);
 	}
 	@CDPluginEvent
 	public boolean onInventoryClick(InventoryClickEvent e)
 	{
 		if(e.getSlot() == -1) return false;
 		if(!e.isCancelled())
-			if(processClick(Player.getPlayer(e.getWhoClicked()), e.getCurrentItem())) {
+			if(processClick((Player) e.getWhoClicked(), e.getCurrentItem())) {
 				e.setCancelled(true);
 				return true;
 			}

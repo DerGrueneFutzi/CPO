@@ -4,6 +4,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
+import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.permissions.Permission;
@@ -17,7 +18,6 @@ import net.gmx.teamterrian.CDsPluginPack.PluginHandler;
 import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginPacket;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
-import net.gmx.teamterrian.CDsPluginPack.tools.Player;
 
 public class ReadOnlyInvs extends CDPlugin
 {
@@ -42,7 +42,7 @@ public class ReadOnlyInvs extends CDPlugin
 	public void onPacket(PacketEvent e)
 	{
 		PacketContainer pc = e.getPacket();
-		Player p = Player.getPlayer(e.getPlayer());
+		Player p = e.getPlayer();
 		if(p.hasPermission("cdpp.roi.bypass")) return;
 		if(pc.getIntegers().read(3) == 3) return;
 		Inventory vi = p.getOpenInventory().getTopInventory();
@@ -58,7 +58,7 @@ public class ReadOnlyInvs extends CDPlugin
 	public void onBlockBreak(BlockBreakEvent e)
 	{
 		Block b = e.getBlock();
-		Player p = Player.getPlayer(e.getPlayer());
+		Player p = e.getPlayer();
 		if(p.hasPermission("cdpp.roi.bypass")) return;
 		if(b.getType() != Material.CHEST && b.getType() != Material.TRAPPED_CHEST) return;
 		Chest c = (Chest) b.getState();

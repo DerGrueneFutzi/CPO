@@ -13,6 +13,7 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.Chest;
 import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.v1_7_R1.CraftWorld;
+import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.Inventory;
 
@@ -26,7 +27,6 @@ import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDInvalidArgsExceptio
 import net.gmx.teamterrian.CDsPluginPack.tools.Data;
 import net.gmx.teamterrian.CDsPluginPack.tools.Dependencys;
 import net.gmx.teamterrian.CDsPluginPack.tools.Dependencys.Dependency;
-import net.gmx.teamterrian.CDsPluginPack.tools.Player;
 import net.gmx.teamterrian.CDsPluginPack.tools.Timestamp;
 import net.gmx.teamterrian.CDsPluginPack.tools.VarTools;
 import net.minecraft.server.v1_7_R1.Blocks;
@@ -55,11 +55,11 @@ public class GlobalChests extends CDPlugin
 		{
 			case "set":
 				if(!d.doDepend(Dependency.WORLDEDIT, sender)) return;
-				set(Player.getPlayer(sender), args);
+				set((Player) sender, args);
 				return;
 			case "del":
 				if(!d.doDepend(Dependency.WORLDEDIT, sender)) return;
-				del(Player.getPlayer(sender));
+				del((Player) sender);
 				return;
 		}
 		throw new CDInvalidArgsException(e.getCommand().getName());
@@ -209,10 +209,10 @@ public class GlobalChests extends CDPlugin
 		String s = e.getInventory().getTitle();
 		if(!s.startsWith("§g§c")) return e.isCancelled();
 		s = getKey(s);
-		if(!Player.isPlayer(e.getPlayer())) return e.isCancelled();
+		if(!VarTools.isPlayer(e.getPlayer())) return e.isCancelled();
 		if(s == null || !data.containsKey(s)) return e.isCancelled();
 		e.setCancelled(true);
-		doOpen(Player.getPlayer(e.getPlayer()), data.get(s));
+		doOpen((Player) e.getPlayer(), data.get(s));
 		return e.isCancelled();
 	}
 	

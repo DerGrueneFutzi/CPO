@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Damageable;
+import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 
@@ -13,7 +14,6 @@ import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginCommand;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDInvalidArgsException;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
-import net.gmx.teamterrian.CDsPluginPack.tools.Player;
 
 public class AddLiveAndHunger extends CDPlugin
 {
@@ -45,7 +45,7 @@ public class AddLiveAndHunger extends CDPlugin
 	{
 		Player p;
 		if(args.length != 2) throw new CDInvalidArgsException("addh");
-		p = Player.getPlayer(Bukkit.getPlayer(args[0]));
+		p = Bukkit.getPlayer(args[0]);
 		if(p == null) return;
 		Damageable d = Bukkit.getPlayer(args[0]);
 		double h;
@@ -60,7 +60,7 @@ public class AddLiveAndHunger extends CDPlugin
 	{
 		Player p;
 		if(args.length <= 1) throw new CDInvalidArgsException("addf");
-		p = Player.getPlayer(Bukkit.getPlayer(args[0]));
+		p = Bukkit.getPlayer(args[0]);
 		if(p == null) return;
 		int f = p.getFoodLevel();
 		try { f += Integer.valueOf(args[1]); }

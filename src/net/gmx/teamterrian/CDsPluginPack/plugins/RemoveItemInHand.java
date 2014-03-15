@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
@@ -13,7 +14,6 @@ import net.gmx.teamterrian.CDsPluginPack.PluginHandler;
 import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginCommand;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
-import net.gmx.teamterrian.CDsPluginPack.tools.Player;
 
 public class RemoveItemInHand extends CDPlugin
 {
@@ -47,13 +47,13 @@ public class RemoveItemInHand extends CDPlugin
 			if(!sender.hasPermission("cdpp.riih.others"))
 				sender.sendMessage(ChatColor.RED + "You are not permitted to remove the Item of other player hands");
 			else
-				if((p = Player.getPlayer(Bukkit.getPlayer(args[0]))) == null)
+				if((p = Bukkit.getPlayer(args[0])) == null)
 					sender.sendMessage(ChatColor.RED + "Player not found");
 				else removeItem(p);
 		else
 			if(!sender.hasPermission("cdpp.riih"))
 				sender.sendMessage(ChatColor.RED + "You are not permitted to remove the Item in your hand");
-			else removeItem(Player.getPlayer(sender));
+			else removeItem((Player) sender);
 	}
 	private void removeItem(Player p)
 	{

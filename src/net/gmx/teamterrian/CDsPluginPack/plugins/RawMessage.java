@@ -1,6 +1,7 @@
 ﻿package net.gmx.teamterrian.CDsPluginPack.plugins;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 
@@ -10,7 +11,6 @@ import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginCommand;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDInvalidArgsException;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
-import net.gmx.teamterrian.CDsPluginPack.tools.Player;
 
 public class RawMessage extends CDPlugin
 {
@@ -35,7 +35,7 @@ public class RawMessage extends CDPlugin
 	{
 		String[] args = e.getArgs();
 		if(args.length <= 1) throw new CDInvalidArgsException(e.getCommand().getName());
-		Player p = Player.getPlayer(Bukkit.getPlayer(args[0]));
+		Player p = Bukkit.getPlayer(args[0]);
 		if(p == null) { e.getSender().sendMessage("Player not found"); return; }
 		String message = "";
 		for(String str : args) message += " " + str;

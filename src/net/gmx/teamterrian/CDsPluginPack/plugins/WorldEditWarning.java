@@ -2,6 +2,7 @@
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
+import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 import com.sk89q.bukkit.util.DynamicPluginCommand;
@@ -11,7 +12,6 @@ import net.gmx.teamterrian.CDsPluginPack.CDPlugin;
 import net.gmx.teamterrian.CDsPluginPack.PluginHandler;
 import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginEvent;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
-import net.gmx.teamterrian.CDsPluginPack.tools.Player;
 import net.gmx.teamterrian.CDsPluginPack.tools.VarTools;
 
 public class WorldEditWarning extends CDPlugin
@@ -40,7 +40,7 @@ public class WorldEditWarning extends CDPlugin
 		if((c = handler.cmdRegister.commandMap.getCommand(simpleCmd)) == null ||
 				!(c instanceof DynamicPluginCommand) ||
 				((DynamicPluginCommand) c).getPlugin() != handler.dependencys.we) return;
-		Player p = Player.getPlayer(e.getPlayer());
+		Player p = e.getPlayer();
 		Selection s = handler.dependencys.we.getSelection(p);
 		if(s == null || s.getHeight() * s.getLength() * s.getWidth() < 1000000) return;
 		clog.log("Catched big WorldEdit operation '" + e.getMessage() + "' from " + p.getName(), this);

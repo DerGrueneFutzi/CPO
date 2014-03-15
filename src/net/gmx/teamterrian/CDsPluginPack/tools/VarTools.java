@@ -20,6 +20,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.Command;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -283,5 +284,10 @@ public class VarTools
 			n[0] = n[1];
 			n[1] = temp;
 		}
+	}
+	
+	public static boolean isPlayer(Object o)
+	{
+		return o instanceof Player;
 	}
 }

@@ -2,12 +2,12 @@
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import net.gmx.teamterrian.CDsPluginPack.CDPlugin;
 import net.gmx.teamterrian.CDsPluginPack.PluginHandler;
 import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginEvent;
-import net.gmx.teamterrian.CDsPluginPack.tools.Player;
 
 public class ModifyWorldFix extends CDPlugin
 {	
@@ -20,7 +20,7 @@ public class ModifyWorldFix extends CDPlugin
 	@SuppressWarnings("deprecation")
 	public boolean onPlayerInteract(PlayerInteractEvent e)
 	{
-		Player p = Player.getPlayer(e.getPlayer());
+		Player p = e.getPlayer();
 		Material m = p.getItemInHand().getType();
 		Block b = e.getClickedBlock();
 		if(b != null) {

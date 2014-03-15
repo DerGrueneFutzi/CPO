@@ -2,6 +2,7 @@
 
 import org.bukkit.ChatColor;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
@@ -13,7 +14,6 @@ import net.gmx.teamterrian.CDsPluginPack.CDPlugin;
 import net.gmx.teamterrian.CDsPluginPack.PluginHandler;
 import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginEvent;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
-import net.gmx.teamterrian.CDsPluginPack.tools.Player;
 
 public class NoEnchCombine extends CDPlugin
 {
@@ -39,7 +39,7 @@ public class NoEnchCombine extends CDPlugin
 		Inventory vi = e.getInventory();
 		if(vi == null) return false;
 		if(vi.getType() != InventoryType.ANVIL || e.getSlot() != 2) return false;
-		Player p = Player.getPlayer(e.getWhoClicked());
+		Player p = (Player) e.getWhoClicked();
 		if(p.hasPermission("cdpp.anvil")) return false;
 		ItemStack i1, i2;
 		i1 = vi.getItem(0);

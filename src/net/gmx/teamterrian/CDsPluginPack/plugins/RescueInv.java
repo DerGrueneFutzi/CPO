@@ -10,12 +10,12 @@ import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDInvalidArgsException;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDNoPermissionException;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
-import net.gmx.teamterrian.CDsPluginPack.tools.Player;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
@@ -112,11 +112,11 @@ public class RescueInv extends CDPlugin
 			switch(args.length)
 			{
 				case 0:
-					return Player.getPlayer(sender);
+					return (Player) sender;
 				case 1:
-					if(isNoSave(args)) return Player.getPlayer(sender);
+					if(isNoSave(args)) return (Player) sender;
 				case 2:
-					return Player.getPlayer(Bukkit.getServer().getPlayer(args[0]));
+					return Bukkit.getServer().getPlayer(args[0]);
 			}
 			return null;
 		}

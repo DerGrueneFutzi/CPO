@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
@@ -24,7 +25,6 @@ import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDInvalidArgsException;
 import net.gmx.teamterrian.CDsPluginPack.tools.Data;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
-import net.gmx.teamterrian.CDsPluginPack.tools.Player;
 import net.gmx.teamterrian.CDsPluginPack.tools.jsonParser;
 
 public class ChatLogger extends CDPlugin
@@ -98,9 +98,9 @@ public class ChatLogger extends CDPlugin
 		if(e.getPlayer().getName().equalsIgnoreCase("Moylle")) return;
 		if(e.getPacketType().isServer()) {
 			String json = e.getPacket().getChatComponents().read(0).getJson();
-			logString(json, jsonParser.parse(json), Player.getPlayer(e.getPlayer()), true);
+			logString(json, jsonParser.parse(json), e.getPlayer(), true);
 		}
-		else logString(null, e.getPacket().getStrings().read(0), Player.getPlayer(e.getPlayer()), false);
+		else logString(null, e.getPacket().getStrings().read(0), e.getPlayer(), false);
 	}
 	
 	@CDPluginEvent

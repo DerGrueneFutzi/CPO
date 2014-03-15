@@ -6,6 +6,7 @@ import java.util.Map;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.permissions.Permission;
@@ -16,7 +17,6 @@ import net.gmx.teamterrian.CDsPluginPack.PluginHandler;
 import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CDPluginEnableEvent;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
-import net.gmx.teamterrian.CDsPluginPack.tools.Player;
 
 public class NoBlockCheating extends CDPlugin
 {
@@ -56,7 +56,7 @@ public class NoBlockCheating extends CDPlugin
 	@CDPluginEvent
 	public void onPlayerJoin(PlayerJoinEvent e)
 	{
-		Player p = Player.getPlayer(e.getPlayer());
+		Player p = e.getPlayer();
 		if(p.hasPermission("cdpp.nbc.bypass")) return;
 		if(isInBlock(getBlockLocation(p)))
 			setBack(p);
@@ -84,7 +84,7 @@ public class NoBlockCheating extends CDPlugin
 			public void run()
 			{
 				Location l;
-				for(Player p : Player.getPlayers(Bukkit.getServer().getOnlinePlayers()))
+				for(Player p : Bukkit.getServer().getOnlinePlayers())
 					if((l = getLocation(p)) != null)
 						locs.put(p, l);
 			}

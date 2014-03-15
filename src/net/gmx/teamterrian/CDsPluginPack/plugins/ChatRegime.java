@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 
@@ -20,7 +21,6 @@ import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginPacket;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CDPluginEnableEvent;
 import net.gmx.teamterrian.CDsPluginPack.tools.Data;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
-import net.gmx.teamterrian.CDsPluginPack.tools.Player;
 
 public class ChatRegime extends CDPlugin
 {
@@ -71,7 +71,7 @@ public class ChatRegime extends CDPlugin
 	
 	private boolean doCaps(PacketEvent e)
 	{
-		Player p = Player.getPlayer(e.getPlayer());
+		Player p = e.getPlayer();
 		StructureModifier<String> sm = e.getPacket().getStrings();
 		String message = sm.read(0);
 		if(p.hasPermission("cdpp.cr.capsblock"))
@@ -93,7 +93,7 @@ public class ChatRegime extends CDPlugin
 	}
 	private boolean doSpam(PacketEvent e)
 	{
-		Player p = Player.getPlayer(e.getPlayer());
+		Player p = e.getPlayer();
 		StructureModifier<String> sm = e.getPacket().getStrings();
 		String message = sm.read(0);
 		long actTime = Data.getTimestamp();

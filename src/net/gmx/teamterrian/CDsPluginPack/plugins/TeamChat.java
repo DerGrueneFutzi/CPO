@@ -12,12 +12,12 @@ import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginPacket;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDInvalidArgsException;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
-import net.gmx.teamterrian.CDsPluginPack.tools.Player;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
@@ -56,7 +56,7 @@ public class TeamChat extends CDPlugin
 	@CDPluginPacket(types = { "cchat" })
 	public void onPacket(PacketEvent e)
 	{
-		Player p = Player.getPlayer(e.getPlayer());
+		Player p = e.getPlayer();
 		if(!p.hasPermission("cdpp.teamchat.toggle")) return;
 		if(toggle.containsKey(p) && toggle.get(p))
 		{
@@ -81,14 +81,14 @@ public class TeamChat extends CDPlugin
 		StringBuilder sb = new StringBuilder();
 		for(String akt : args) sb.append(" " + akt);
 		clog.log("[" + name + "] > "+ sb.toString(), this);
-		for(Player p : Player.getPlayers(Bukkit.getServer().getOnlinePlayers()))
+		for(Player p : Bukkit.getServer().getOnlinePlayers())
 			if(p.hasPermission("cdpp.teamchat.receive")) p.sendMessage(ChatColor.RED + name + ChatColor.RESET + ChatColor.GRAY + " >" + ChatColor.RESET + ChatColor.WHITE + sb.toString());
 		if(name.equals("Server")) log.info("[CDPP][TeamChat][Console]" + sb.toString());
 	}
 	private void actoggle(CommandSender sender, String[] args) throws CDInvalidArgsException
 	{
 		if(args.length >= 1) throw new CDInvalidArgsException("actoggle");
-		Player p = Player.getPlayer(sender);
+		Player p = (Player) sender;
 		if(!toggle.containsKey(p)) toggle.put(p, false);
 		if(!toggle.get(p))
 		{
@@ -107,7 +107,7 @@ public class TeamChat extends CDPlugin
 	@CDPluginEvent
 	public void onPlayerJoin(PlayerJoinEvent e)
 	{
-		Player p = Player.getPlayer(e.getPlayer());
+		Player p = e.getPlayer();
 		if(toggle.containsKey(p) && toggle.get(p)) toggle.put(p, false);
 	}
 }

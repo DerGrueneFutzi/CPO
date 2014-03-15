@@ -7,6 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.HumanEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.permissions.Permission;
@@ -18,7 +19,7 @@ import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginCommand;
 import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
-import net.gmx.teamterrian.CDsPluginPack.tools.Player;
+import net.gmx.teamterrian.CDsPluginPack.tools.VarTools;
 
 public class BetterJump extends CDPlugin
 {
@@ -50,7 +51,7 @@ public class BetterJump extends CDPlugin
 	public boolean onEntityDamage(EntityDamageEvent e)
 	{
 		if(e.getCause() != DamageCause.FALL) return e.isCancelled();
-		if(!Player.isPlayer(e.getEntity())) return e.isCancelled();
+		if(!VarTools.isPlayer(e.getEntity())) return e.isCancelled();
 		doProtect(e);
 		return false;
 	}
@@ -71,8 +72,8 @@ public class BetterJump extends CDPlugin
 	
 	private void doProtect(EntityDamageEvent e)
 	{
-		if(!Player.isPlayer(e)) return;
-		Player p = Player.getPlayer(e.getEntity());
+		if(!VarTools.isPlayer(e)) return;
+		Player p = (Player) e.getEntity();
 		if(protect.containsValue(p))
 		{
 			clog.log("Cancelling FallDamage for " + p.getName(), this);
@@ -125,9 +126,9 @@ public class BetterJump extends CDPlugin
 	private Player getPlayer(String[] args, CommandSender sender)
 	{
 		if(args.length == 0 || ifDouble(args[0]) || args[0].equals("true"))
-			return Player.getPlayer(sender);
+			return (Player) sender;
 		Player p;
-		if((p = Player.getPlayer(Bukkit.getServer().getPlayer(args[0]))) == null) {
+		if((p = Bukkit.getServer().getPlayer(args[0])) == null) {
 			sender.sendMessage(mbeg + "Player not found");
 			return null;
 		}

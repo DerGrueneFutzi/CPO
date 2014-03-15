@@ -11,10 +11,10 @@ import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginCommand;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDInvalidArgsException;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
-import net.gmx.teamterrian.CDsPluginPack.tools.Player;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 
@@ -40,7 +40,7 @@ public class LongerChat extends CDPlugin
 	@CDPluginCommand(commands = { "lc cdpp.longerchat 1", "lcadd cdpp.longerchat 1", "lcclear cdpp.longerchat 1", "lcrun cdpp.longerchat 1" })
 	public void onCommand(CommandEvent e) throws CDInvalidArgsException
 	{
-		Player p = Player.getPlayer(e.getSender());
+		Player p = (Player) e.getSender();
 		String[] args = e.getArgs();
 		switch(e.getCommand().getName())
 		{

@@ -10,12 +10,13 @@ import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CDPluginEnableEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
-import net.gmx.teamterrian.CDsPluginPack.tools.Player;
+import net.gmx.teamterrian.CDsPluginPack.tools.VarTools;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -110,17 +111,17 @@ public class LevelConverter extends CDPlugin
 	
 	private Player getPlayer(CommandSender sender, String[] args)
 	{
-		boolean isPlayer = Player.isPlayer(sender);
+		boolean isPlayer = VarTools.isPlayer(sender);
 		try
 		{
 			switch(args.length)
 			{
 				case 0:
-					return (isPlayer ? Player.getPlayer(sender) : null);
+					return (Player) (isPlayer ? sender : null);
 				case 1:
-					if(isAll(args)) return (isPlayer ? Player.getPlayer(sender) : null);
+					if(isAll(args)) return (Player) (isPlayer ? sender : null);
 				case 2:
-					return Player.getPlayer(Bukkit.getServer().getPlayer(args[0]));
+					return Bukkit.getServer().getPlayer(args[0]);
 			}
 			return null;
 		}

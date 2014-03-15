@@ -14,7 +14,6 @@ import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginPacket;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CDPluginEnableEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
-import net.gmx.teamterrian.CDsPluginPack.tools.Player;
 import net.minecraft.server.v1_7_R1.WatchableObject;
 
 import org.bukkit.Bukkit;
@@ -24,6 +23,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByBlockEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -82,7 +82,7 @@ public class HealingStones extends CDPlugin
 	@CDPluginCommand(commands = { "revive cdpp.hs.revive 1" })
 	public void onCommand(CommandEvent e)
 	{
-		Player p = Player.getPlayer(e.getSender());
+		Player p = (Player) e.getSender();
 		doRevive(p, reviveData.get(p.getName()));
 	}
 
@@ -92,7 +92,7 @@ public class HealingStones extends CDPlugin
 		PacketContainer pc = e.getPacket();
 		if(pc.getType() == PacketType.Play.Server.UPDATE_HEALTH) {
 			if(e.getPacket().getFloat().read(0) == 0F) {
-				respawnPlayer(Player.getPlayer(e.getPlayer()));
+				respawnPlayer(e.getPlayer());
 				e.setCancelled(true);
 			}
 		}
@@ -111,7 +111,7 @@ public class HealingStones extends CDPlugin
 		{
 			public void run()
 			{
-				Player[] players = Player.getPlayers(Bukkit.getServer().getOnlinePlayers());
+				Player[] players = Bukkit.getServer().getOnlinePlayers();
 				ItemStack i;
 				String s, n1, n2;
 				char c;

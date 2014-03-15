@@ -19,7 +19,6 @@ import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDInvalidArgsException;
 import net.gmx.teamterrian.CDsPluginPack.tools.Data;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
-import net.gmx.teamterrian.CDsPluginPack.tools.Player;
 import net.minecraft.server.v1_7_R1.NBTTagCompound;
 import net.minecraft.server.v1_7_R1.NBTTagList;
 import net.minecraft.util.org.apache.commons.io.IOUtils;
@@ -27,6 +26,7 @@ import net.minecraft.util.org.apache.commons.io.IOUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.v1_7_R1.inventory.CraftItemStack;
+import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.permissions.Permission;
@@ -213,7 +213,7 @@ public class BetaUsers extends CDPlugin
 	@CDPluginEvent
 	public void onPlayerJoin(PlayerJoinEvent e)
 	{
-		Player p = Player.getPlayer(e.getPlayer());
+		Player p = e.getPlayer();
 		if(users.indexOf(p.getName().toLowerCase()) == -1) return;
 		for(ItemStack i : items) p.getInventory().addItem(i.clone());
 		users.remove(p.getName().toLowerCase());

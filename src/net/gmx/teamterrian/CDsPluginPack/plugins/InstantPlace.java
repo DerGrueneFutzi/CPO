@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.permissions.Permission;
@@ -15,7 +16,6 @@ import net.gmx.teamterrian.CDsPluginPack.PluginHandler;
 import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginCommand;
 import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
-import net.gmx.teamterrian.CDsPluginPack.tools.Player;
 
 public class InstantPlace extends CDPlugin
 {
@@ -37,7 +37,7 @@ public class InstantPlace extends CDPlugin
 	@CDPluginCommand(commands = { "instantplace cdpp.ip 1" })
 	public void onCommand(CommandEvent e)
 	{
-		Player p = Player.getPlayer(e.getSender());
+		Player p = (Player) e.getSender();
 		if(players.contains(p)) players.remove(p);
 		else players.add(p);
 		p.sendMessage(ChatColor.GOLD + "InstantPlace now changed for you");

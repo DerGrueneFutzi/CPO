@@ -20,7 +20,6 @@ import net.gmx.teamterrian.CDsPluginPack.tools.Data;
 import net.gmx.teamterrian.CDsPluginPack.tools.Dependencys;
 import net.gmx.teamterrian.CDsPluginPack.tools.Dependencys.Dependency;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
-import net.gmx.teamterrian.CDsPluginPack.tools.Player;
 import net.gmx.teamterrian.CDsPluginPack.tools.VarTools;
 import net.minecraft.server.v1_7_R1.NBTCompressedStreamTools;
 import net.minecraft.server.v1_7_R1.NBTTagCompound;
@@ -38,6 +37,7 @@ import org.bukkit.craftbukkit.v1_7_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.permissions.Permission;
@@ -158,8 +158,8 @@ public class AdventureEngine extends CDPlugin
 		if(needPlayer(cmds)) p = getPlayer(cmds, sender);
 		else p = null;
 		ShowOption so = getShowOption(cmds);
-		Inventory vi = p != null ? (((HumanEntity) p.real).getInventory()) : null;
-		CommandSender s = (p == null ? sender : p.real);
+		Inventory vi = p != null ? (((HumanEntity) p).getInventory()) : null;
+		CommandSender s = (p == null ? sender : p);
 		if((messages = make(cmds, connections, s, vi, true)) != null && messages.size() > 0) showMessages(messages, s, so);
 		else make(cmds, connections, s, vi, false);
 		return true;
@@ -220,32 +220,32 @@ public class AdventureEngine extends CDPlugin
 				message[0] = " - " + (negate ? "" : "NOT ") + "The permission " + cmd[1];
 				back = p.hasPermission(cmd[1]); break;
 			case "set":
-				try { back = setItem(Player.getPlayer(p), cmd, test); }
+				try { back = setItem((Player) p, cmd, test); }
 				catch (IOException x) { p.sendMessage(mbeg + ChatColor.RED + "The Item was added, but there was a problem by saving the Data."); }
 				break;
 			case "rem":
-				try { back = remItem(Player.getPlayer(p), cmd, test); }
+				try { back = remItem((Player) p, cmd, test); }
 				catch (IOException x) { p.sendMessage(mbeg + ChatColor.RED + "The Item was added, but there was a problem by saving the Data."); }
 				break;
 			case "setbook":
-				try { back = setBook(Player.getPlayer(p), cmd, test); }
+				try { back = setBook((Player) p, cmd, test); }
 				catch (IOException x) { p.sendMessage(mbeg + ChatColor.RED + "The Item was added, but there was a problem by saving the Data."); }
 				break;
 			case "rembook":
-				try { back = remBook(Player.getPlayer(p), cmd, test); }
+				try { back = remBook((Player) p, cmd, test); }
 				catch (IOException x) { p.sendMessage(mbeg + ChatColor.RED + "The Item was added, but there was a problem by saving the Data."); }
 				break;
 			case "give":
-				back = giveItem(Player.getPlayer(p), cmd, inv, test, false); break;
+				back = giveItem((Player) p, cmd, inv, test, false); break;
 			case "givebook":
-				back = giveItem(Player.getPlayer(p), cmd, inv, test, true); break;
+				back = giveItem((Player) p, cmd, inv, test, true); break;
 			case "tave":
 			case "simu":
 				simu = true;
 			case "have":
 				take = false;
 			case "take":
-				back = take(Player.getPlayer(p), cmd, message, inv, test, take, negate, simu); break;
+				back = take((Player) p, cmd, message, inv, test, take, negate, simu); break;
 			case "exist":
 				back = exist(p, cmd, test); break;
 			case "spawn":
@@ -623,14 +623,14 @@ public class AdventureEngine extends CDPlugin
 	private Player getPlayer(List<String[]> args, CommandSender sender)
 	{
 		if(!isCommand(args.get(0)[0])) {
-			Player p = Player.getPlayer(Bukkit.getPlayer(args.get(0)[0]));
+			Player p = Bukkit.getPlayer(args.get(0)[0]);
 			if(p != null) {
 				args.set(0, VarTools.subArr(args.get(0), 1));
 				return p;
 			}
 		}
 		Player p2;
-		try { p2 = Player.getPlayer(sender); }
+		try { p2 = (Player) sender; }
 		catch (ClassCastException x) { sender.sendMessage(mbeg + "Player " + args.get(0)[0] + " not found"); throw x; }
 		return p2;
 	}

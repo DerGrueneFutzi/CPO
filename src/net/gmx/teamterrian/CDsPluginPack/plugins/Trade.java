@@ -14,12 +14,13 @@ import net.gmx.teamterrian.CDsPluginPack.handle.events.CDPluginEnableEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDInvalidArgsException;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
-import net.gmx.teamterrian.CDsPluginPack.tools.Player;
+import net.gmx.teamterrian.CDsPluginPack.tools.VarTools;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -90,19 +91,19 @@ public class Trade extends CDPlugin
 		switch(e.getCommand().getName().toLowerCase())
 		{
 			case "tradetoggle":
-				tradetoggle(Player.getPlayer(sender)); return;
+				tradetoggle((Player) sender); return;
 			case "trade":
 				if(args.length < 1) throw new CDInvalidArgsException(e.getCommand().getName());
-					sendRequest(Player.getPlayer(sender), Player.getPlayer(Bukkit.getPlayer(args[0])), args[0]);
+					sendRequest((Player) sender, Bukkit.getPlayer(args[0]), args[0]);
 					return;
 			case "tradeacc":
-				if(!doRequest(Player.getPlayer(sender), true))
+				if(!doRequest((Player) sender, true))
 					sender.sendMessage(ChatColor.RED + "Nobody has offert you a trade"); return;
 			case "tradedeny":
-				if(!doRequest(Player.getPlayer(sender), false))
+				if(!doRequest((Player) sender, false))
 					sender.sendMessage(ChatColor.RED + "Nobody has offert you a trade"); return;
 			case "tradeabort":
-				if(!abortRequest(Player.getPlayer(sender)))
+				if(!abortRequest((Player) sender))
 					sender.sendMessage(ChatColor.RED + "You haven´t offert anyone a trade"); return;
 		}
 		throw new CDInvalidArgsException(e.getCommand().getName());
@@ -167,7 +168,7 @@ public class Trade extends CDPlugin
 	public void onDrag(InventoryDragEvent e)
 	{
 		if(!e.getInventory().getName().equals(tradeTitle)) return;
-		int Ileft = getLeft(Player.getPlayer(e.getWhoClicked()));
+		int Ileft = getLeft((Player) e.getWhoClicked());
 		if(Ileft == -1) return;
 		if(!checkDrag(e, Ileft == 1)) e.setCancelled(true);
 	}
@@ -182,7 +183,7 @@ public class Trade extends CDPlugin
 	{
 		Inventory vi = e.getInventory();
 		if(vi.getName() != tradeTitle) return;
-		Player p = Player.getPlayer(e.getPlayer());
+		Player p = (Player) e.getPlayer();
 		if(!p.hasPermission("cdpp.trade")) return;
 		clog.log(p.getName() + " closed his Tradewindow", this);
 		Inventory uvi = p.getInventory();	
@@ -201,8 +202,8 @@ public class Trade extends CDPlugin
 	{
 		try
 		{
-			if(!Player.isPlayer(e.getWhoClicked())) return;
-			Player p = Player.getPlayer(e.getWhoClicked());
+			if(!VarTools.isPlayer(e.getWhoClicked())) return;
+			Player p = (Player) e.getWhoClicked();
 			if(!p.hasPermission("cdpp.trade")) return;
 			if(e.getSlot() == -1) return;
 			Inventory vi = e.getInventory();
@@ -223,7 +224,7 @@ public class Trade extends CDPlugin
 	@CDPluginEvent
 	public void onPlayerQuit(PlayerQuitEvent e)
 	{
-		try{ checkRequests(Player.getPlayer(e.getPlayer()), null); }
+		try{ checkRequests(e.getPlayer(), null); }
 		catch(Exception x) {
 			x.printStackTrace(clog.getStream());
 			clog.log("Because of an Error, all requests were deleted", this);

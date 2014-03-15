@@ -11,13 +11,14 @@ import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDInvalidArgsException;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
-import net.gmx.teamterrian.CDsPluginPack.tools.Player;
+import net.gmx.teamterrian.CDsPluginPack.tools.VarTools;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Creature;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -56,7 +57,7 @@ public class MonsterVanish extends CDPlugin
 	private void process(String[] args, CommandSender sender) throws CDInvalidArgsException
 	{
 		if(args.length == 0) throw new CDInvalidArgsException("mvanish");
-		Player p = Player.getPlayer(Bukkit.getServer().getPlayerExact(args[0]));
+		Player p = Bukkit.getServer().getPlayerExact(args[0]);
 		if(p == null) sender.sendMessage(ChatColor.DARK_RED + "Player not found");
 		else if(args.length == 1) removeMonsterPerm(p, true);
 		else createTask(p, Long.valueOf(args[1]));
@@ -95,7 +96,7 @@ public class MonsterVanish extends CDPlugin
 	@CDPluginEvent
 	public void onPlayerQuit(PlayerQuitEvent e)
 	{
-		removeMonsterPerm(Player.getPlayer(e.getPlayer()), false);
+		removeMonsterPerm(e.getPlayer(), false);
 	}
 	public void onPlayerRespawn(final String p)
 	{
@@ -106,20 +107,20 @@ public class MonsterVanish extends CDPlugin
 	@CDPluginEvent
 	public void onPlayerJoin(PlayerJoinEvent e)
 	{
-		removeMonsterPerm(Player.getPlayer(e.getPlayer()), false);
+		removeMonsterPerm(e.getPlayer(), false);
 	}
 	@CDPluginEvent
 	public void onEntityDamageByEntity(EntityDamageByEntityEvent e)
 	{
-		if(!Player.isPlayer(e.getDamager())) return;
-		Player p = Player.getPlayer(e.getDamager());
+		if(!VarTools.isPlayer(e.getDamager())) return;
+		Player p = (Player) e.getDamager();
 		if (removeMonsterPerm(p, true))
 		clog.log("Removed MVanish from " + p.getName() + " because he had hit an Entity", this);
 	}
 	@CDPluginEvent
 	public void onPlayerDeath(PlayerDeathEvent e)
 	{	
-		Player p = Player.getPlayer(e.getEntity());
+		Player p = e.getEntity();
 		if(p == null) return;
 		if (removeMonsterPerm(p, true))
 		clog.log("Removed MVanish from " + p.getName() + " because he had died", this);

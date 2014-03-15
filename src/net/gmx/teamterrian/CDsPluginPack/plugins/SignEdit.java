@@ -10,7 +10,6 @@ import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDInvalidArgsExceptio
 import net.gmx.teamterrian.CDsPluginPack.tools.Dependencys;
 import net.gmx.teamterrian.CDsPluginPack.tools.Dependencys.Dependency;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
-import net.gmx.teamterrian.CDsPluginPack.tools.Player;
 import net.gmx.teamterrian.CDsPluginPack.tools.VarTools;
 
 import org.bukkit.ChatColor;
@@ -21,6 +20,7 @@ import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 
@@ -57,10 +57,10 @@ public class SignEdit extends CDPlugin
 	{
 		if(!d.doDepend(Dependency.WORLDEDIT, sender)) return true;
 		if(args.length < 2) throw new CDInvalidArgsException("se");
-		Selection s = d.we.getSelection(Player.getPlayer(sender));
+		Selection s = d.we.getSelection((Player) sender);
 		if(s == null)
 			sender.sendMessage(mbeg + "Please select a region with WorldEdit");
-		return cSign(VarTools.getLocations(s), Player.getPlayer(sender), args);
+		return cSign(VarTools.getLocations(s), (Player) sender, args);
 	}
 	
 	private boolean cSign(List<Location> locs, Player p, String[] args)

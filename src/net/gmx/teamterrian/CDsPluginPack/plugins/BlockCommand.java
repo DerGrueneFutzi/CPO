@@ -17,6 +17,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -40,7 +41,6 @@ import net.gmx.teamterrian.CDsPluginPack.plugins.BlockCommand.TriggerType;
 import net.gmx.teamterrian.CDsPluginPack.tools.Data;
 import net.gmx.teamterrian.CDsPluginPack.tools.Dependencys;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
-import net.gmx.teamterrian.CDsPluginPack.tools.Player;
 import net.gmx.teamterrian.CDsPluginPack.tools.Timestamp;
 import net.gmx.teamterrian.CDsPluginPack.tools.VarTools;
 import net.gmx.teamterrian.CDsPluginPack.tools.Dependencys.Dependency;
@@ -133,19 +133,19 @@ public class BlockCommand extends CDPlugin
 		{
 			case "add":
 				if(!d.doDepend(Dependency.WORLDEDIT, sender)) return;
-				add(Player.getPlayer(sender), args);
+				add((Player) sender, args);
 				return;
 			case "setcooldown":
 				if(!d.doDepend(Dependency.WORLDEDIT, sender)) return;
-				setCooldown(Player.getPlayer(sender), args);
+				setCooldown((Player) sender, args);
 				return;
 			case "deltrigger":
 				if(!d.doDepend(Dependency.WORLDEDIT, sender)) return;
-				delTriggerData(Player.getPlayer(sender), args);
+				delTriggerData((Player) sender, args);
 				return;
 			case "setshow":
 				if(!d.doDepend(Dependency.WORLDEDIT, sender)) return;
-				setShow(Player.getPlayer(sender), args);
+				setShow((Player) sender, args);
 				return;
 			case "save":
 				save(sender);
@@ -154,15 +154,15 @@ public class BlockCommand extends CDPlugin
 				load(sender);
 				return;
 			case "near":
-				show(Player.getPlayer(sender));
+				show((Player) sender);
 				return;
 			case "show":
 				if(!d.doDepend(Dependency.WORLDEDIT, sender)) return;
-				showBlock(Player.getPlayer(sender));
+				showBlock((Player) sender);
 				return;
 			case "del":
 				if(!d.doDepend(Dependency.WORLDEDIT, sender)) return;
-				del(Player.getPlayer(sender));
+				del((Player) sender);
 				return;
 			case "opreload":
 			case "reloadop":
@@ -175,7 +175,7 @@ public class BlockCommand extends CDPlugin
 	@CDPluginPacket(types = { "cchat" })
 	public void onPacket(PacketEvent e)
 	{
-		Player p = Player.getPlayer(e.getPlayer());
+		Player p = e.getPlayer();
 		if(e.getPacket().getStrings().read(0).charAt(0) != '/' || shouldOp(p)) return;
 		e.setCancelled(true);
 		clog.log("Blocked command from " + p.getName() + " because he is in a temporary Op-Mode", this);
@@ -433,7 +433,7 @@ public class BlockCommand extends CDPlugin
 		BCBlockData blockData;
 		if(!places.containsKey(l) || !(blockData = places.get(l)).containsTrigger(TriggerType.MOVE))
 			return e.isCancelled();
-		runCommands(blockData.getTriggerData(TriggerType.MOVE), Player.getPlayer(e.getPlayer()));
+		runCommands(blockData.getTriggerData(TriggerType.MOVE), e.getPlayer());
 		return e.isCancelled();
 	}
 	@CDPluginEvent
@@ -447,7 +447,7 @@ public class BlockCommand extends CDPlugin
 		Location l = getBlockLoc(b.getLocation());
 		if(!places.containsKey(l) || !places.get(l).containsTrigger(TriggerType.CLICK)) return e.isCancelled();
 		e.setCancelled(true);
-		runCommands(places.get(l).getTriggerData(TriggerType.CLICK), Player.getPlayer(e.getPlayer()));
+		runCommands(places.get(l).getTriggerData(TriggerType.CLICK), e.getPlayer());
 		return e.isCancelled();
 	}
 	

@@ -18,7 +18,6 @@ import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDInvalidArgsException;
 import net.gmx.teamterrian.CDsPluginPack.tools.Data;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
-import net.gmx.teamterrian.CDsPluginPack.tools.Player;
 import net.gmx.teamterrian.CDsPluginPack.tools.VarTools;
 import net.minecraft.server.v1_7_R1.NBTTagCompound;
 import net.minecraft.server.v1_7_R1.NBTTagList;
@@ -29,6 +28,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 
@@ -137,7 +137,7 @@ public class BugTracker extends CDPlugin
 	
 	private Return bugAdd(String[] args, CommandSender sender, Location[] l)
 	{
-		Player p = Player.getPlayer(sender);
+		Player p = (Player) sender;
 		String desc = VarTools.SB(args, 0);
 		String[] mes = new String[] { p.getName(), desc };
 		l[0] = p.getLocation();
@@ -172,7 +172,7 @@ public class BugTracker extends CDPlugin
 	}
 	private Return bugTp(String[] args, CommandSender sender, Boolean[] cftp, Integer[] counter, String[] o)
 	{
-		if(!Player.isPlayer(sender)) return Return.TRUE;
+		if(!VarTools.isPlayer(sender)) return Return.TRUE;
 		counter[0] = 1;
 		if(args.length < 1) return Return.TRUE;
 		int tpn;
@@ -185,13 +185,13 @@ public class BugTracker extends CDPlugin
 		}
 		o = bugs.get(tpt);
 		sender.sendMessage(ChatColor.YELLOW + "[BugTracker][" + counter[0] + "][" + o[0] + "] " + (o[1].length() == 0 ? "" : ": " + o[1]));
-		Player.getPlayer(sender).teleport(tpt);
+		((Player) sender).teleport(tpt);
 		cftp[0] = true;
 		return Return.CONTINUE;
 	}
 	private Return bugNear(String[] args, CommandSender sender, Boolean[] cftp, Integer[] counter, String[] o)
 	{
-		if(!Player.isPlayer(sender)) return Return.TRUE;
+		if(!VarTools.isPlayer(sender)) return Return.TRUE;
 		double dist;
 		if(args.length >= 1 && !cftp[0]) try { dist = Integer.valueOf(args[0]); } catch (Exception x) { dist = 10; }
 		else if(cftp[0]) dist = 25;
@@ -199,7 +199,7 @@ public class BugTracker extends CDPlugin
 		int cc = counter[0];
 		counter[0] = 0;
 		boolean found = false;
-		Location ploc = Player.getPlayer(sender).getLocation();
+		Location ploc = ((Player) sender).getLocation();
 		for(Location loc : bugs.keySet()) {
 			counter[0]++;
 			if(loc.distance(ploc) <= dist) {

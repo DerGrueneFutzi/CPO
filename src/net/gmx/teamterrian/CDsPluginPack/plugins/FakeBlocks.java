@@ -16,6 +16,7 @@ import org.bukkit.block.Sign;
 import org.bukkit.block.Skull;
 import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.v1_7_R1.util.CraftMagicNumbers;
+import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 
@@ -41,7 +42,6 @@ import net.gmx.teamterrian.CDsPluginPack.tools.Data;
 import net.gmx.teamterrian.CDsPluginPack.tools.Dependencys;
 import net.gmx.teamterrian.CDsPluginPack.tools.Dependencys.Dependency;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
-import net.gmx.teamterrian.CDsPluginPack.tools.Player;
 import net.gmx.teamterrian.CDsPluginPack.tools.VarTools;
 import net.minecraft.server.v1_7_R1.NBTTagByte;
 import net.minecraft.server.v1_7_R1.NBTTagCompound;
@@ -139,7 +139,7 @@ public class FakeBlocks extends CDPlugin
 		String[] args = e.getArgs();
 		FBBlockData blockData;
 		int counter = 0;
-		Selection s = d.we.getSelection(Player.getPlayer(e.getSender()));
+		Selection s = d.we.getSelection((Player) e.getSender());
 		if(s == null) throw new CDNullSelectionException();
 		String perm = args.length == 2 ? args[1] : null;
 		for(Location l : VarTools.getLocations(s))
@@ -158,7 +158,7 @@ public class FakeBlocks extends CDPlugin
 	{
 		int counter = 0;
 		CommandSender sender = e.getSender();
-		Selection s = d.we.getSelection(Player.getPlayer(sender));
+		Selection s = d.we.getSelection((Player) sender);
 		if(s == null) throw new CDNullSelectionException();
 		for(Location l : VarTools.getLocations(s))
 			if(blocks.containsKey(l)) {
@@ -176,7 +176,7 @@ public class FakeBlocks extends CDPlugin
 		String[] args = e.getArgs();
 		FBPermData permData;
 		if(args.length != 8) throw new CDInvalidArgsException(e.getCommand().getName());
-		Player p = Player.getPlayer(Bukkit.getPlayer(args[1]));
+		Player p = Bukkit.getPlayer(args[1]);
 		if(p == null) throw new CDPlayerNotFoundException(args[1]);
 		for(Location l : VarTools.getLocations(VarTools.getBox(e.getArgs(), 2, p.getWorld())))
 		{

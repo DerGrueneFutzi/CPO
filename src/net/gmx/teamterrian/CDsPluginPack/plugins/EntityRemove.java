@@ -12,6 +12,7 @@ import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 
@@ -23,7 +24,6 @@ import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDException;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDInvalidArgsException;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDWorldNotFoundException;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
-import net.gmx.teamterrian.CDsPluginPack.tools.Player;
 import net.gmx.teamterrian.CDsPluginPack.tools.VarTools;
 
 public class EntityRemove extends CDPlugin
@@ -60,7 +60,7 @@ public class EntityRemove extends CDPlugin
 		else if(args.length == 2)
 			counter = doRemove(getTypeList(args[0]), null, w);
 		else if(args.length == 3)
-			counter = doRemove(getTypeList(args[0]), VarTools.getBox(Player.getPlayer(sender).getLocation(), Integer.valueOf(args[1])), w);
+			counter = doRemove(getTypeList(args[0]), VarTools.getBox(((Player) sender).getLocation(), Integer.valueOf(args[1])), w);
 		else if(args.length == 6)
 			counter = doRemove(getTypeList(args[0]), VarTools.getBox(VarTools.getPoint(args, 1, w), Integer.valueOf(args[4])), w);
 		else if(args.length == 8)
