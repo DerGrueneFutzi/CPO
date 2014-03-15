@@ -1,4 +1,4 @@
-﻿package net.gmx.teamterrian.CDsPluginPack.plugins;
+package net.gmx.teamterrian.CDsPluginPack.plugins;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -35,7 +35,7 @@ public class ServerLock extends CDPlugin
 	boolean noBypass = false;
 	Map<String, String> messages = new CDHashMap<String, String>();
 	String mbeg = ChatColor.AQUA + "[ServerLock] " + ChatColor.GOLD;
-	
+
 	public ServerLock(PluginHandler handler)
 	{
 		super(handler);
@@ -57,7 +57,7 @@ public class ServerLock extends CDPlugin
 			new Permission("cdpp.sl.io", PermissionDefault.OP)
 		};
 	}
-		
+
 	@CDPluginEvent
 	public void onEnable(CDPluginEnableEvent e)
 	{
@@ -86,9 +86,9 @@ public class ServerLock extends CDPlugin
 			e.setSuccess(this, false);
 		}
 	}
-	
+
 	public String[] getDirectorys() { return new String[] { "ServerLock" }; }
-	
+
 	@CDPluginCommand(commands = { "lock cdpp.sl.lock 0" })
 	public void onCommand(CommandEvent e) throws CDInvalidArgsException
 	{
@@ -142,14 +142,14 @@ public class ServerLock extends CDPlugin
 				lock(args, sender);
 		}
 	}
-	
+
 	@CDPluginEvent
 	public void onPlayerLogin(PlayerLoginEvent e)
 	{
 		if((lock.equals("") || e.getPlayer().hasPermission("cdpp.sl.bypass")) && !noBypass) return;
 		e.disallow(Result.KICK_WHITELIST, lock);
 	}
-	
+
 	private void optionAll(CommandSender sender)
 	{
 		if(!sender.hasPermission("cdpp.sl.option.all")) {
@@ -199,7 +199,7 @@ public class ServerLock extends CDPlugin
 			sender.sendMessage(mbeg + "The message were deleted, but there's a problem in saving the data. Please contact an Admin");
 		}
 	}
-	
+
 	private void lock(CommandSender sender)
 	{
 		if(!sender.hasPermission("cdpp.sl.lock")) {
@@ -248,7 +248,7 @@ public class ServerLock extends CDPlugin
 		lock = s;
 		sender.sendMessage(mbeg + "Server locked with your message");
 	}
-	
+
 	private boolean save(CommandSender sender)
 	{
 		if(!sender.hasPermission("cdpp.sl.io")) {
@@ -282,7 +282,7 @@ public class ServerLock extends CDPlugin
 		}
 		return true;
 	}
-	
+
 	private void save() throws IOException
 	{
 		clog.log("Start saving Messages", this);
