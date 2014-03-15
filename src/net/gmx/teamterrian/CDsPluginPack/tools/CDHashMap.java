@@ -67,7 +67,7 @@ public class CDHashMap<K, V> extends HashMap<K, V>
 	}
 	public V put(K k, V v)
 	{
-		if(k instanceof Player) return super.put(k, v);
+		if(!(k instanceof Player)) return super.put(k, v);
 		Player p, po = (Player) k;
 		V ret;
 		for(Object key : new HashSet<K>(this.keySet()))
