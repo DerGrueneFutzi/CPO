@@ -52,7 +52,7 @@ public class CDHashMap<K, V> extends HashMap<K, V>
 			else break;
 		for(Object key : this.keySet())
 			if(key == null) continue;
-			else if(((Player) key).getName().equals(name)) return this.get(key);
+			else if(((Player) key).getName().equals(name)) return super.get(key);
 		return super.get(o);
 	}	
 	public V remove(Object o)
@@ -66,7 +66,7 @@ public class CDHashMap<K, V> extends HashMap<K, V>
 			else break;
 		for(Object key : new HashSet<K>(this.keySet()))
 			if(key == null) continue;
-			else if(((Player) key).getName().equals(name)) return remove(key);
+			else if(((Player) key).getName().equals(name)) return super.remove(key);
 		return null;
 	}
 	public V put(K k, V v)
