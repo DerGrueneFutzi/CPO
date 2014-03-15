@@ -17,71 +17,76 @@ public class CDHashMap<K, V> extends HashMap<K, V>
 
 	public boolean containsKey(Object o)
 	{
-		if(!(o instanceof Player)) return super.containsKey(o);
-		Player p, po = (Player) o;
+		if(o == null || !(o instanceof Player)) return super.containsKey(o);
+		String name = ((Player) o).getName();
 		for(Object key : this.keySet())
-		{
-			if(!(key instanceof Player)) return super.containsKey(o);
-			p = (Player) key;
-			if(p.getName().equals(po.getName())) return true;
-		}
+			if(key == null) continue;
+			else if(!(key instanceof Player)) return super.containsKey(key);
+			else break;
+		for(Object key : this.keySet())
+			if(key == null) continue;
+			else if(((Player) key).getName().equals(name)) return true;
 		return false;
 	}
 	public boolean containsValue(Object o)
 	{
-		if(!(o instanceof Player)) return super.containsKey(o);
-		Player p, po = (Player) o;
+		if(o == null || !(o instanceof Player)) return super.containsValue(o);
+		String name = ((Player) o).getName();
 		for(Object val : this.values())
-		{
-			if(!(val instanceof Player)) return super.containsValue(o);
-			p = (Player) val;
-			if(p.getName().equals(po.getName())) return true;
-		}
+			if(val == null) continue;
+			else if(!(val instanceof Player)) return super.containsValue(o);
+			else break;
+		for(Object val : this.values())
+			if(val == null) continue;
+			else if(((Player) val).getName().equals(name)) return true;
 		return false;
 	}
 	
 	public V get(Object o)
 	{
-		if(!(o instanceof Player)) return super.get(o);
-		Player p, po = (Player) o;
-		for(Object key : this.values())
-		{
-			if(!(key instanceof Player)) return super.get(o);
-			p = (Player) key;
-			if(p.getName().equals(po.getName())) return this.get(key);
-		}
+		if(o == null || !(o instanceof Player)) return super.get(o);
+		String name = ((Player) o).getName();
+		for(Object key : this.keySet())
+			if(key == null) continue;
+			else if(!(key instanceof Player)) return super.get(o);
+			else break;
+		for(Object key : this.keySet())
+			if(key == null) continue;
+			else if(((Player) key).getName().equals(name)) return this.get(key);
 		return super.get(o);
 	}	
 	public V remove(Object o)
 	{
 		if(!containsKey(o)) return null;
-		if(o instanceof Player) return super.remove(o);
-		Player p, po = (Player) o;
+		if(o == null || !(o instanceof Player)) return super.remove(o);
+		String name = ((Player) o).getName();
+		for(Object key : this.keySet())
+			if(key == null) continue;
+			else if(!(key instanceof Player)) return super.remove(o);
+			else break;
 		for(Object key : new HashSet<K>(this.keySet()))
-		{
-			if(!(key instanceof Player)) return super.remove(o);
-			p = (Player) key;
-			if(p.getName().equals(po.getName())) return remove(key);
-		}
+			if(key == null) continue;
+			else if(((Player) key).getName().equals(name)) return remove(key);
 		return null;
 	}
 	public V put(K k, V v)
 	{
-		if(!(k instanceof Player)) return super.put(k, v);
-		Player p, po = (Player) k;
+		if(k == null || !(k instanceof Player)) return super.put(k, v);
+		String name = ((Player) k).getName();
 		V ret;
+		for(Object key : this.keySet())
+			if(key == null) continue;
+			else if(!(key instanceof Player)) return super.put(k, v);
+			else break;
 		for(Object key : new HashSet<K>(this.keySet()))
-		{
-			if(!(key instanceof Player)) return super.put(k, v);
-			p = (Player) key;
-			if(p.getName().equals(po.getName()))
+			if(key == null) continue;
+			else if(((Player) key).getName().equals(name))
 			{
 				ret = get(key);
 				remove(key);
 				super.put(k, v);
 				return ret;
 			}
-		}
 		return super.put(k, v);
 	}
 }
