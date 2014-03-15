@@ -25,7 +25,7 @@ public class CDHashMap<K, V> extends HashMap<K, V>
 			p = (Player) key;
 			if(p.getName().equals(po.getName())) return true;
 		}
-		return true;
+		return false;
 	}
 	public boolean containsValue(Object o)
 	{
@@ -50,7 +50,7 @@ public class CDHashMap<K, V> extends HashMap<K, V>
 			p = (Player) key;
 			if(p.getName().equals(po.getName())) return this.get(key);
 		}
-		return null;
+		return super.get(o);
 	}	
 	public V remove(Object o)
 	{
@@ -82,6 +82,6 @@ public class CDHashMap<K, V> extends HashMap<K, V>
 				return ret;
 			}
 		}
-		return null;
+		return super.put(k, v);
 	}
 }

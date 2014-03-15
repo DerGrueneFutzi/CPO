@@ -108,6 +108,8 @@ public class TeamChat extends CDPlugin
 	public void onPlayerJoin(PlayerJoinEvent e)
 	{
 		Player p = e.getPlayer();
-		if(toggle.containsKey(p) && toggle.get(p)) toggle.put(p, false);
+		if(toggle.containsKey(p)
+				&& toggle.get(p))
+			toggle.put(p, false);
 	}
 }
