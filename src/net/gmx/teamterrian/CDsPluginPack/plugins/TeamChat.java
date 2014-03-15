@@ -1,6 +1,5 @@
 ﻿package net.gmx.teamterrian.CDsPluginPack.plugins;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -11,6 +10,7 @@ import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginPacket;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDInvalidArgsException;
+import net.gmx.teamterrian.CDsPluginPack.tools.CDHashMap;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
 
 import org.bukkit.Bukkit;
@@ -28,7 +28,7 @@ public class TeamChat extends CDPlugin
 {
 	Log clog;
 	Logger log;
-	Map<Player, Boolean> toggle = new HashMap<Player, Boolean>();
+	Map<Player, Boolean> toggle = new CDHashMap<Player, Boolean>();
 	
 	public TeamChat(PluginHandler handler)
 	{

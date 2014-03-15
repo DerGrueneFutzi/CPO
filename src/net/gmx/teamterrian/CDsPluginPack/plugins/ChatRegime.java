@@ -1,7 +1,6 @@
 ﻿package net.gmx.teamterrian.CDsPluginPack.plugins;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -19,6 +18,7 @@ import net.gmx.teamterrian.CDsPluginPack.PluginHandler;
 import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginPacket;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CDPluginEnableEvent;
+import net.gmx.teamterrian.CDsPluginPack.tools.CDHashMap;
 import net.gmx.teamterrian.CDsPluginPack.tools.Data;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
 
@@ -27,7 +27,7 @@ public class ChatRegime extends CDPlugin
 	Logger log;
 	Log clog;
 	List<Character> bigs = new ArrayList<Character>();
-	Map<Player, CRChatData> data = new HashMap<Player, CRChatData>();
+	Map<Player, CRChatData> data = new CDHashMap<Player, CRChatData>();
 	
 	public ChatRegime(PluginHandler handler)
 	{

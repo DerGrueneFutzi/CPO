@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +15,7 @@ import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginPacket;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CDPluginDisableEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CDPluginEnableEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
+import net.gmx.teamterrian.CDsPluginPack.tools.CDHashMap;
 import net.gmx.teamterrian.CDsPluginPack.tools.Data;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
 import net.minecraft.server.v1_7_R1.NBTCompressedStreamTools;
@@ -48,7 +48,7 @@ import com.comphenix.protocol.events.PacketEvent;
 public class MoreEnderChests extends CDPlugin
 {
 	Log clog;
-	Map<String, Inventory[]> invs = new HashMap<String, Inventory[]>();
+	Map<String, Inventory[]> invs = new CDHashMap<String, Inventory[]>();
 	ItemStack nextInv = new ItemStack(Material.ANVIL) 
 	, prefInv = new ItemStack(Material.ANVIL)
 	, emptyItem = new ItemStack(Material.AIR);

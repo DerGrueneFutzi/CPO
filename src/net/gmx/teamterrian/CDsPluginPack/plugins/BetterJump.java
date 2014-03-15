@@ -1,6 +1,5 @@
 ﻿package net.gmx.teamterrian.CDsPluginPack.plugins;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.bukkit.Bukkit;
@@ -18,6 +17,7 @@ import net.gmx.teamterrian.CDsPluginPack.PluginHandler;
 import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginCommand;
 import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
+import net.gmx.teamterrian.CDsPluginPack.tools.CDHashMap;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
 import net.gmx.teamterrian.CDsPluginPack.tools.VarTools;
 
@@ -25,7 +25,7 @@ public class BetterJump extends CDPlugin
 {
 	Log clog;
 	String mbeg = ChatColor.LIGHT_PURPLE + "[BetterJump] " + ChatColor.WHITE;
-	Map<Runnable, Player> protect = new HashMap<Runnable, Player>();
+	Map<Runnable, Player> protect = new CDHashMap<Runnable, Player>();
 	
 	public BetterJump(PluginHandler handler)
 	{

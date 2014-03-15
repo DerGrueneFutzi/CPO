@@ -3,7 +3,6 @@
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 import net.gmx.teamterrian.CDsPluginPack.CDPlugin;
@@ -14,6 +13,7 @@ import net.gmx.teamterrian.CDsPluginPack.handle.events.CDPluginDisableEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CDPluginEnableEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDNoPermissionException;
+import net.gmx.teamterrian.CDsPluginPack.tools.CDHashMap;
 import net.gmx.teamterrian.CDsPluginPack.tools.Data;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
 import net.gmx.teamterrian.CDsPluginPack.tools.VarTools;
@@ -36,7 +36,7 @@ import com.comphenix.protocol.events.PacketEvent;
 public class ItemHelp extends CDPlugin
 {
 	Log clog;
-	Map<ItemStack, String> help = new HashMap<ItemStack, String>();
+	Map<ItemStack, String> help = new CDHashMap<ItemStack, String>();
 	String mbeg = ChatColor.GOLD + "[ItemHelp] " + ChatColor.DARK_AQUA;
 	
 	public ItemHelp(PluginHandler handler)

@@ -3,7 +3,6 @@
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.bukkit.ChatColor;
@@ -19,6 +18,7 @@ import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CDPluginDisableEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CDPluginEnableEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
+import net.gmx.teamterrian.CDsPluginPack.tools.CDHashMap;
 import net.gmx.teamterrian.CDsPluginPack.tools.Data;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
 import net.gmx.teamterrian.CDsPluginPack.tools.VarTools;
@@ -30,7 +30,7 @@ public class MotDChanger extends CDPlugin
 {
 	Log clog;
 	String motd = "";
-	Map<String, String> messages = new HashMap<String, String>();
+	Map<String, String> messages = new CDHashMap<String, String>();
 	String mbeg = ChatColor.AQUA + "[MotDChanger] " + ChatColor.GOLD;
 	
 	public MotDChanger(PluginHandler handler)

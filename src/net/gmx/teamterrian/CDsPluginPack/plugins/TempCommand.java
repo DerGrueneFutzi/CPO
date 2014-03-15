@@ -1,7 +1,6 @@
 ﻿package net.gmx.teamterrian.CDsPluginPack.plugins;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.bukkit.Bukkit;
@@ -22,6 +21,7 @@ import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginCommand;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDInvalidArgsException;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDNoPermissionException;
+import net.gmx.teamterrian.CDsPluginPack.tools.CDHashMap;
 import net.gmx.teamterrian.CDsPluginPack.tools.Dependencys;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
 import net.gmx.teamterrian.CDsPluginPack.tools.Dependencys.Dependency;
@@ -30,7 +30,7 @@ import net.gmx.teamterrian.CDsPluginPack.tools.VarTools;
 public class TempCommand extends CDPlugin
 {
 	Log clog;
-	Map<Runnable, Object[]> data = new HashMap<Runnable, Object[]>();
+	Map<Runnable, Object[]> data = new CDHashMap<Runnable, Object[]>();
 	Dependencys d;
 	String mbeg = "[TempCommand] ";
 	

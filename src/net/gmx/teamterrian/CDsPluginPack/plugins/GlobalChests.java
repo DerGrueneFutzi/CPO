@@ -1,6 +1,5 @@
 ﻿package net.gmx.teamterrian.CDsPluginPack.plugins;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.bukkit.Bukkit;
@@ -24,6 +23,7 @@ import net.gmx.teamterrian.CDsPluginPack.PluginHandler;
 import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDInvalidArgsException;
+import net.gmx.teamterrian.CDsPluginPack.tools.CDHashMap;
 import net.gmx.teamterrian.CDsPluginPack.tools.Data;
 import net.gmx.teamterrian.CDsPluginPack.tools.Dependencys;
 import net.gmx.teamterrian.CDsPluginPack.tools.Dependencys.Dependency;
@@ -36,7 +36,7 @@ import net.minecraft.server.v1_7_R1.TileEntityChest;
 
 public class GlobalChests extends CDPlugin
 {
-	Map<String, GCChestData> data = new HashMap<String, GCChestData>();
+	Map<String, GCChestData> data = new CDHashMap<String, GCChestData>();
 	String mbeg = ChatColor.DARK_GREEN + "[GlobalChests] " + ChatColor.WHITE;
 	Dependencys d;
 	
@@ -343,20 +343,20 @@ class GCChestData
 	
 	public GCChestData()
 	{
-		inventorys = new HashMap<String, Inventory>();
+		inventorys = new CDHashMap<String, Inventory>();
 		timestamp = new GCTimestamp();
 		globalChest = true;
 	}
 	public GCChestData(Inventory fillInventory, int cooldown)
 	{
-		inventorys = new HashMap<String, Inventory>();
+		inventorys = new CDHashMap<String, Inventory>();
 		inventorys.put("_", fillInventory);
 		timestamp = new GCTimestamp(cooldown);
 		globalChest = true;
 	}
 	public GCChestData(Inventory fillInventory, int cooldown, boolean global)
 	{
-		inventorys = new HashMap<String, Inventory>();
+		inventorys = new CDHashMap<String, Inventory>();
 		inventorys.put("_", fillInventory);
 		timestamp = new GCTimestamp(cooldown);
 		globalChest = global;

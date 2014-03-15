@@ -1,7 +1,6 @@
 ﻿package net.gmx.teamterrian.CDsPluginPack.plugins;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -16,6 +15,7 @@ import net.gmx.teamterrian.CDsPluginPack.handle.events.CDPluginDisableEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CDPluginEnableEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDInvalidArgsException;
+import net.gmx.teamterrian.CDsPluginPack.tools.CDHashMap;
 import net.gmx.teamterrian.CDsPluginPack.tools.Data;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
 import net.gmx.teamterrian.CDsPluginPack.tools.VarTools;
@@ -36,8 +36,8 @@ public class BugTracker extends CDPlugin
 {
 	Log clog;
 	int test;
-	Map<Location, String[]> bugs = new HashMap<Location, String[]>();
-	Map<Location, String[]> deleted = new HashMap<Location, String[]>();
+	Map<Location, String[]> bugs = new CDHashMap<Location, String[]>();
+	Map<Location, String[]> deleted = new CDHashMap<Location, String[]>();
 	
 	public BugTracker(PluginHandler handler)
 	{
@@ -314,7 +314,7 @@ public class BugTracker extends CDPlugin
 	}
 	private void append(Map<Location, String[]> map, String path) throws IOException
 	{
-		Map<Location, String[]> copy = new HashMap<Location, String[]>(map);
+		Map<Location, String[]> copy = new CDHashMap<Location, String[]>(map);
 		load(map, path);
 		for(Location l : copy.keySet())
 			map.put(l, copy.get(l));

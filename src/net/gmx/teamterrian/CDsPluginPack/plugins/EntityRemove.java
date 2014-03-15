@@ -1,7 +1,6 @@
 ﻿package net.gmx.teamterrian.CDsPluginPack.plugins;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,6 +22,7 @@ import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDException;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDInvalidArgsException;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDWorldNotFoundException;
+import net.gmx.teamterrian.CDsPluginPack.tools.CDHashMap;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
 import net.gmx.teamterrian.CDsPluginPack.tools.VarTools;
 
@@ -149,7 +149,7 @@ public class EntityRemove extends CDPlugin
 	
 	private Map<EntityType, Integer> doRemove(List<EntityType> toRemove, Location[] boxes, World w)
 	{
-		Map<EntityType, Integer> counter = new HashMap<EntityType, Integer>();
+		Map<EntityType, Integer> counter = new CDHashMap<EntityType, Integer>();
 		Location box1, box2;
 		if(boxes == null) { box1 = null; box2 = null; }
 		else { box1 = boxes[0]; box2 = boxes[1]; }

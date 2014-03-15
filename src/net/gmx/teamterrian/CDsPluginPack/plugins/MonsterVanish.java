@@ -1,6 +1,5 @@
 ﻿package net.gmx.teamterrian.CDsPluginPack.plugins;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +9,7 @@ import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginCommand;
 import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDInvalidArgsException;
+import net.gmx.teamterrian.CDsPluginPack.tools.CDHashMap;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
 import net.gmx.teamterrian.CDsPluginPack.tools.VarTools;
 
@@ -32,7 +32,7 @@ import ru.tehkode.permissions.bukkit.PermissionsEx;
 public class MonsterVanish extends CDPlugin
 {
 	Log clog;
-	static Map<Runnable, Player> players = new HashMap<Runnable, Player>();
+	static Map<Runnable, Player> players = new CDHashMap<Runnable, Player>();
 	
 	public MonsterVanish(PluginHandler handler)
 	{

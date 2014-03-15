@@ -13,6 +13,7 @@ import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CDPluginEnableEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDInvalidArgsException;
+import net.gmx.teamterrian.CDsPluginPack.tools.CDHashMap;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
 import net.gmx.teamterrian.CDsPluginPack.tools.VarTools;
 
@@ -47,7 +48,7 @@ public class Trade extends CDPlugin
 	List<Integer> slotsLeft, slotsRight, slotsEmpty, slotsWoolLeft, slotsWoolRight;
 	ItemStack[] startItems, emptysLeft, emptysRight;
 	List<ItemStack> emptyList;
-	Map<Player, Player> requests = new HashMap<Player, Player>();
+	Map<Player, Player> requests = new CDHashMap<Player, Player>();
 	List<Player> leftP, rightP;
 	String tradeTitle, prefix;
 	

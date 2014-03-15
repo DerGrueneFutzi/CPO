@@ -3,7 +3,6 @@ package net.gmx.teamterrian.CDsPluginPack.plugins;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.bukkit.ChatColor;
@@ -18,13 +17,14 @@ import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginCommand;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDInvalidArgsException;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDNoPermissionException;
+import net.gmx.teamterrian.CDsPluginPack.tools.CDHashMap;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
 import net.minecraft.server.v1_7_R1.NBTCompressedStreamTools;
 import net.minecraft.server.v1_7_R1.NBTTagCompound;
 
 public class ResetPerms extends CDPlugin
 {
-	Map<String, String> groups = new HashMap<String, String>();
+	Map<String, String> groups = new CDHashMap<String, String>();
 	Log clog;
 	
 	public ResetPerms(PluginHandler handler)

@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +15,7 @@ import net.gmx.teamterrian.CDsPluginPack.handle.events.CDPluginDisableEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CDPluginEnableEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDInvalidArgsException;
+import net.gmx.teamterrian.CDsPluginPack.tools.CDHashMap;
 import net.gmx.teamterrian.CDsPluginPack.tools.Data;
 import net.gmx.teamterrian.CDsPluginPack.tools.Dependencys;
 import net.gmx.teamterrian.CDsPluginPack.tools.Dependencys.Dependency;
@@ -49,8 +49,8 @@ import com.goncalomb.bukkit.nbteditor.nbt.EntityNBT;
 public class AdventureEngine extends CDPlugin
 {
 	Log clog;
-	private Map<String, ItemStack> items = new HashMap<String, ItemStack>();
-	private Map<String, ItemStack> entitys = new HashMap<String, ItemStack>();
+	private Map<String, ItemStack> items = new CDHashMap<String, ItemStack>();
+	private Map<String, ItemStack> entitys = new CDHashMap<String, ItemStack>();
 	Dependencys d;
 	String mbeg = ChatColor.GOLD + "[AdventureEngine] ";
 	

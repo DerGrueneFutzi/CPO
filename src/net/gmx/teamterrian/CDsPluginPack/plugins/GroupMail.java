@@ -3,7 +3,6 @@
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,6 +25,7 @@ import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDException;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDInvalidArgsException;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDNoPermissionException;
+import net.gmx.teamterrian.CDsPluginPack.tools.CDHashMap;
 import net.gmx.teamterrian.CDsPluginPack.tools.Data;
 import net.gmx.teamterrian.CDsPluginPack.tools.Dependencys;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
@@ -38,7 +38,7 @@ import net.minecraft.server.v1_7_R1.NBTTagString;
 public class GroupMail extends CDPlugin
 {
 	Log clog;
-	Map<String, List<User>> groups = new HashMap<String, List<User>>();
+	Map<String, List<User>> groups = new CDHashMap<String, List<User>>();
 	Dependencys d;
 	String mbeg = ChatColor.DARK_GREEN + "[GroupMail] " + ChatColor.WHITE;
 	

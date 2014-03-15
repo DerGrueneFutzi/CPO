@@ -1,6 +1,5 @@
 ﻿package net.gmx.teamterrian.CDsPluginPack.plugins;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.bukkit.Bukkit;
@@ -16,12 +15,13 @@ import net.gmx.teamterrian.CDsPluginPack.CDPlugin;
 import net.gmx.teamterrian.CDsPluginPack.PluginHandler;
 import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CDPluginEnableEvent;
+import net.gmx.teamterrian.CDsPluginPack.tools.CDHashMap;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
 
 public class NoBlockCheating extends CDPlugin
 {
 	Log clog;
-	Map<Player, Location> locs = new HashMap<Player, Location>();
+	Map<Player, Location> locs = new CDHashMap<Player, Location>();
 	World w = Bukkit.getServer().getWorld("world");
 	
 	public NoBlockCheating(PluginHandler handler)

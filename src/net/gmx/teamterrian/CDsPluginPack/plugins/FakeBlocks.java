@@ -3,7 +3,6 @@ package net.gmx.teamterrian.CDsPluginPack.plugins;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -38,6 +37,7 @@ import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDNoPermissionExcepti
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDNullSelectionException;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDPlayerNotFoundException;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDUnsupportedPacketModifierException;
+import net.gmx.teamterrian.CDsPluginPack.tools.CDHashMap;
 import net.gmx.teamterrian.CDsPluginPack.tools.Data;
 import net.gmx.teamterrian.CDsPluginPack.tools.Dependencys;
 import net.gmx.teamterrian.CDsPluginPack.tools.Dependencys.Dependency;
@@ -53,7 +53,7 @@ public class FakeBlocks extends CDPlugin
 {
 	Dependencys d;
 	Log clog;
-	Map<Location, FBBlockData> blocks = new HashMap<Location, FBBlockData>();
+	Map<Location, FBBlockData> blocks = new CDHashMap<Location, FBBlockData>();
 	String mbeg = ChatColor.DARK_GREEN + "[FakeBlocks] " + ChatColor.BLUE;
 	
 	public FakeBlocks(PluginHandler handler)

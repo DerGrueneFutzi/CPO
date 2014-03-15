@@ -1,7 +1,6 @@
 ﻿package net.gmx.teamterrian.CDsPluginPack.plugins;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +9,7 @@ import net.gmx.teamterrian.CDsPluginPack.PluginHandler;
 import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginCommand;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDInvalidArgsException;
+import net.gmx.teamterrian.CDsPluginPack.tools.CDHashMap;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
 
 import org.bukkit.Bukkit;
@@ -21,7 +21,7 @@ import org.bukkit.permissions.PermissionDefault;
 public class LongerChat extends CDPlugin
 {
 	Log clog;
-	Map<Player, List<String>> messages = new HashMap<Player, List<String>>();
+	Map<Player, List<String>> messages = new CDHashMap<Player, List<String>>();
 	
 	public LongerChat(PluginHandler handler)
 	{

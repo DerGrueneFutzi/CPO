@@ -3,7 +3,6 @@
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.bukkit.ChatColor;
@@ -23,6 +22,7 @@ import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginPacket;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CDPluginDisableEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDInvalidArgsException;
+import net.gmx.teamterrian.CDsPluginPack.tools.CDHashMap;
 import net.gmx.teamterrian.CDsPluginPack.tools.Data;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
 import net.gmx.teamterrian.CDsPluginPack.tools.jsonParser;
@@ -30,7 +30,7 @@ import net.gmx.teamterrian.CDsPluginPack.tools.jsonParser;
 public class ChatLogger extends CDPlugin
 {
 	Log clog;
-	Map<Player, PrintStream[]> streams = new HashMap<Player, PrintStream[]>();
+	Map<Player, PrintStream[]> streams = new CDHashMap<Player, PrintStream[]>();
 	private boolean criticalError = false;
 	
 	public ChatLogger(PluginHandler handler)

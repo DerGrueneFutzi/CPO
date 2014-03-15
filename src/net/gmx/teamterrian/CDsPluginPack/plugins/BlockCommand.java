@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +37,7 @@ import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDInvalidArgsException;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDNoPermissionException;
 import net.gmx.teamterrian.CDsPluginPack.plugins.BlockCommand.TriggerType;
+import net.gmx.teamterrian.CDsPluginPack.tools.CDHashMap;
 import net.gmx.teamterrian.CDsPluginPack.tools.Data;
 import net.gmx.teamterrian.CDsPluginPack.tools.Dependencys;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
@@ -59,7 +59,7 @@ public class BlockCommand extends CDPlugin
 	Log clog;
 	Dependencys d;
 	
-	Map<Location, BCBlockData> places = new HashMap<Location, BCBlockData>();
+	Map<Location, BCBlockData> places = new CDHashMap<Location, BCBlockData>();
 	
 	public BlockCommand(PluginHandler handler)
 	{
@@ -401,7 +401,7 @@ public class BlockCommand extends CDPlugin
 			p.sendMessage("No Permission to use this command");
 			return null;
 		}
-		Map<Integer, Location> back = new HashMap<Integer, Location>();
+		Map<Integer, Location> back = new CDHashMap<Integer, Location>();
 		int counter = 0;
 		Location loc = p.getLocation();
 		for(Location l : places.keySet())
@@ -757,7 +757,7 @@ class BCBlockData
 	
 	public BCBlockData()
 	{
-		this.blockData = new HashMap<TriggerType, BCTriggerData>();
+		this.blockData = new CDHashMap<TriggerType, BCTriggerData>();
 	}
 	public BCBlockData(Map<TriggerType, BCTriggerData> blockData)
 	{

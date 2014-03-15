@@ -1,6 +1,5 @@
 ﻿package net.gmx.teamterrian.CDsPluginPack.plugins;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import net.gmx.teamterrian.CDsPluginPack.CDPlugin;
@@ -9,6 +8,7 @@ import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginCommand;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDInvalidArgsException;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDNoPermissionException;
+import net.gmx.teamterrian.CDsPluginPack.tools.CDHashMap;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
 
 import org.bukkit.Bukkit;
@@ -23,7 +23,7 @@ import org.bukkit.permissions.PermissionDefault;
 public class RescueInv extends CDPlugin
 {
 	Log clog;
-	private Map<Player, ItemStack[][]> invs = new HashMap<Player, ItemStack[][]>();
+	private Map<Player, ItemStack[][]> invs = new CDHashMap<Player, ItemStack[][]>();
 	public String mbeg = ChatColor.DARK_GRAY + "[RescueInv] " + ChatColor.AQUA;
 	
 	public RescueInv(PluginHandler handler)

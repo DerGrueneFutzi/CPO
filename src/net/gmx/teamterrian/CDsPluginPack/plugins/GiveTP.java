@@ -3,7 +3,6 @@
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,6 +27,7 @@ import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CDPluginEnableEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDInvalidArgsException;
+import net.gmx.teamterrian.CDsPluginPack.tools.CDHashMap;
 import net.gmx.teamterrian.CDsPluginPack.tools.Data;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
 import net.gmx.teamterrian.CDsPluginPack.tools.VarTools;
@@ -38,7 +38,7 @@ import net.minecraft.server.v1_7_R1.NBTTagString;
 public class GiveTP extends CDPlugin
 {
 	Log clog;
-	Map<String, ItemStack> gti = new HashMap<String, ItemStack>();
+	Map<String, ItemStack> gti = new CDHashMap<String, ItemStack>();
 	
 	public GiveTP(PluginHandler handler)
 	{
