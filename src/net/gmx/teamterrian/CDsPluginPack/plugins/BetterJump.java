@@ -22,6 +22,7 @@ import net.gmx.teamterrian.CDsPluginPack.PluginHandler;
 import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginCommand;
 import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
+import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDInvalidArgsException;
 import net.gmx.teamterrian.CDsPluginPack.tools.CDHashMap;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
 import net.gmx.teamterrian.CDsPluginPack.tools.VarTools;
@@ -47,7 +48,7 @@ public class BetterJump extends CDPlugin
 	}
 		
 	@CDPluginCommand(commands = { "bj cdpp.bj 1" })
-	public boolean onCommand(CommandEvent e)
+	public boolean onCommand(CommandEvent e) throws CDInvalidArgsException
 	{
 		return process(e.getSender(), e.getArgs());
 	}
@@ -61,12 +62,9 @@ public class BetterJump extends CDPlugin
 		return false;
 	}
 	
-	private boolean process(CommandSender sender, String[] args)
+	private boolean process(CommandSender sender, String[] args) throws CDInvalidArgsException
 	{
-		if(args.length > 4) {
-			sender.sendMessage(mbeg + "To few arguments");
-			return true;
-		}
+		if(args.length > 4) throw new CDInvalidArgsException("bj");
 		Player p = getPlayer(args, sender);
 		if(p == null) return true;
 		Double[] data = getData(args);
@@ -188,13 +186,10 @@ public class BetterJump extends CDPlugin
 		}
 		else if(p.getGameMode() != GameMode.CREATIVE)
 			p.setAllowFlight(false);
-	}
-
-	
+	}	
 	@CDPluginEvent
 	public void onFlyToggle(PlayerToggleFlightEvent e)
 	{
-		System.out.println("GET");
 		Player p = e.getPlayer();
 		if(!p.hasPermission("cdpp.bj.doublejump")) return;
 		e.setCancelled(true);
@@ -203,5 +198,4 @@ public class BetterJump extends CDPlugin
 	    putRunnable(p);
 	    doJump(p, getDefaultData());
 	}
-
 }

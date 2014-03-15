@@ -24,8 +24,8 @@ public class CDInvalidArgsException extends CDException
 	@Override
 	public void handle(PluginHandler handler, CommandEvent e)
 	{
-		e.getSender().sendMessage(ChatColor.GOLD + "The Plugin don´t accept the count or the kind of arguments");
+		e.getSender().sendMessage(ChatColor.GOLD + "The Plugin don´t accept that count or kind of arguments");
 		if(handler.clistener.checkCommand(e.getCommand().getName(), e.getSender()))
-			((Man) handler.plugins.get(Man.class)).printUsage(e.getSender(), e.getCommand());
+			((Man) handler.plugins.get(Man.class)).printUsage(e.getSender(), e.getCommand().getName());
 	}
 }

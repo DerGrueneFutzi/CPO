@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.bukkit.ChatColor;
-import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
@@ -16,6 +15,7 @@ import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginCommand;
 import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CDPluginEnableEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
+import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDInvalidArgsException;
 import net.gmx.teamterrian.CDsPluginPack.tools.CDHashMap;
 import net.gmx.teamterrian.CDsPluginPack.tools.Data;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
@@ -27,7 +27,7 @@ public class Man extends CDPlugin
 {
 	Log clog;
 	public Map<String, List<String>> help = new CDHashMap<String, List<String>>();
-	String mbeg = ChatColor.DARK_GRAY + "[MAN] ";
+	String mbeg = ChatColor.GRAY + "[MAN] ";
 	
 	public Man(PluginHandler handler)
 	{
@@ -63,15 +63,17 @@ public class Man extends CDPlugin
 	}
 	
 	@CDPluginCommand(commands = { "man cdpp.man 0", "manload cdpp.man.load 0" })
-	public void onCommand(CommandEvent e)
+	public void onCommand(CommandEvent e) throws CDInvalidArgsException
 	{
-		if(e.getCommand().getName().equalsIgnoreCase("Man")) printUsage(e.getSender(), e.getCommand());
+		if(e.getCommand().getName().equalsIgnoreCase("man"))
+			if(e.getArgs().length != 1) throw new CDInvalidArgsException(e.getCommand().getName());
+			else printUsage(e.getSender(), e.getArgs()[0]);
 		else load(e.getSender());
 	}
 	
-	public void printUsage(CommandSender sender, Command c)
+	public void printUsage(CommandSender sender, String c)
 	{
-		List<String> usages = help.get(c.getName().toLowerCase());
+		List<String> usages = help.get(c);
 		if(usages == null)
 			sender.sendMessage(mbeg + "No Help for this command available");
 		else
