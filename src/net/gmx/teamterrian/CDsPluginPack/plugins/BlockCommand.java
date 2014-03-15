@@ -47,7 +47,6 @@ import net.gmx.teamterrian.CDsPluginPack.tools.Dependencys.Dependency;
 import net.minecraft.server.v1_7_R1.NBTCompressedStreamTools;
 import net.minecraft.server.v1_7_R1.NBTTagByte;
 import net.minecraft.server.v1_7_R1.NBTTagCompound;
-import net.minecraft.server.v1_7_R1.NBTTagInt;
 import net.minecraft.server.v1_7_R1.NBTTagList;
 import net.minecraft.server.v1_7_R1.NBTTagLong;
 import net.minecraft.server.v1_7_R1.NBTTagString;
@@ -60,7 +59,7 @@ public class BlockCommand extends CDPlugin
 	Log clog;
 	Dependencys d;
 	
-	private Map<Location, BCBlockData> places = new HashMap<Location, BCBlockData>();
+	Map<Location, BCBlockData> places = new HashMap<Location, BCBlockData>();
 	
 	public BlockCommand(PluginHandler handler)
 	{
@@ -593,8 +592,8 @@ public class BlockCommand extends CDPlugin
 	}
 	private void doTimestamp(NBTTagCompound nbtCompound, BCTimestamp timestamp)
 	{
-		nbtCompound.set("globalCooldown", new NBTTagInt(timestamp.getGlobalCooldown()));
-		nbtCompound.set("playerCooldown", new NBTTagInt(timestamp.getPlayerCooldown()));
+		nbtCompound.set("globalCooldown", new NBTTagLong(timestamp.getGlobalCooldown()));
+		nbtCompound.set("playerCooldown", new NBTTagLong(timestamp.getPlayerCooldown()));
 		nbtCompound.set("show", new NBTTagByte(timestamp.getShow() ? (byte) 1 :(byte) 0));
 		NBTTagList cooldownList = new NBTTagList();
 		NBTTagCompound timestampCompound;
@@ -659,8 +658,8 @@ public class BlockCommand extends CDPlugin
 	private BCTimestamp readTimestamp(NBTTagCompound nbtCompound)
 	{
 		BCTimestamp timestamp = new BCTimestamp();
-		timestamp.setGlobalCooldown(nbtCompound.getInt("globalCooldown"));
-		timestamp.setPlayerCooldown(nbtCompound.getInt("playerCooldown"));
+		timestamp.setGlobalCooldown(nbtCompound.getLong("globalCooldown"));
+		timestamp.setPlayerCooldown(nbtCompound.getLong("playerCooldown"));
 		timestamp.setShow(nbtCompound.getByte("show") == 0 ? false : true);
 		NBTTagList cooldownsList = (NBTTagList) nbtCompound.get("timestamps");
 		NBTTagCompound userData;

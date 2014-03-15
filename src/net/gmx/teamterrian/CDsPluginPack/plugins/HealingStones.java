@@ -116,7 +116,6 @@ public class HealingStones extends CDPlugin
 				String s, n1, n2;
 				char c;
 				int co;
-				Damageable d;
 				List<String> sarr;
 				ItemMeta m;
 				Double h;
@@ -130,41 +129,49 @@ public class HealingStones extends CDPlugin
 					{
 						System.out.println("Run");
 						if((i = p.getItemInHand()) == null || !checkItem(i)) continue;
+						System.out.println("Run 1");
 						if(i.getDurability() >= 1000)
 						{
 							clog.log("Stone from " + p.getName() + " broke", this);
 							p.setItemInHand(null);
 							continue;
 						}
+						System.out.println("Run 2");
 						if((m = i.getItemMeta()) == null || (sarr = m.getLore()) == null || sarr.size() == 0) continue;
+						System.out.println("Run 3");
 						s = sarr.get(0);
 						if(s.substring(s.length() - 2).equals("§1")) stch = 1;
 						else if(s.substring(s.length() - 2).equals("§2")) stch = 2;
 						else continue;
+						System.out.println("Run 4");
 						if(!procItem(i, p.getInventory())) continue;
+						System.out.println("Run 5");
 						if(i.getAmount() > 1)
 						{
 							p.sendMessage(ChatColor.RED + "[HealingStones] Bitte nur einen Stein in der Hand halten");
 							continue;
 						}
+						System.out.println("Run 6");
 						n1 = "";
 						n2 = "";
 						co = 1;
 						n1 += s.charAt(1);
 						while((c = s.charAt(co += 2)) != 'r') n1 += c;
 						while((c = s.charAt(co += 2)) != 'r') n2 += c;
-						d = p;
 						if(p.isDead()) continue;
+						System.out.println("Run 7");
 						switch(stch)
 						{
 							case 1:
-								h = d.getHealth() + Double.valueOf(n1);
+								System.out.println("Run 8");
+								h = ((Damageable) p).getHealth() + Double.valueOf(n1);
+								System.out.println(p.getHealthScale());
+								if(((Damageable) p).getHealth() >= p.getHealthScale()) continue;
+								System.out.println("Run 9");
 								if(h > p.getHealthScale())
-								{
-									if(d.getHealth() >= p.getHealthScale()) continue;
 									p.setHealth(p.getHealthScale());
-								}
 								else p.setHealth(h);
+								System.out.println("Run 10");
 								break;
 							case 2:
 								if(p.getFoodLevel() >= 20) continue;

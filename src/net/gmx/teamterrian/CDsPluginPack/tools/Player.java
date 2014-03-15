@@ -26,6 +26,8 @@ public class Player extends CraftPlayer
             return false;
         return this.getName().equalsIgnoreCase(other.getName());
 	}
+
+	
 	
 	public static Player getPlayer(Object o)
 	{

@@ -7,8 +7,8 @@ import java.util.Set;
 
 public class Timestamp
 {
-	private int global_cooldown;
-	private int player_cooldown;
+	private long global_cooldown;
+	private long player_cooldown;
 	private Map<String, Long> timestamps;
 	
 	public Timestamp()
@@ -37,11 +37,11 @@ public class Timestamp
 		this.player_cooldown = -1;
 	}
 	
-	public void setGlobalCooldown(int global_cooldown)
+	public void setGlobalCooldown(long l)
 	{
-		this.global_cooldown = global_cooldown;
+		this.global_cooldown = l;
 	}
-	public void setPlayerCooldown(int player_cooldown)
+	public void setPlayerCooldown(long player_cooldown)
 	{
 		this.player_cooldown = player_cooldown;
 	}
@@ -49,11 +49,11 @@ public class Timestamp
 	{
 		this.timestamps = timestamps;
 	}
-	public int getGlobalCooldown()
+	public long getGlobalCooldown()
 	{
 		return global_cooldown;
 	}
-	public int getPlayerCooldown()
+	public long getPlayerCooldown()
 	{
 		return player_cooldown;
 	}
@@ -98,18 +98,18 @@ public class Timestamp
 				)
 			);
 	}
-	public int getTimeToNextGlobalUse()
+	public long getTimeToNextGlobalUse()
 	{
 		if(global_cooldown == -1 || timestamps.get("") == null) return 0;
-		int i = global_cooldown - (int) (Data.getTimestamp() - this.getTimestamp("")) + 1;
+		long i = global_cooldown - (Data.getTimestamp() - this.getTimestamp("")) + 1;
 		return (i < 0 ? 0 : i);
 	}
-	public int getTimeToNextUse(String p)
+	public long getTimeToNextUse(String p)
 	{
-		int i;
+		long i;
 		if(player_cooldown == -1 || timestamps.get(p) == null) i = 0;
-		else i = player_cooldown - (int) (Data.getTimestamp() - this.getTimestamp(p)) + 1;
-		int t = this.getTimeToNextGlobalUse();
+		else i = player_cooldown - (Data.getTimestamp() - this.getTimestamp(p)) + 1;
+		long t = this.getTimeToNextGlobalUse();
 		i = (i > t ? i : t); 
 		return (i < 0 ? 0 : i);
 	}
