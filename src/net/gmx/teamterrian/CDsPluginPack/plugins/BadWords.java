@@ -103,7 +103,7 @@ public class BadWords extends CDPlugin
 		{
 			clog.log("Replaced Chatmessage of " + p.getName() + " from \"" + pc.getStrings().read(0) + "\" to \"" + s + "\"", this);
 			pc.getStrings().write(0, s);
-			e.getPlayer().sendMessage(ChatColor.DARK_RED + "Don´t use such words!");
+			e.getPlayer().sendMessage("" + ChatColor.DARK_RED + ChatColor.BOLD + "Don´t use such words!");
 		}}
 		catch (Exception x) { }
 	}
