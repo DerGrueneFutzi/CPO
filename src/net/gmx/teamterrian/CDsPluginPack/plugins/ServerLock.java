@@ -166,7 +166,7 @@ public class ServerLock extends CDPlugin
 			sender.sendMessage(ChatColor.RED + "No Permission to add a message");
 			return;
 		}
-		String toAdd = VarTools.SB(args, 2);
+		String toAdd = VarTools.arrToString(args, 2);
 		if(messages.containsKey(args[1]) && !sender.hasPermission("cdpp.sl.msg.override")) {
 			sender.sendMessage(ChatColor.RED + "No Permission to override a message");
 			return;
@@ -243,7 +243,7 @@ public class ServerLock extends CDPlugin
 			sender.sendMessage(ChatColor.RED + "No Permission to lock the Server with an specified message");
 			return;
 		}
-		String s = VarTools.SB(args, 1);
+		String s = VarTools.arrToString(args, 1);
 		clog.log("Locking Server with Message \"" + s + "\" from " + sender.getName(), this);
 		lock = s;
 		sender.sendMessage(mbeg + "Server locked with your message");

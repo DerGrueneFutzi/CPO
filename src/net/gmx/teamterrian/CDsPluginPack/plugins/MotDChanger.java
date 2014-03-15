@@ -139,7 +139,7 @@ public class MotDChanger extends CDPlugin
 			sender.sendMessage(ChatColor.RED + "No Permission to add a MotD");
 			return;
 		}
-		String toAdd = VarTools.SB(args, 2);
+		String toAdd = VarTools.arrToString(args, 2);
 		if(messages.containsKey(args[1]) && !sender.hasPermission("cdpp.motdc.msg.override")) {
 			sender.sendMessage(ChatColor.RED + "No Permission to override a set MotD");
 			return;
@@ -216,7 +216,7 @@ public class MotDChanger extends CDPlugin
 			sender.sendMessage(ChatColor.RED + "No Permission to lock the Server with an specified message");
 			return;
 		}
-		String s = VarTools.SB(args, 0);
+		String s = VarTools.arrToString(args, 0);
 		clog.log("Changing MotD with Message \"" + s + "\" from " + sender.getName(), this);
 		motd = s;
 		sender.sendMessage(mbeg + "MotD changed with your message");

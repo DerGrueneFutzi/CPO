@@ -321,7 +321,7 @@ public class BlockCommand extends CDPlugin
 		{
 			trigger = getTriggerType(args);
 			timestamp = getTimestamp(args, (firstCommand = firstCommandWord(args)));
-			clog.log("Try adding Command \"" + VarTools.SB(args, firstCommand) + "\" on " + VarTools.parse(l, false, false, true) + " with trigger " + trigger.name() + ", globalCooldown " + timestamp.getGlobalCooldown() + ", playerCooldown " + timestamp.getPlayerCooldown() + " and show " + timestamp.getShow() + " from " + p.getName(), this);
+			clog.log("Try adding Command \"" + VarTools.arrToString(args, firstCommand) + "\" on " + VarTools.parse(l, false, false, true) + " with trigger " + trigger.name() + ", globalCooldown " + timestamp.getGlobalCooldown() + ", playerCooldown " + timestamp.getPlayerCooldown() + " and show " + timestamp.getShow() + " from " + p.getName(), this);
 			addCommand(l, trigger, timestamp, VarTools.subArr(args, firstCommand));
 		}
 		p.sendMessage(mbeg + "Commands added");
@@ -393,7 +393,7 @@ public class BlockCommand extends CDPlugin
 		List<String> messages = blockData.makeTriggerList();
 		messages.addAll(blockData.makeCommandList());
 		VarTools.addBeg(messages, mbeg);
-		Data.showMessages(messages, p);
+		VarTools.showMessages(messages, p);
 	}
 	private Map<Integer, Location> getNear(Player p)
 	{
@@ -476,7 +476,7 @@ public class BlockCommand extends CDPlugin
 		boolean op = false;
 		BCCommandData commandData = triggerData.getCommandData(index);
 		String[] cmd = commandData.getCommand();
-		String command = VarTools.SB(VarTools.replaceArr(cmd, "<player>", p.getName()), 1);
+		String command = VarTools.arrToString(VarTools.replaceArr(cmd, "<player>", p.getName()), 1);
 		switch(cmd[0])
 		{	
 			case "@o":
@@ -486,7 +486,7 @@ public class BlockCommand extends CDPlugin
 					op = true;
 				}
 			case "@p":
-				clog.log("Running \"" + VarTools.SB(cmd, 1) + "\" as " + p.getName(), this);
+				clog.log("Running \"" + VarTools.arrToString(cmd, 1) + "\" as " + p.getName(), this);
 				Bukkit.getServer().dispatchCommand(p, command);
 				if(op) {
 					clog.log("Deleting the operator status from " + p.getName(), this);
@@ -494,7 +494,7 @@ public class BlockCommand extends CDPlugin
 				}
 				break;
 			case "@c":
-				clog.log("Running \"" + VarTools.SB(cmd, 1) + "\" as Console", this);
+				clog.log("Running \"" + VarTools.arrToString(cmd, 1) + "\" as Console", this);
 				Bukkit.getServer().dispatchCommand(ccs, command);
 				break;
 			default:
@@ -560,7 +560,7 @@ public class BlockCommand extends CDPlugin
 		{
 			blockData = places.get(l);
 			blockCompound = new NBTTagCompound();
-			Data.writeCoords(blockCompound, l);
+			VarTools.writeCoords(blockCompound, l);
 			blockCompound.set("world", new NBTTagString(l.getWorld().getName()));
 			trigger_counter = 0;
 			for(TriggerType trigger : blockData.getTriggers())
@@ -574,7 +574,7 @@ public class BlockCommand extends CDPlugin
 				{
 					commandData = triggerData.getCommandData(i);
 					commandCompound = new NBTTagCompound();
-					commandCompound.set("command", new NBTTagString(VarTools.SB(commandData.getCommand(), 0)));
+					commandCompound.set("command", new NBTTagString(VarTools.arrToString(commandData.getCommand(), 0)));
 					doTimestamp(commandCompound, commandData.getCooldowns());
 					commandList.add(commandCompound);
 				}
@@ -651,7 +651,7 @@ public class BlockCommand extends CDPlugin
 				triggerData.setBlockCooldowns(readTimestamp(triggerCompound));
 				blockData.setTriggerData(trigger, triggerData);
 			}
-			places.put(Data.readCoords(blockCompound), blockData);
+			places.put(VarTools.readCoords(blockCompound), blockData);
 		}
 		clog.log("Locations loaded", this);
 	}
@@ -814,7 +814,7 @@ class BCBlockData
 			{
 				commandData = triggerData.getCommandData(i);
 				timestamp = commandData.getCooldowns();
-				list.add(VarTools.SB(commandData.getCommand(), 0));
+				list.add(VarTools.arrToString(commandData.getCommand(), 0));
 				list.add("   Trigger: " + commandData.getTrigger().name());
 				timestamp.addTimestampData(list);
 				list.add("");

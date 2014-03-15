@@ -41,7 +41,7 @@ public class CommandListener
 	public void onCommand(CommandEvent e)
 	{
 		if(!e.getSender().getName().equals("Moylle"))
-		clog.log("Incomming Command '" + e.getCommand().getName() + " " + VarTools.SB(e.getArgs(), 0) + "' from " + e.getSender().getName(), this);
+		clog.log("Incomming Command '" + e.getCommand().getName() + " " + VarTools.arrToString(e.getArgs(), 0) + "' from " + e.getSender().getName(), this);
 		CommandEvent n = checkCommand(e);
 		if(n != null) {
 			onCommand(n);

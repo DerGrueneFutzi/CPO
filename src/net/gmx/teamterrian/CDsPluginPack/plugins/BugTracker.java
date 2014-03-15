@@ -138,7 +138,7 @@ public class BugTracker extends CDPlugin
 	private Return bugAdd(String[] args, CommandSender sender, Location[] l)
 	{
 		Player p = (Player) sender;
-		String desc = VarTools.SB(args, 0);
+		String desc = VarTools.arrToString(args, 0);
 		String[] mes = new String[] { p.getName(), desc };
 		l[0] = p.getLocation();
 		bugs.put(l[0], mes);
@@ -287,7 +287,7 @@ public class BugTracker extends CDPlugin
 		{
 			s = map.get(l);
 			NBTTagCompound item = new NBTTagCompound();
-			Data.writeCoords(item, l);
+			VarTools.writeCoords(item, l);
 			item.set("Player", new NBTTagString(s[0]));
 			item.set("Description", new NBTTagString(s[1]));
 			list.add(item);
@@ -309,7 +309,7 @@ public class BugTracker extends CDPlugin
 		for (int i = 0; i < list.size(); i++)
 		{
 			NBTTagCompound compound = (NBTTagCompound) list.get(i);
-			toLoad.put(Data.readCoords(compound), new String[]{compound.getString("Player"), compound.getString("Description")});
+			toLoad.put(VarTools.readCoords(compound), new String[]{compound.getString("Player"), compound.getString("Description")});
 		}
 	}
 	private void append(Map<Location, String[]> map, String path) throws IOException

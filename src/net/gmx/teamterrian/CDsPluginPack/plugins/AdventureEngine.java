@@ -273,8 +273,8 @@ public class AdventureEngine extends CDPlugin
 					op = true;
 				}
 			case "@p":
-				clog.log("Running \"" + VarTools.SB(cmd, 2) + "\" as " + cs.getName(), this);
-				Bukkit.dispatchCommand(cs, VarTools.SB(cmd, 2));
+				clog.log("Running \"" + VarTools.arrToString(cmd, 2) + "\" as " + cs.getName(), this);
+				Bukkit.dispatchCommand(cs, VarTools.arrToString(cmd, 2));
 				if(op) {
 					clog.log("Deleting the operator status from " + cs.getName(), this);
 					cs.setOp(false);
@@ -282,8 +282,8 @@ public class AdventureEngine extends CDPlugin
 				return;
 			default:
 				String strCmd;
-				if(cmd[1].equals("@c")) strCmd = VarTools.SB(cmd, 2);
-				else strCmd = VarTools.SB(cmd, 1);
+				if(cmd[1].equals("@c")) strCmd = VarTools.arrToString(cmd, 2);
+				else strCmd = VarTools.arrToString(cmd, 1);
 				clog.log("Running \"" + strCmd + "\" as Console", this);
 				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), strCmd);
 				return;

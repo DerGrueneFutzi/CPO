@@ -65,7 +65,7 @@ public class SignEdit extends CDPlugin
 	
 	private boolean cSign(List<Location> locs, Player p, String[] args)
 	{
-		String s = VarTools.SB(args, 1);
+		String s = VarTools.arrToString(args, 1);
 		Block b;
 		int line;
 		try { line = Integer.valueOf(args[0]); } catch (Exception x) { x.printStackTrace(); return false; }

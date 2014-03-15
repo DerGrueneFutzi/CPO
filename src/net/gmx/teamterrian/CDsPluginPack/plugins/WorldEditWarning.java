@@ -33,7 +33,7 @@ public class WorldEditWarning extends CDPlugin
 		String simpleCmd = VarTools.stringToArr(cmd, 0)[0];
 		if(simpleCmd.equalsIgnoreCase("dobig")) {
 			clog.log("Running probably big WorldEdit Operation '" + cmd + "' from " + e.getPlayer().getName() + ". Permissionhandling is done by WorldEdit", this);
-			e.setMessage(VarTools.SB(VarTools.stringToArr(cmd, 1), 0));
+			e.setMessage(VarTools.arrToString(VarTools.stringToArr(cmd, 1), 0));
 			return;
 		}
 		Command c;

@@ -224,11 +224,11 @@ public class FakeBlocks extends CDPlugin
 		for(Location l : blocks.keySet())
 		{
 			locCpd = new NBTTagCompound();
-			Data.writeCoords(locCpd, l);
+			VarTools.writeCoords(locCpd, l);
 			locList = new NBTTagList();
 			for(FBPermData permData : blocks.get(l).blocks)
 			{
-				permCpd = Data.writePacket(permData.tileData);
+				permCpd = VarTools.writePacket(permData.tileData);
 				permCpd.set("blockID", new NBTTagInt(permData.blockData[0]));
 				permCpd.set("blockData", new NBTTagInt(permData.blockData[1]));
 				permCpd.set("perm", new NBTTagString(permData.perm == null ? "" : permData.perm));
@@ -269,10 +269,10 @@ public class FakeBlocks extends CDPlugin
 			{
 				permCpd = locList.get(j);
 				permData = new FBPermData(permCpd.getString("perm"), new Integer[] { permCpd.getInt("blockID"), permCpd.getInt("blockData") });
-				permData.tileData = Data.readPacket(permCpd);
+				permData.tileData = VarTools.readPacket(permCpd);
 				blockData.blocks.add(permData);
 			}
-			blocks.put(Data.readCoords(locCpd), blockData);
+			blocks.put(VarTools.readCoords(locCpd), blockData);
 		}
 		clog.log("All Data read", this);
 	}
@@ -343,7 +343,7 @@ class FBPermData
 		cpd.set("id", new NBTTagString("Skull"));
 		cpd.set("SkullType", new NBTTagByte((byte) s.getSkullType().ordinal()));
 		cpd.set("Rot", new NBTTagByte((byte) s.getRotation().ordinal()));
-		Data.writeCoords(cpd, s.getLocation());
+		VarTools.writeCoords(cpd, s.getLocation());
 		writeCoords(pc, s.getLocation());
 		pc.getIntegers().write(3, 4);
 		pc.getModifier().write(4, cpd);

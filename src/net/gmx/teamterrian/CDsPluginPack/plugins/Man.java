@@ -19,6 +19,7 @@ import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
 import net.gmx.teamterrian.CDsPluginPack.tools.CDHashMap;
 import net.gmx.teamterrian.CDsPluginPack.tools.Data;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
+import net.gmx.teamterrian.CDsPluginPack.tools.VarTools;
 import net.minecraft.server.v1_7_R1.NBTTagCompound;
 import net.minecraft.server.v1_7_R1.NBTTagList;
 
@@ -105,7 +106,7 @@ public class Man extends CDPlugin
 		for(int i = 0; i < listTag.size(); i++)
 		{
 			helpTag = listTag.get(i);
-			help.put(helpTag.getString("cmd").toLowerCase(), Data.convertNBTList((NBTTagList) helpTag.get("usages")));
+			help.put(helpTag.getString("cmd").toLowerCase(), VarTools.convertNBTList((NBTTagList) helpTag.get("usages")));
 		}
 	}
 }

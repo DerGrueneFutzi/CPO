@@ -106,7 +106,7 @@ public class ItemHelp extends CDPlugin
 					case "rem":
 						remHelp((Player) sender); return;
 				}
-				setHelp((Player) sender, VarTools.SB(args, 0).replace('&', '§'));
+				setHelp((Player) sender, VarTools.arrToString(args, 0).replace('&', '§'));
 			}
 	}
 	

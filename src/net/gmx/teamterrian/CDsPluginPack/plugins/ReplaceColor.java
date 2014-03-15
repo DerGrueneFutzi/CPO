@@ -23,7 +23,7 @@ public class ReplaceColor extends CDPlugin
 	public void onCommand(CommandEvent e)
 	{
 		Player p = (Player) e.getSender();
-		String mes = VarTools.SB(e.getArgs(), 0);
+		String mes = VarTools.arrToString(e.getArgs(), 0);
 		mes = mes.replace('&', '§');
 		if(mes.charAt(0) == '/') Bukkit.dispatchCommand(p, mes.substring(1));
 		else p.chat(mes);
