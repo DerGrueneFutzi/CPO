@@ -4,11 +4,16 @@ import java.util.Map;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
+import org.bukkit.Material;
+import org.bukkit.block.BlockFace;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
+import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerToggleFlightEvent;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 
@@ -83,7 +88,7 @@ public class BetterJump extends CDPlugin
 		}
 	}
 	
-	private void putRunnable(Player p)
+	protected void putRunnable(Player p)
 	{
 		clog.log("Putting Runnable for " + p.getName(), this);
 		Runnable r = getRunnable(p);
@@ -118,7 +123,7 @@ public class BetterJump extends CDPlugin
 			}
 	}
 	
-	private Double[] getDefaultData()
+	protected Double[] getDefaultData()
 	{
 		return new Double[] { 4.375, 0.2 };
 	}
@@ -164,11 +169,39 @@ public class BetterJump extends CDPlugin
 		return new Double[] { Double.valueOf(args[start]), Double.valueOf(args[start + 1]) };
 	}
 	
-	private void doJump(HumanEntity e, Double[] d)
+	protected void doJump(HumanEntity e, Double[] d)
 	{
 		clog.log("Jump " + e.getName() + " with h = " + d[1] + ", l = " + d[0], this);
 		e.setVelocity(e.getLocation().getDirection().setY(d[1]).multiply(d[0]));
 	}
 	
 	private boolean ifDouble(String input) { try { Double.valueOf(input); return true; } catch (Exception x) { return false; } }
+	
+	@CDPluginEvent
+	public void onMove(PlayerMoveEvent e)
+	{
+		Player p = e.getPlayer();
+		if(p.hasPermission("cdpp.bj.doublejump")) {
+			if((p.getGameMode() != GameMode.CREATIVE) && 
+					(p.getLocation().getBlock().getRelative(BlockFace.DOWN).getType() != Material.AIR))
+				p.setAllowFlight(true);
+		}
+		else if(p.getGameMode() != GameMode.CREATIVE)
+			p.setAllowFlight(false);
+	}
+
+	
+	@CDPluginEvent
+	public void onFlyToggle(PlayerToggleFlightEvent e)
+	{
+		System.out.println("GET");
+		Player p = e.getPlayer();
+		if(!p.hasPermission("cdpp.bj.doublejump")) return;
+		e.setCancelled(true);
+	    p.setAllowFlight(false);
+	    p.setFlying(false);
+	    putRunnable(p);
+	    doJump(p, getDefaultData());
+	}
+
 }
