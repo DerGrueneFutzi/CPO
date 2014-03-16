@@ -319,7 +319,7 @@ public class VarTools
 	
 	public static boolean isPlayer(Object o)
 	{
-		return o instanceof Player;
+		return (o instanceof Player);
 	}
 	public static void showMessages(List<String> messages, Player p)
 	{
