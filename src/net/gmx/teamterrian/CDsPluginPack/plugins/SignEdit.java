@@ -7,6 +7,7 @@ import net.gmx.teamterrian.CDsPluginPack.PluginHandler;
 import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginCommand;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDInvalidArgsException;
+import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDNullSelectionException;
 import net.gmx.teamterrian.CDsPluginPack.tools.Dependencys;
 import net.gmx.teamterrian.CDsPluginPack.tools.Dependencys.Dependency;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
@@ -48,18 +49,17 @@ public class SignEdit extends CDPlugin
 	}
 		
 	@CDPluginCommand(commands = { "se cdpp.se 1" })
-	public void onCommand(CommandEvent e) throws CDInvalidArgsException
+	public void onCommand(CommandEvent e) throws CDInvalidArgsException, CDNullSelectionException
 	{
 		process(e.getArgs(), e.getSender(), e.getCommand());
 	}
 	
-	private boolean process(String[] args, CommandSender sender, Command cmd) throws CDInvalidArgsException
+	private boolean process(String[] args, CommandSender sender, Command cmd) throws CDInvalidArgsException, CDNullSelectionException
 	{
 		if(!d.doDepend(Dependency.WORLDEDIT, sender)) return true;
 		if(args.length < 2) throw new CDInvalidArgsException("se");
 		Selection s = d.we.getSelection((Player) sender);
-		if(s == null)
-			sender.sendMessage(mbeg + "Please select a region with WorldEdit");
+		if(s == null) throw new CDNullSelectionException();
 		return cSign(VarTools.getLocations(s), (Player) sender, args);
 	}
 	

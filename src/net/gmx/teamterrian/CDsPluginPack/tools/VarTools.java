@@ -28,6 +28,7 @@ import net.minecraft.server.v1_7_R1.NBTTagShort;
 import net.minecraft.server.v1_7_R1.NBTTagString;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.Command;
@@ -547,7 +548,6 @@ public class VarTools
 			back[i + a1.length] = a2[i];
 		return back;
 	}
+	public static String getExclamation(ChatColor c) { return "" + ChatColor.RESET + c + ChatColor.BOLD + ChatColor.MAGIC + "!!! " + ChatColor.RESET; }
 }
-
-//static boolean unix = !System.getProperty("os.name").toLowerCase().contains("windows");
 

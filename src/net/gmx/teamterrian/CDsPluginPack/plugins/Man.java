@@ -67,15 +67,16 @@ public class Man extends CDPlugin
 	{
 		if(e.getCommand().getName().equalsIgnoreCase("man"))
 			if(e.getArgs().length != 1) throw new CDInvalidArgsException(e.getCommand().getName());
-			else printUsage(e.getSender(), e.getArgs()[0]);
+			else printUsage(e.getSender(), e.getArgs()[0], true);
 		else load(e.getSender());
 	}
 	
-	public void printUsage(CommandSender sender, String c)
+	public void printUsage(CommandSender sender, String c, boolean showIfEmpty)
 	{
 		List<String> usages = help.get(c);
-		if(usages == null)
-			sender.sendMessage(mbeg + "No Help for this command available");
+		if(usages == null) {
+			if(showIfEmpty)
+				sender.sendMessage(mbeg + "No Help for this command available"); }
 		else
 			for(String line : usages)
 				sender.sendMessage(mbeg + line);

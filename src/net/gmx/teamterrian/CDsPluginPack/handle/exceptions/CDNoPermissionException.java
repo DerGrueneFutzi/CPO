@@ -21,6 +21,6 @@ public class CDNoPermissionException extends CDException
 	{
 		handler.clog.log(e.getSender().getName() + " was denyed to run command '" + e.getCommand().getName() + " " + VarTools.arrToString(e.getArgs(), 0) + "'. The Player was " + (notify ? "" : "not ") + "notifyed", this);
 		if(notify)
-			e.getSender().sendMessage("" + ChatColor.RED + ChatColor.BOLD + ChatColor.MAGIC + "!!!" + ChatColor.RESET + ChatColor.DARK_RED + " Der Brotkasten will nicht, dass du diesen Command benutzt " + ChatColor.RED + ChatColor.BOLD + ChatColor.MAGIC + "!!!");
+			e.getSender().sendMessage(VarTools.getExclamation(ChatColor.RED) + ChatColor.DARK_RED + "Der Brotkasten will nicht, dass du diesen Command benutzt");
 	}
 }

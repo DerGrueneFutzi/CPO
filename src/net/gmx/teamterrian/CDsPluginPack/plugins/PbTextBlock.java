@@ -63,7 +63,7 @@ public class PbTextBlock extends CDPlugin
 		NONE,
 	}
 	
-	@CDPluginPacket(types = { "cchat" })
+	@CDPluginPacket(types = { "cchat" }, priority = 20)
 	public void onPacket(PacketEvent e)
 	{
 		if(doAction(e)) return;

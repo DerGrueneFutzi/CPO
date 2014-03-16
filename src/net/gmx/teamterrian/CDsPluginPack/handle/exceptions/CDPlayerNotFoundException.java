@@ -4,6 +4,7 @@ import org.bukkit.ChatColor;
 
 import net.gmx.teamterrian.CDsPluginPack.PluginHandler;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
+import net.gmx.teamterrian.CDsPluginPack.tools.VarTools;
 
 public class CDPlayerNotFoundException extends CDException
 {
@@ -18,7 +19,7 @@ public class CDPlayerNotFoundException extends CDException
 	@Override
 	public void handle(PluginHandler handler, CommandEvent e) throws CDInvalidArgsException
 	{
-		e.getSender().sendMessage(ChatColor.RED + "The Player '" + player + "' was not found");
+		e.getSender().sendMessage(VarTools.getExclamation(ChatColor.GOLD) + ChatColor.RED + "The Player '" + player + "' was not found");
 		throw new CDInvalidArgsException(e.getCommand().getName());
 	}
 }

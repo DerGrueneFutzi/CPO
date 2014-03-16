@@ -49,7 +49,8 @@ public class Trade extends CDPlugin
 	ItemStack[] startItems, emptysLeft, emptysRight;
 	List<ItemStack> emptyList;
 	Map<Player, Player> requests = new CDHashMap<Player, Player>();
-	List<Player> leftP, rightP;
+	List<Player> leftP = new CDArrayList<Player>(),
+				rightP = new CDArrayList<Player>();
 	String tradeTitle, prefix;
 	
 	public Trade(PluginHandler handler)

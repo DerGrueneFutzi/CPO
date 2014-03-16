@@ -4,6 +4,7 @@ import org.bukkit.ChatColor;
 
 import net.gmx.teamterrian.CDsPluginPack.PluginHandler;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
+import net.gmx.teamterrian.CDsPluginPack.tools.VarTools;
 
 public class CDNullSelectionException extends CDException
 {
@@ -12,6 +13,6 @@ public class CDNullSelectionException extends CDException
 	@Override
 	public void handle(PluginHandler handler, CommandEvent e)
 	{
-		e.getSender().sendMessage(ChatColor.GOLD + "For this action you have to select a Region with WorldEdit");
+		e.getSender().sendMessage(VarTools.getExclamation(ChatColor.GOLD) + ChatColor.GOLD + "For this action you have to select a Region with WorldEdit");
 	}
 }

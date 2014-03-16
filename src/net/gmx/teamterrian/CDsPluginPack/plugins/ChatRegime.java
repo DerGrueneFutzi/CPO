@@ -62,7 +62,7 @@ public class ChatRegime extends CDPlugin
 		}
 	}
 	
-	@CDPluginPacket(types = { "cchat" })
+	@CDPluginPacket(types = { "cchat" }, priority = 20)
 	public void onPacket(PacketEvent e)
 	{
 		if(doSpam(e)) return;

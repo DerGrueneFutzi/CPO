@@ -15,6 +15,7 @@ import net.gmx.teamterrian.CDsPluginPack.CDPlugin;
 import net.gmx.teamterrian.CDsPluginPack.PluginHandler;
 import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginEvent;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
+import net.gmx.teamterrian.CDsPluginPack.tools.VarTools;
 
 public class NoEnchCombine extends CDPlugin
 {
@@ -50,7 +51,7 @@ public class NoEnchCombine extends CDPlugin
 			e.setCancelled(true);
 			clog.log("Forbid " + p.getName() + " to combine two or more enchantments", this);
 			p.setExp(p.getExp());
-			p.sendMessage(getExclamation(ChatColor.GOLD) + ChatColor.RED + "Es ist nicht möglich, Verzauberungen aus Waffen oder Rüstung zu kombinieren.");
+			p.sendMessage(VarTools.getExclamation(ChatColor.GOLD) + ChatColor.RED + "Es ist nicht möglich, Verzauberungen aus Waffen oder Rüstung zu kombinieren.");
 		}
 	}
 	@CDPluginEvent

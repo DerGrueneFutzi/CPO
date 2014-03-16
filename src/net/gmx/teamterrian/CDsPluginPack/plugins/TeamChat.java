@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 
 import net.gmx.teamterrian.CDsPluginPack.CDPlugin;
 import net.gmx.teamterrian.CDsPluginPack.PluginHandler;
+import net.gmx.teamterrian.CDsPluginPack.handle.CDCommand;
 import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginCommand;
 import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginPacket;
@@ -12,6 +13,7 @@ import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDInvalidArgsException;
 import net.gmx.teamterrian.CDsPluginPack.tools.CDHashMap;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
+import net.gmx.teamterrian.CDsPluginPack.tools.VarTools;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -41,13 +43,13 @@ public class TeamChat extends CDPlugin
 	{
 		return new Permission[]
 		{
-			new Permission("cdpp.teamchat.toggle", PermissionDefault.OP),
-			new Permission("cdpp.teamchat.receive", PermissionDefault.OP),
-			new Permission("cdpp.teamchat.send", PermissionDefault.OP)
+			new Permission("cdpp.tc.toggle", PermissionDefault.OP),
+			new Permission("cdpp.tc.receive", PermissionDefault.OP),
+			new Permission("cdpp.tc.send", PermissionDefault.OP)
 		};
 	}
 		
-	@CDPluginCommand(commands = { "ac cdpp.teamchat.send 1", "actoggle cdpp.teamchat.toggle 1" })
+	@CDPluginCommand(commands = { "ac cdpp.tc.send 1", "actoggle cdpp.tc.toggle 1" })
 	public void onCommand(CommandEvent e) throws CDInvalidArgsException
 	{
 		process(e.getSender(), e.getArgs(), e.getCommand());
@@ -57,12 +59,12 @@ public class TeamChat extends CDPlugin
 	public void onPacket(PacketEvent e)
 	{
 		Player p = e.getPlayer();
-		if(!p.hasPermission("cdpp.teamchat.toggle")) return;
+		if(!p.hasPermission("cdpp.tc.toggle") || e.getPacket().getStrings().read(0).startsWith("/")) return;
 		if(toggle.containsKey(p) && toggle.get(p))
 		{
 			e.setCancelled(true);
 			clog.log("Text from " + p.getName() + " was catched because he had toggled this action on", this);
-			Bukkit.dispatchCommand(p, "ac " + e.getPacket().getStrings().read(0));
+			handler.clistener.onCommand(new CommandEvent(new CDCommand("ac", handler.getCDPP()), p, VarTools.stringToArr(e.getPacket().getStrings().read(0), 0)));
 		}
 	}
 	
@@ -82,8 +84,9 @@ public class TeamChat extends CDPlugin
 		for(String akt : args) sb.append(" " + akt);
 		clog.log("[" + name + "] > "+ sb.toString(), this);
 		for(Player p : Bukkit.getServer().getOnlinePlayers())
-			if(p.hasPermission("cdpp.teamchat.receive")) p.sendMessage(ChatColor.RED + name + ChatColor.RESET + ChatColor.GRAY + " >" + ChatColor.RESET + ChatColor.WHITE + sb.toString());
+			if(p.hasPermission("cdpp.tc.receive")) p.sendMessage(ChatColor.RED + name + ChatColor.RESET + ChatColor.GRAY + " >" + ChatColor.RESET + ChatColor.WHITE + sb.toString());
 		if(name.equals("Server")) log.info("[CDPP][TeamChat][Console]" + sb.toString());
+		else log.info("[CDPP][TeamChat][" + name + "]" + sb.toString());
 	}
 	private void actoggle(CommandSender sender, String[] args) throws CDInvalidArgsException
 	{
@@ -94,13 +97,13 @@ public class TeamChat extends CDPlugin
 		{
 			toggle.put(p, true);
 			clog.log("Toggled action for " + p.getName() + " on", this);
-			p.sendMessage(ChatColor.GREEN + "[CDPP][TeamChat] Du schreibst ab sofort dauerhaft im TeamChat");
+			p.sendMessage(ChatColor.GREEN + "[TeamChat] Du schreibst ab sofort dauerhaft im TeamChat");
 		}
 		else
 		{
 			toggle.put(p, false);
 			clog.log("Toggled action for " + p.getName() + " off", this);
-			p.sendMessage(ChatColor.GREEN + "[CDPP][TeamChat] Du schreibst ab sofort wieder im normalen Chat");
+			p.sendMessage(ChatColor.GREEN + "[TeamChat] Du schreibst ab sofort wieder im normalen Chat");
 		}
 	}
 	

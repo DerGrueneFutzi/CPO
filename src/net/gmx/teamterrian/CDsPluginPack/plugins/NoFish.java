@@ -10,6 +10,7 @@ import net.gmx.teamterrian.CDsPluginPack.CDPlugin;
 import net.gmx.teamterrian.CDsPluginPack.PluginHandler;
 import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginEvent;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
+import net.gmx.teamterrian.CDsPluginPack.tools.VarTools;
 
 public class NoFish extends CDPlugin
 {
@@ -36,7 +37,7 @@ public class NoFish extends CDPlugin
 		if(p.hasPermission("cdpp.nf")) return e.isCancelled();
 		e.setCancelled(true);
 		clog.log("Forbid fishing for " + p.getName(), this);
-		p.sendMessage(getExclamation(ChatColor.GOLD) + ChatColor.GOLD + "Fishing is not allowed on this Server");
+		p.sendMessage(VarTools.getExclamation(ChatColor.GOLD) + ChatColor.GOLD + "Fishing is not allowed on this Server");
 		return e.isCancelled();
 	}
 }
