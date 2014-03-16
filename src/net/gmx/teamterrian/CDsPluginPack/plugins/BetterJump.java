@@ -191,7 +191,7 @@ public class BetterJump extends CDPlugin
 	public void onFlyToggle(PlayerToggleFlightEvent e)
 	{
 		Player p = e.getPlayer();
-		if(!p.hasPermission("cdpp.bj.doublejump")) return;
+		if(!p.hasPermission("cdpp.bj.doublejump") || p.getGameMode() != GameMode.CREATIVE) return;
 		e.setCancelled(true);
 	    p.setAllowFlight(false);
 	    p.setFlying(false);

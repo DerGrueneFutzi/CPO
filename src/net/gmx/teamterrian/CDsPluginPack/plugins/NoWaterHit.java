@@ -1,6 +1,5 @@
 ﻿package net.gmx.teamterrian.CDsPluginPack.plugins;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -31,12 +30,21 @@ public class NoWaterHit extends CDPlugin
 	@CDPluginEvent
 	public void onEntityDamageByEntity(EntityDamageByEntityEvent e)
 	{
-		if(!(VarTools.isPlayer(e.getDamager()) || VarTools.isPlayer(e.getEntity()))) return;
-		Player p = (Player) e.getDamager();
-		if(!p.hasPermission("cdpp.waterhit") && Bukkit.getServer().getWorld("world").getBlockAt(p.getLocation().add(0, 1.62, 0)).getType() == Material.STATIONARY_WATER)
+		Player p1 = null, p2 = null;
+		if(VarTools.isPlayer(e.getDamager()))
+			p1 = (Player) e.getDamager();
+		if(VarTools.isPlayer(e.getEntity()))
+			p2 = (Player) e.getEntity();
+		if(p1 == null && p2 == null) return;
+		boolean b1 = true, b2 = true;
+		if(p1 != null) b1 = p1.hasPermission("cdpp.waterhit");
+		if(p2 != null) b2 = p2.hasPermission("cdpp.waterhit");
+		if((!b1 || !b2) && (p1.getWorld().getBlockAt(p1.getLocation().add(0, 1.62, 0)).getType() == Material.STATIONARY_WATER || p2.getWorld().getBlockAt(p1.getLocation().add(0, 1.62, 0)).getType() == Material.STATIONARY_WATER))
 		{
 			e.setCancelled(true);
-			p.sendMessage(ChatColor.RED + "You can´t hit Entitys under water");
+			if(p1 != null)
+				if(!b1) p1.sendMessage(ChatColor.RED + "You can´t hit Entitys under water");
+				else if(!b2) p1.sendMessage(ChatColor.RED + "This Player can´t be hit under water");
 		}
 	}
 }

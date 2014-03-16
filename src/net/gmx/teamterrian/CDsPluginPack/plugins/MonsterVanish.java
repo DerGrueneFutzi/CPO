@@ -158,7 +158,7 @@ public class MonsterVanish extends CDPlugin
 			if(cr.getTarget() == p)
 				cr.setTarget(null);
 		}
-		((HealingStones) handler.plugins.get("hs")).makeInvulnerable(p);
+		((HealingStones) handler.plugins.get(HealingStones.class)).makeInvulnerable(p);
 		p.sendMessage(ChatColor.GOLD + "§lDu bist nun unsichtbar und/oder unantastbar für Monster");
 		if(p == null || !p.hasPermission("modifyworld.mobtarget.monster.zombie")) return false;
 		clog.log("Trying to add the negated Monster-Permission to " + p.getName(), this);

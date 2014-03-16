@@ -25,7 +25,7 @@ public class NoFish extends CDPlugin
 	{
 		return new Permission[]
 		{
-			new Permission("cdpp.nf.bypass", PermissionDefault.OP)
+			new Permission("cdpp.nf", PermissionDefault.OP)
 		};
 	}
 		
@@ -33,10 +33,10 @@ public class NoFish extends CDPlugin
 	public boolean onPlayerFish(PlayerFishEvent e)
 	{
 		Player p = e.getPlayer();
-		if(p.hasPermission("cdpp.nf.bypass")) return e.isCancelled();
+		if(p.hasPermission("cdpp.nf")) return e.isCancelled();
 		e.setCancelled(true);
 		clog.log("Forbid fishing for " + p.getName(), this);
-		p.sendMessage(ChatColor.GOLD + "Fishing is not allowed on this Server");
+		p.sendMessage(getExclamation(ChatColor.GOLD) + ChatColor.GOLD + "Fishing is not allowed on this Server");
 		return e.isCancelled();
 	}
 }

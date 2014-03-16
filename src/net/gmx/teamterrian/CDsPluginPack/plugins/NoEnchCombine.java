@@ -4,6 +4,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -29,18 +30,18 @@ public class NoEnchCombine extends CDPlugin
 	{
 		return new Permission[]
 		{
-			new Permission("cdpp.anvil", PermissionDefault.OP)
+			new Permission("cdpp.nec", PermissionDefault.OP)
 		};
 	}
 		
 	@CDPluginEvent
-	public boolean onInventoryClick(InventoryClickEvent e)
+	public void onInventoryClick(InventoryClickEvent e)
 	{	
 		Inventory vi = e.getInventory();
-		if(vi == null) return false;
-		if(vi.getType() != InventoryType.ANVIL || e.getSlot() != 2) return false;
+		if(vi == null) return;
+		if(vi.getType() != InventoryType.ANVIL || e.getSlot() != 2) return;
 		Player p = (Player) e.getWhoClicked();
-		if(p.hasPermission("cdpp.anvil")) return false;
+		if(p.hasPermission("cdpp.nec")) return;
 		ItemStack i1, i2;
 		i1 = vi.getItem(0);
 		i2 = vi.getItem(1);
@@ -49,9 +50,15 @@ public class NoEnchCombine extends CDPlugin
 			e.setCancelled(true);
 			clog.log("Forbid " + p.getName() + " to combine two or more enchantments", this);
 			p.setExp(p.getExp());
-			p.sendMessage(ChatColor.RED + "Es ist nicht möglich, Verzauberungen aus Waffen oder Rüstung zu kombinieren.");
+			p.sendMessage(getExclamation(ChatColor.GOLD) + ChatColor.RED + "Es ist nicht möglich, Verzauberungen aus Waffen oder Rüstung zu kombinieren.");
 		}
-		return false;
+	}
+	@CDPluginEvent
+	public void onInvClose(InventoryCloseEvent e)
+	{
+		Player p = (Player) e.getPlayer();
+		if(e.getInventory().getType() == InventoryType.ANVIL)
+			p.setExp(p.getExp());
 	}
 	
 	private boolean hasEnchantment(ItemStack i, boolean isBook)

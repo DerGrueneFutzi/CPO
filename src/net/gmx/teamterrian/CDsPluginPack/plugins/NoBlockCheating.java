@@ -4,7 +4,6 @@ import java.util.Map;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
@@ -22,7 +21,6 @@ public class NoBlockCheating extends CDPlugin
 {
 	Log clog;
 	Map<Player, Location> locs = new CDHashMap<Player, Location>();
-	World w = Bukkit.getServer().getWorld("world");
 	
 	public NoBlockCheating(PluginHandler handler)
 	{
@@ -98,7 +96,7 @@ public class NoBlockCheating extends CDPlugin
 	}
 	private Location getBlockLocation(Location l)
 	{
-		return new Location(w, l.getBlockX(), l.getBlockY(), l.getBlockZ());
+		return new Location(l.getWorld(), l.getBlockX(), l.getBlockY(), l.getBlockZ());
 	}
 	private Location getBlockLocation(Player p)
 	{
@@ -106,9 +104,9 @@ public class NoBlockCheating extends CDPlugin
 	}
 	private boolean isInBlock(Location l)
 	{
-		boolean back = w.getBlockAt(l).getType().isSolid();
+		boolean back = l.getBlock().getType().isSolid();
 		if (back && l.getBlockY() !=  256)
-			back &= w.getBlockAt(l.add(0, 1, 0)).getType().isSolid();
+			back &= l.getWorld().getBlockAt(l.add(0, 1, 0)).getType().isSolid();
 		return back;
 	}
 }

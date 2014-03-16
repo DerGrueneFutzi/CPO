@@ -14,6 +14,7 @@ import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginPacket;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CDPluginDisableEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CDPluginEnableEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
+import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDNoPermissionException;
 import net.gmx.teamterrian.CDsPluginPack.tools.CDArrayList;
 import net.gmx.teamterrian.CDsPluginPack.tools.CDHashMap;
 import net.gmx.teamterrian.CDsPluginPack.tools.Data;
@@ -54,7 +55,7 @@ public class MoreEnderChests extends CDPlugin
 	, emptyItem = new ItemStack(Material.AIR);
 	String dirPath = "./world/mec/",
 	echestTitle = " - Page ";
-	int size = 6;
+	int size = 10;
 	boolean lock = false;
 	List<Player> dontClose = new CDArrayList<Player>();
 	
@@ -69,8 +70,8 @@ public class MoreEnderChests extends CDPlugin
 		return new Permission[]
 		{
 			new Permission("cdpp.mec.io", PermissionDefault.OP),
-			new Permission("cdpp.mec.openinv", PermissionDefault.OP),
-			new Permission("cdpp.mec.openinv.others", PermissionDefault.OP),
+			new Permission("cdpp.mec.open", PermissionDefault.OP),
+			new Permission("cdpp.mec.open.others", PermissionDefault.OP),
 			new Permission("cdpp.mec.lock", PermissionDefault.OP),
 			new Permission("cdpp.mec.lock.bypass", PermissionDefault.OP),
 			new Permission("cdpp.mec", PermissionDefault.OP),
@@ -115,7 +116,7 @@ public class MoreEnderChests extends CDPlugin
 	}
 	
 	@CDPluginCommand(commands = { "mec cdpp.mec 1", "echest cdpp.mec 1", "enderchest cdpp.mec 1" })
-	public boolean onCommand(CommandEvent e)
+	public boolean onCommand(CommandEvent e) throws CDNoPermissionException
 	{
 		String[] args = e.getArgs();
 		CommandSender sender = e.getSender();
@@ -152,26 +153,22 @@ public class MoreEnderChests extends CDPlugin
 		sender.sendMessage(ChatColor.YELLOW + "[CDPP][MEC] Flushed!");
 		return true;
 	}
-	private boolean open(String[] args, CommandSender sender)
+	private boolean open(String[] args, CommandSender sender) throws CDNoPermissionException
 	{
-		if(!sender.hasPermission("cdpp.mec.openinv"))
-			sender.sendMessage(ChatColor.RED + "[MEC] You aren´t allowed to open MECs by command");
-		else
-			try
-			{
-				if(args.length >= 2)
-					if(sender.hasPermission("cdpp.mec.openinv.others"))
-						openOtherInv((Player) sender, args[1]);
-					else
-						sender.sendMessage(ChatColor.RED + "[MEC] You aren´t allowed to open other MECs");
-				else
-				openOtherInv((Player) sender, sender.getName());
-			}
-			catch (Exception x)
-			{
-				x.printStackTrace(clog.getStream());
-				sender.sendMessage(ChatColor.DARK_RED + "Error while opening the MEC. Look to the log for more information.");
-			}
+		if(!sender.hasPermission("cdpp.mec.open")) throw new CDNoPermissionException(true);
+		try
+		{
+			if(args.length >= 2)
+				if(sender.hasPermission("cdpp.mec.open.others"))
+					openOtherInv((Player) sender, args[1]);
+				else throw new CDNoPermissionException(true);
+			else openOtherInv((Player) sender, sender.getName());
+		}
+		catch (Exception x)
+		{
+			x.printStackTrace(clog.getStream());
+			sender.sendMessage(ChatColor.DARK_RED + "Error while opening the MEC. Please contanct an Server Admin");
+		}
 		return true;
 	}
 	private boolean lock(CommandSender sender)
@@ -525,7 +522,7 @@ public class MoreEnderChests extends CDPlugin
 			clog.log("To " + p.getName() + ": MEC from " + chest + " does not exist", this);
 			p.sendMessage(ChatColor.DARK_RED + "Enderchest not found!");
 			return;
-			}
+		}
 		Cheststate cs = isAllowed(p, chest, p.getName() == chest); 
 		switch(cs)
 		{
@@ -572,8 +569,9 @@ public class MoreEnderChests extends CDPlugin
 	}
 	private int getEchestLevel(Player p)
 	{
-		for(int i = 10; i >= 0; i--) if(p.hasPermission("cdpp.mec.level.kick." + i)) return i;
-		return -1;
+		PermissionUser pexUser = PermissionsEx.getUser(p.getName());
+		for(int i = 10; i > 0; i--) if(pexUser.has("cdpp.mec.level.kick." + i)) return i;
+		return 0;
 	}
 	private String lock()
 	{

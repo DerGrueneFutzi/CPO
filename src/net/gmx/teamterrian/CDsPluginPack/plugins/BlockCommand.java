@@ -176,7 +176,7 @@ public class BlockCommand extends CDPlugin
 	public void onPacket(PacketEvent e)
 	{
 		Player p = e.getPlayer();
-		if(e.getPacket().getStrings().read(0).charAt(0) != '/' || shouldOp(p)) return;
+		if(e.getPacket().getStrings().read(0).charAt(0) != '/' || !p.isOp() || shouldOp(p)) return;
 		e.setCancelled(true);
 		clog.log("Blocked command from " + p.getName() + " because he is in a temporary Op-Mode", this);
 		p.sendMessage(ChatColor.RED + "Your command couldn't be processed. Please try again in a few seconds. If it still not works, contact an Server Admin");
