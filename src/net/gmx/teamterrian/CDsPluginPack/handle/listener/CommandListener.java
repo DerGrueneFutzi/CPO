@@ -44,30 +44,31 @@ public class CommandListener
 		clog.log("Incomming Command '" + e.getCommand().getName() + " " + VarTools.arrToString(e.getArgs(), 0) + "' from " + e.getSender().getName(), this);
 		CommandEvent n = checkCommand(e);
 		if(n != null) {
-			onCommand(n);
-			return;
-		}
-		try
-		{
-			for(String key : commandList.get(e.getCommand().getName().toLowerCase()))
+			if(!n.getCommand().getName().equalsIgnoreCase("cdpp"))
+				onCommand(n); }
+		else
+			try
 			{
-				checkFullCommand(key, e);
-				for(Entry<Object, Method> entry : commands.get(key))
-					try {
-						try { entry.getValue().invoke(entry.getKey(), e); }
-						catch (InvocationTargetException x) { handleException((Exception) x.getCause(), e, false, true); }
-					}
-					catch (Exception x) { handleException(x, e, false, true); }
+				for(String key : commandList.get(e.getCommand().getName().toLowerCase()))
+				{
+					checkFullCommand(key, e);
+					for(Entry<Object, Method> entry : commands.get(key))
+						try {
+							try { entry.getValue().invoke(entry.getKey(), e); }
+							catch (InvocationTargetException x) { handleException((Exception) x.getCause(), e, false, true); }
+						}
+						catch (Exception x) { handleException(x, e, false, true); }
+				}
 			}
-		}
-		catch (Exception x) { handleException(x, e, false, false); } 
+			catch (Exception x) { handleException(x, e, false, false); } 
 	}
 	private CommandEvent checkCommand(CommandEvent e)
 	{
 		if(!e.getCommand().getName().equalsIgnoreCase("cdpp")) return null;
 		String[] args = e.getArgs();
-		CommandEvent back = new CommandEvent(new CDCommand(args[0], handler.getCDPP()), e.getSender(), VarTools.subArr(args, 1));
-		return back;
+		if(args.length == 0) e.getSender().sendMessage("" + ChatColor.GREEN + ChatColor.BOLD + "CDsPluginPack " + ChatColor.WHITE + "v" + handler.getCDPP().getDescription().getVersion());
+		else return new CommandEvent(new CDCommand(args[0], handler.getCDPP()), e.getSender(), VarTools.subArr(args, 1));
+		return e;
 	}
 	
 	private void handleException(Exception x, CommandEvent e, boolean wasHandled, boolean innerLoop)

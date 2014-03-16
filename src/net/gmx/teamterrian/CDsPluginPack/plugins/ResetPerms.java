@@ -1,7 +1,5 @@
 package net.gmx.teamterrian.CDsPluginPack.plugins;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Map;
 
@@ -18,8 +16,8 @@ import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDInvalidArgsException;
 import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDNoPermissionException;
 import net.gmx.teamterrian.CDsPluginPack.tools.CDHashMap;
+import net.gmx.teamterrian.CDsPluginPack.tools.Data;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
-import net.minecraft.server.v1_7_R1.NBTCompressedStreamTools;
 import net.minecraft.server.v1_7_R1.NBTTagCompound;
 
 public class ResetPerms extends CDPlugin
@@ -85,14 +83,8 @@ public class ResetPerms extends CDPlugin
 		clog.log("Start loading Groups", this);
 		clog.log("Clearing intern map", this);
 		groups.clear();
-		if(!new File(CDPlugin.getDir() + getDirectorys()[0] + "/data.dat").exists()) {
-			clog.log("File " + CDPlugin.getDir() + getDirectorys()[0] + "/data.dat not found. Returning", this);
-			return;
-		}
-		NBTTagCompound base;
-		FileInputStream inputStream = new FileInputStream(CDPlugin.getDir() + getDirectorys()[0] + "/data.dat");
-		base = NBTCompressedStreamTools.a(inputStream);
-		inputStream.close();
+		NBTTagCompound base = Data.load(CDPlugin.getDir() + getDirectorys()[0] + "/data.dat", this);
+		if(base == null) return;
 		for(Object name : base.c())
 			groups.put((String) name, base.getString((String) name));
 		clog.log("Groups loaded", this);

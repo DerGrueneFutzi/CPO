@@ -1,11 +1,15 @@
 ﻿package net.gmx.teamterrian.CDsPluginPack.plugins;
 
+import java.util.List;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import net.gmx.teamterrian.CDsPluginPack.CDPlugin;
 import net.gmx.teamterrian.CDsPluginPack.PluginHandler;
 import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginPacket;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
+import net.gmx.teamterrian.CDsPluginPack.tools.VarTools;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -14,6 +18,7 @@ import org.bukkit.permissions.PermissionDefault;
 
 import com.comphenix.protocol.events.PacketEvent;
 
+import ru.tehkode.permissions.PermissionGroup;
 import ru.tehkode.permissions.PermissionUser;
 import ru.tehkode.permissions.bukkit.PermissionsEx;
 
@@ -61,9 +66,8 @@ public class PbTextBlock extends CDPlugin
 	@CDPluginPacket(types = { "cchat" })
 	public void onPacket(PacketEvent e)
 	{
-		Player p = e.getPlayer();
 		if(doAction(e)) return;
-		if(p.hasPermission("cdpp.PbTB.disable")) return;
+		if(e.getPlayer().hasPermission("cdpp.PbTB.disable")) return;
 		doBlock(e);
 	}
 
@@ -87,13 +91,17 @@ public class PbTextBlock extends CDPlugin
 		Player p = e.getPlayer();
 		String message = e.getPacket().getStrings().read(0);
 		PermissionUser u = PermissionsEx.getUser(p);
-		String[] perms = u.getPermissions("world");
+		String[] permsArr = u.getPermissions(p.getWorld().getName());
+		for(PermissionGroup pg : u.getGroups())
+			permsArr = VarTools.combineArray(permsArr, pg.getPermissions(p.getWorld().getName()));
+		u.getGroups();
 		String[] parr = new String[1];
 		Object[] options;
+		List<String> perms = VarTools.toList(permsArr);
 		for(String perm : perms)
 		{
-			if(!perm.startsWith("cdpp.PbTB.block.")) continue;
-			perm = perm.substring(16).replace('_', ' ').replace("*", ".*");
+			if(!perm.startsWith("cdpp.PbTB.block.") || perms.contains("-" + perm) || perm.length() < 19) continue;
+			perm = perm.substring(16).replace('_', ' ');
 			parr[0] = perm;
 			options = getOptions(parr);
 			if(search(message, parr[0], (SearchType) options[0]))
@@ -139,20 +147,20 @@ public class PbTextBlock extends CDPlugin
 		back[0] = st;
 		back[1] = mt;
 		return back;
-	}	private boolean search(String text, String search, SearchType st)
+	}
+	private boolean search(String text, String search, SearchType st)
 	{
-		String copy = new String(text);
 		switch(st)
 		{
-			case NORMAL: return !text.replaceAll(search, "").equals(copy);
+			case NORMAL: return Pattern.compile(search).matcher(text).matches();
 			case BEGINNING:
-				text = text.replaceFirst(search, "");
-				if(text.length() == 0) return true;
-				else return text.substring(copy.length() - text.length()).equals(copy);
+				Matcher m = Pattern.compile(search).matcher(text);
+				return (m.find() ? m.start() == 0 : false);
 			case END:
-				text = text.replaceAll(search, "");
-				if(text.length() == 0) return true;
-				return (!text.equals(copy) && copy.startsWith(text));
+				Matcher ma = Pattern.compile(search).matcher(text);
+				int e = -1;
+				while(ma.find()) e = ma.end();
+				return (e == text.length());
 			default:
 				return false;
 		}

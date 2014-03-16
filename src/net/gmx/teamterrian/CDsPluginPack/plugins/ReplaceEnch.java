@@ -24,21 +24,19 @@ public class ReplaceEnch extends CDPlugin
 	{
 		return new Permission[]
 		{
-			new Permission("cdpp.re.bypass.looting", PermissionDefault.OP)
+			new Permission("cdpp.re.looting", PermissionDefault.OP)
 		};
 	}
 		
 	@CDPluginEvent
-	public boolean onEnchantItem(EnchantItemEvent e)
+	public void onEnchantItem(EnchantItemEvent e)
 	{
-		System.out.println("GET");
 		if(e.getEnchantsToAdd().containsKey(Enchantment.LOOT_BONUS_MOBS))
 		{
-			if(e.getEnchanter().hasPermission("cdpp.re.bypass.looting")) return e.isCancelled();
-			clog.log("Replaced an Looting-Enchantment with Smite for " + e.getEnchanter().getName(), this);
-			e.getEnchantsToAdd().put(Enchantment.DAMAGE_UNDEAD, e.getEnchantsToAdd().get(Enchantment.LOOT_BONUS_MOBS));
+			if(e.getEnchanter().hasPermission("cdpp.re.looting")) return;
+			clog.log("Replaced an Looting-Enchantment with Sharpness for " + e.getEnchanter().getName(), this);
+			e.getEnchantsToAdd().put(Enchantment.DAMAGE_ALL, e.getEnchantsToAdd().get(Enchantment.LOOT_BONUS_MOBS));
 			e.getEnchantsToAdd().remove(Enchantment.LOOT_BONUS_MOBS);
 		}
-		return e.isCancelled();
 	}
 }

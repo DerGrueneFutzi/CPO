@@ -37,17 +37,17 @@ public class SeeSpawner extends CDPlugin
 	{
 		return new Permission[]
 		{
-			new Permission("cdpp.seespawner", PermissionDefault.OP)
+			new Permission("cdpp.ss", PermissionDefault.OP)
 		};
 	}
 		
-	@CDPluginCommand(commands = { "seespawner cdpp.seespawner 1" })
+	@CDPluginCommand(commands = { "seespawner cdpp.ss 1" })
 	public void onCommand(CommandEvent e)
 	{
 		Player p = (Player) e.getSender();
 		if(see.contains(p)) see.remove(p);
 		else see.add(p);
-		e.getSender().sendMessage(ChatColor.GOLD + "SpawnerVisibility changed");
+		e.getSender().sendMessage(ChatColor.GOLD + "[SeeSpawner] SpawnerVisibility changed");
 	}
 	
 	@CDPluginPacket(types = { "stile_entity_data" })

@@ -537,6 +537,16 @@ public class VarTools
 		}
 		return pc;
 	}
+	
+	public static String[] combineArray(String[] a1, String[] a2)
+	{
+		String[] back = new String[a1.length + a2.length];
+		for(int i = 0; i < a1.length; i++)
+			back[i] = a1[i];
+		for(int i = 0; i < a2.length; i++)
+			back[i + a1.length] = a2[i];
+		return back;
+	}
 }
 
 //static boolean unix = !System.getProperty("os.name").toLowerCase().contains("windows");

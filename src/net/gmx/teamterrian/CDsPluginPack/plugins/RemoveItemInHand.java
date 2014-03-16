@@ -1,7 +1,6 @@
 ﻿package net.gmx.teamterrian.CDsPluginPack.plugins;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -13,6 +12,10 @@ import net.gmx.teamterrian.CDsPluginPack.CDPlugin;
 import net.gmx.teamterrian.CDsPluginPack.PluginHandler;
 import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginCommand;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
+import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDException;
+import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDInvalidArgsException;
+import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDNoPermissionException;
+import net.gmx.teamterrian.CDsPluginPack.handle.exceptions.CDPlayerNotFoundException;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
 
 public class RemoveItemInHand extends CDPlugin
@@ -35,25 +38,23 @@ public class RemoveItemInHand extends CDPlugin
 	}
 		
 	@CDPluginCommand(commands = { "riih cdpp.riih 1" })
-	public void onCommand(CommandEvent e)
+	public void onCommand(CommandEvent e) throws CDException
 	{
 		removeItem(e.getSender(), e.getArgs());
 	}
 	
-	private void removeItem(CommandSender sender, String[] args)
+	private void removeItem(CommandSender sender, String[] args) throws CDException
 	{
 		Player p;
-		if(args.length >= 1)
-			if(!sender.hasPermission("cdpp.riih.others"))
-				sender.sendMessage(ChatColor.RED + "You are not permitted to remove the Item of other player hands");
+		if(args.length == 1)
+			if(!sender.hasPermission("cdpp.riih.others")) throw new CDNoPermissionException(true);
 			else
-				if((p = Bukkit.getPlayer(args[0])) == null)
-					sender.sendMessage(ChatColor.RED + "Player not found");
+				if((p = Bukkit.getPlayer(args[0])) == null) throw new CDPlayerNotFoundException(args[0]);
 				else removeItem(p);
-		else
-			if(!sender.hasPermission("cdpp.riih"))
-				sender.sendMessage(ChatColor.RED + "You are not permitted to remove the Item in your hand");
+		else if(args.length == 0)
+			if(!sender.hasPermission("cdpp.riih")) throw new CDNoPermissionException(true);
 			else removeItem((Player) sender);
+		else throw new CDInvalidArgsException("riih");
 	}
 	private void removeItem(Player p)
 	{

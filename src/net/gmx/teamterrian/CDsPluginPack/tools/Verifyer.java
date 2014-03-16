@@ -1,14 +1,8 @@
 package net.gmx.teamterrian.CDsPluginPack.tools;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.security.MessageDigest;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 public class Verifyer
@@ -60,7 +54,7 @@ public class Verifyer
 		}
 		catch(Exception x) { return new byte[0]; } 
 	}
-	private byte[] createHash(File file, String hashalg)
+	/*private byte[] createHash(File file, String hashalg)
 	{
 		try
 		{
@@ -78,7 +72,7 @@ public class Verifyer
 	    return digest.digest();
 		}
 		catch(Exception x) { return new byte[0]; }
-	}
+	}*/
 	private byte[] createHash(String s, String hashalg)
 	{
 		return createHash(s.getBytes(), hashalg);
@@ -101,7 +95,7 @@ public class Verifyer
 		catch (IOException e) { return ""; }
 		return sb.toString();
 	}
-	private String hashZip(ZipFile z, String filename)
+	/*private String hashZip(ZipFile z, String filename)
 	{
 		try
 		{
@@ -121,7 +115,7 @@ public class Verifyer
 	        	for(byte akt : o) out.add(akt);
 	        }
 	        for(int i = sizec; i < b.length; i++)
-	        {
+	        {s
 	        	b[i] = out.get(0);
 	        	out.remove(0);
 	        }
@@ -129,7 +123,7 @@ public class Verifyer
 	        return getString(createHash(b, "SHA-1"));
 		}
 		catch(Exception x) { return ""; }
-	}
+	}*/
 	private String getHex(byte[] input)
 	{
 		StringBuffer hexString = new StringBuffer();
