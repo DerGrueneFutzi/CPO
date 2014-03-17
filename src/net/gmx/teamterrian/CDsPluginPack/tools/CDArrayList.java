@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 public class CDArrayList<E> extends ArrayList<E>
 {
 	private static final long serialVersionUID = -1198161659015956750L;
+	private Boolean isPlayer = null;
 	
 	public CDArrayList() { }
 	public CDArrayList(Collection<E> col)
@@ -16,11 +17,8 @@ public class CDArrayList<E> extends ArrayList<E>
 	}
 	public boolean contains(Object o)
 	{
-		if(o == null || !(o instanceof Player)) return super.contains(o);
+		if(!checkType(o)) return super.contains(o);
 		String name = ((Player) o).getName();
-		for(Object val : this)
-			if(val == null) continue;
-			else if(!(val instanceof Player)) return super.contains(o);
 		for(Object val : this)
 			if(val == null) continue;
 			else if(((Player) val).getName().equals(name)) return true;
@@ -29,11 +27,8 @@ public class CDArrayList<E> extends ArrayList<E>
 	
 	public int indexOf(Object o)
 	{
-		if(o == null || !(o instanceof Player)) return super.indexOf(o);
+		if(!checkType(o)) return super.indexOf(o);
 		String name = ((Player) o).getName();
-		for(Object val : this)
-			if(val == null) continue;
-			else if(!(val instanceof Player)) return super.indexOf(o);
 		for(int i = 0; i < this.size(); i++)
 			if(this.get(i) == null) continue;
 			else if(((Player) this).getName().equals(name)) return i;
@@ -41,11 +36,8 @@ public class CDArrayList<E> extends ArrayList<E>
 	}
 	public int lastIndexOf(Object o)
 	{
-		if(o == null || !(o instanceof Player)) return super.lastIndexOf(o);
+		if(!checkType(o)) return super.lastIndexOf(o);
 		String name = ((Player) o).getName();
-		for(Object val : this)
-			if(val == null) continue;
-			else if(!(val instanceof Player)) return super.lastIndexOf(o);
 		for(int i = this.size() - 1; i >= 0; i--)
 			if(this.get(i) == null) continue;
 			else if(((Player) this).getName().equals(name)) return i;
@@ -54,16 +46,20 @@ public class CDArrayList<E> extends ArrayList<E>
 	
 	public boolean remove(Object o)
 	{
-		if(!(o instanceof Player)) return super.remove(o);
+		if(!checkType(o)) return super.remove(o);
 		String name = ((Player) o).getName();
-		for(Object val : this)
-			if(val == null) continue;
-			else if(!(val instanceof Player)) return super.remove(o);
 		for(int i = 0; i < this.size(); i++)
 			if(((Player) this.get(i)).getName().equals(name)) {
-				this.remove(i);
+				super.remove(i);
 				return true;
 			}
 		return false;
+	}
+	
+	private boolean checkType(Object o)
+	{
+		if(o == null) return false;
+		if(isPlayer != null) return isPlayer;
+		return (isPlayer = o instanceof Player);
 	}
 }

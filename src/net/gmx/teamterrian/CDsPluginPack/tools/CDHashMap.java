@@ -8,6 +8,8 @@ import org.bukkit.entity.Player;
 public class CDHashMap<K, V> extends HashMap<K, V>
 {
 	private static final long serialVersionUID = 7019909201564608954L;
+	private Boolean isKeyPlayer = null,
+					isValPlayer = null;
 	
 	public CDHashMap() { }
 	public CDHashMap(Map<K, V> map)
@@ -17,12 +19,8 @@ public class CDHashMap<K, V> extends HashMap<K, V>
 
 	public boolean containsKey(Object o)
 	{
-		if(o == null || !(o instanceof Player)) return super.containsKey(o);
+		if(!checkType(o, true)) return super.containsKey(o);
 		String name = ((Player) o).getName();
-		for(Object key : this.keySet())
-			if(key == null) continue;
-			else if(!(key instanceof Player)) return super.containsKey(key);
-			else break;
 		for(Object key : this.keySet())
 			if(key == null) continue;
 			else if(((Player) key).getName().equals(name)) return true;
@@ -30,12 +28,8 @@ public class CDHashMap<K, V> extends HashMap<K, V>
 	}
 	public boolean containsValue(Object o)
 	{
-		if(o == null || !(o instanceof Player)) return super.containsValue(o);
+		if(!checkType(o, false)) return super.containsValue(o);
 		String name = ((Player) o).getName();
-		for(Object val : this.values())
-			if(val == null) continue;
-			else if(!(val instanceof Player)) return super.containsValue(o);
-			else break;
 		for(Object val : this.values())
 			if(val == null) continue;
 			else if(((Player) val).getName().equals(name)) return true;
@@ -44,12 +38,8 @@ public class CDHashMap<K, V> extends HashMap<K, V>
 	
 	public V get(Object o)
 	{
-		if(o == null || !(o instanceof Player)) return super.get(o);
+		if(!checkType(o, true)) return super.get(o);
 		String name = ((Player) o).getName();
-		for(Object key : this.keySet())
-			if(key == null) continue;
-			else if(!(key instanceof Player)) return super.get(o);
-			else break;
 		for(Object key : this.keySet())
 			if(key == null) continue;
 			else if(((Player) key).getName().equals(name)) return super.get(key);
@@ -58,12 +48,8 @@ public class CDHashMap<K, V> extends HashMap<K, V>
 	public V remove(Object o)
 	{
 		if(!containsKey(o)) return null;
-		if(o == null || !(o instanceof Player)) return super.remove(o);
+		if(!checkType(o, true)) return super.remove(o);
 		String name = ((Player) o).getName();
-		for(Object key : this.keySet())
-			if(key == null) continue;
-			else if(!(key instanceof Player)) return super.remove(o);
-			else break;
 		for(Object key : new HashSet<K>(this.keySet()))
 			if(key == null) continue;
 			else if(((Player) key).getName().equals(name)) return super.remove(key);
@@ -71,13 +57,9 @@ public class CDHashMap<K, V> extends HashMap<K, V>
 	}
 	public V put(K k, V v)
 	{
-		if(k == null || !(k instanceof Player)) return super.put(k, v);
+		if(!checkType(k, true)) return super.put(k, v);
 		String name = ((Player) k).getName();
 		V ret;
-		for(Object key : this.keySet())
-			if(key == null) continue;
-			else if(!(key instanceof Player)) return super.put(k, v);
-			else break;
 		for(Object key : new HashSet<K>(this.keySet()))
 			if(key == null) continue;
 			else if(((Player) key).getName().equals(name))
@@ -88,5 +70,15 @@ public class CDHashMap<K, V> extends HashMap<K, V>
 				return ret;
 			}
 		return super.put(k, v);
+	}
+
+	private boolean checkType(Object o, boolean isKey)
+	{
+		if(o == null) return false;
+		Boolean b = (isKey ? isKeyPlayer : isValPlayer);
+		if(b != null) return b;
+		if(isKey) isKeyPlayer = o instanceof Player;
+		else isValPlayer = o instanceof Player;
+		return (isKey ? isKeyPlayer : isValPlayer);
 	}
 }
