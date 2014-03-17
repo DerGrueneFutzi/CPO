@@ -11,7 +11,7 @@ public class CDsPluginPack extends JavaPlugin
 	
 	public void onLoad()
 	{
-		handler.clog.log("Loadin Plugin", this);
+		handler.clog.log("Loadin Pluging", this);
 		handler.load();
 	}
 	

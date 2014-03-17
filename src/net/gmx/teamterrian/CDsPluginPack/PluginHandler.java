@@ -51,11 +51,19 @@ public class PluginHandler
 		return cdpp;
 	}
 	
-	public boolean load()
+	public void load()
 	{
+		cmdRegister = new CommandRegister(cdpp);
+		getDependencys();
+		try { constructClasses(); }
+		catch (Exception x) { error(x); return; }
+		doDirectorys();
+		new EventRegister(cdpp).registerEvents();
+		new PacketRegister(cdpp).registerPackets();
+		cmdRegister.registerCommands();
+		registerPermissions();
 		clog.log("Calling LoadEvent", this);
 		CDPluginLoadEvent e = new CDPluginLoadEvent();
-		clog.log("Event is " + (e.isAsynchronous() ? "a" : "") + "synchron", this);
 		Bukkit.getPluginManager().callEvent(e);
 		int failed = 0;
 		for(boolean success : e.getSuccess())
@@ -65,25 +73,14 @@ public class PluginHandler
 		{
 			log.severe(failed + " Plugins failed to load");
 			error();
-			return false;
 		}
-		return true;
 	}
 	
 	public void enable()
 	{
 		clog.log("Enabling", this);
 		log.info("[CDPP] Enabling Plugins");
-		cmdRegister = new CommandRegister(cdpp);
-		getDependencys();
-		try { constructClasses(); }
-		catch (Exception x) { error(x); return; }
-		doDirectorys();
-		new EventRegister(cdpp).registerEvents();
-		new PacketRegister(cdpp).registerPackets();
-		cmdRegister.registerCommands();
 		if(!enablePPs()) return;
-		registerPermissions();
 		clog.log("All plugins enabled", this);
 		log.info("[CDPP] All Plugins enabled");
 	}
@@ -115,7 +112,7 @@ public class PluginHandler
 	private void constructClasses() throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, ZipException, IOException
 	{
 		clog.log("Finding Plugins and calling Constructors of it", this);
-		DynamicClassFinder finder = new DynamicClassFinder("./plugins");
+		DynamicClassFinder finder = new DynamicClassFinder("./plugins", this);
 		for(Class<? extends CDPlugin> c : finder.getFoundClasses())
 			plugins.put(c, c.getConstructor(PluginHandler.class).newInstance(this));
 		clog.log("Done", this);
