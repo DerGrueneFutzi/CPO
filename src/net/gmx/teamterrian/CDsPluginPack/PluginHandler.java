@@ -21,8 +21,6 @@ import net.gmx.teamterrian.CDsPluginPack.plugins.*;
 import net.gmx.teamterrian.CDsPluginPack.tools.Dependencys;
 import net.gmx.teamterrian.CDsPluginPack.tools.DynamicClassFinder;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
-import net.gmx.teamterrian.CDsPluginPack.tools.Verifyer;
-
 import org.bukkit.Bukkit;
 import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.PluginManager;
@@ -75,7 +73,6 @@ public class PluginHandler
 	public void enable()
 	{
 		clog.log("Enabling", this);
-		if(!verify()) return;
 		log.info("[CDPP] Enabling Plugins");
 		cmdRegister = new CommandRegister(cdpp);
 		getDependencys();
@@ -133,26 +130,6 @@ public class PluginHandler
 				for(String path : paths)
 					checkDir(CDPlugin.getDir() + path);
 		clog.log("All Directorys checked", this);
-	}
-	private boolean verify()
-	{
-		byte[] hash = new byte[]{(byte) 60,(byte) 248,(byte) 35,(byte) 85,(byte) 3,(byte) 156,(byte) 140,(byte) 154,(byte) 252,(byte) 163,(byte) 9,(byte) 54,(byte) 28,(byte) 77,(byte) 4,(byte) 253,(byte) 2,(byte) 7,(byte) 215,(byte) 148};
-		int players = 2000, files = 18;
-		clog.log("Running Verifyer " + files + " Files and minimum " + players + " Player files", this);
-		Verifyer v = new Verifyer(hash, files, players);
-		if(v.verify() < 3)
-		{
-			clog.log("Failed to verify", this);
-			verifyed = false;
-			log.severe("Ein Plugin oder eine Config-Datei wurde modifiziert!");
-			log.severe("Der Server wird nicht gestartet!");
-			EMStop.doKill(clog, this);
-			Bukkit.getServer().shutdown();
-			return false;
-		}
-		verifyed = true;
-		clog.log("Successfully verifyed", this);
-		return true;
 	}
 	
 	private void registerPermissions()
