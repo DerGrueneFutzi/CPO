@@ -3,7 +3,6 @@
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import net.gmx.teamterrian.CDsPluginPack.CDPlugin;
 import net.gmx.teamterrian.CDsPluginPack.PluginHandler;
@@ -42,7 +41,6 @@ import com.earth2me.essentials.User;
 
 public class Trade extends CDPlugin
 {
-	Logger log;
 	Log clog;
 	ItemStack greenWool, air, redWool, empty;
 	List<Integer> slotsLeft, slotsRight, slotsEmpty, slotsWoolLeft, slotsWoolRight;
@@ -57,7 +55,6 @@ public class Trade extends CDPlugin
 	{
 		super(handler);
 		clog = handler.clog;
-		log = handler.log;
 	}
 
 	public Permission[] getPermissions()
@@ -167,6 +164,7 @@ public class Trade extends CDPlugin
 		rightP.add(right);
 	}
 	
+	@CDPluginEvent
 	public void onDrag(InventoryDragEvent e)
 	{
 		if(!e.getInventory().getName().equals(tradeTitle)) return;
@@ -208,19 +206,19 @@ public class Trade extends CDPlugin
 			Player p = (Player) e.getWhoClicked();
 			if(!p.hasPermission("cdpp.trade")) return;
 			if(e.getSlot() == -1) return;
-			Inventory vi = e.getInventory();
+			Inventory vi = e.getClickedInventory();
 			if(vi == null) return;
 			if(!vi.getTitle().equals(tradeTitle)) return;
 			int Ileft = getLeft(p);
 			if(Ileft == -1) return;
-			if(e.getAction() == InventoryAction.COLLECT_TO_CURSOR|| !checkShift(e, Ileft == 1)) { e.setCancelled(true); return; }
+			if(e.getAction() == InventoryAction.COLLECT_TO_CURSOR || !checkShift(e, Ileft == 1)) { e.setCancelled(true); return; }
 			checkAction(e, Ileft == 1, vi);
 			if(checkTrade(vi)) doTrade(vi);
 		}
 		catch(Exception x)
 		{
 			x.printStackTrace(clog.getStream());
-			log.warning("[CDPP][Trade] Exception while processing an Inventoryclick");
+			handler.log.warning("[CDPP][Trade] Exception while processing an Inventoryclick");
 		}
 	}
 	@CDPluginEvent
@@ -230,7 +228,7 @@ public class Trade extends CDPlugin
 		catch(Exception x) {
 			x.printStackTrace(clog.getStream());
 			clog.log("Because of an Error, all requests were deleted", this);
-			log.warning("[CDPP][Trade] Exception. Clearing all Requests");
+			handler.log.warning("[CDPP][Trade] Exception. Clearing all Requests");
 			requests.clear();
 		}
 	}
@@ -372,12 +370,14 @@ public class Trade extends CDPlugin
 	private void checkAction(InventoryClickEvent e, boolean leftClicked, Inventory vi)
 	{
 		int slot = e.getSlot();
-		if((leftClicked ? slotsLeft : slotsRight).indexOf(slot) != -1) {
+		if((leftClicked ? slotsLeft : slotsRight).contains(slot))
 			resetWool(vi);
-			return;
+		else {
+			e.setCancelled(true);
+			if((leftClicked ? slotsWoolLeft : slotsWoolRight).indexOf(slot) != -1)
+				setWool(vi, leftClicked);
 		}
-		e.setCancelled(true);
-		if((leftClicked ? slotsWoolLeft : slotsWoolRight).indexOf(slot) != -1) setWool(vi, leftClicked);
+		
 	}
 	private boolean checkTrade(Inventory vi)
 	{
