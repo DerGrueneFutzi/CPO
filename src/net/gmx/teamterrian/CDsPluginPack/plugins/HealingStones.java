@@ -52,7 +52,6 @@ public class HealingStones extends CDPlugin
 	{
 		super(handler);
 		clog = handler.clog;
-		tinv = Bukkit.createInventory(null, 9);
 	}
 
 	public Permission[] getPermissions()
@@ -69,6 +68,7 @@ public class HealingStones extends CDPlugin
 	{
 		try
 		{
+			tinv = Bukkit.createInventory(null, 9);
 			clog.log("Scheduling Healing Task", this);
 			Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(handler.getCDPP(), getHealingTask(), 200, 40);
 			clog.log("Success", this);

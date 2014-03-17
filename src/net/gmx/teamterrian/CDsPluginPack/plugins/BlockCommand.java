@@ -66,8 +66,6 @@ public class BlockCommand extends CDPlugin
 		super(handler);
 		clog = handler.clog;
 		d = handler.dependencys;
-		ops = toStringSet(Bukkit.getOperators());
-		ccs = Bukkit.getServer().getConsoleSender();
 	}
 
 	public Permission[] getPermissions()
@@ -98,6 +96,8 @@ public class BlockCommand extends CDPlugin
 	public void onEnable(CDPluginEnableEvent e)
 	{
 		try {
+			ops = toStringSet(Bukkit.getOperators());
+			ccs = Bukkit.getServer().getConsoleSender();
 			clog.log("Loading locations", this);
 			load();
 			clog.log("Success", this);

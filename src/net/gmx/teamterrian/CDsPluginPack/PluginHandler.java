@@ -74,13 +74,6 @@ public class PluginHandler
 			log.severe(failed + " Plugins failed to load");
 			error();
 		}
-		Bukkit.getScheduler().scheduleSyncDelayedTask(cdpp, new Runnable()
-		{
-			public void run()
-			{
-				cmdRegister.registerBukkitCommands();
-			}
-		}, 0);
 	}
 	
 	public void enable()
@@ -88,6 +81,13 @@ public class PluginHandler
 		clog.log("Enabling", this);
 		log.info("[CDPP] Enabling Plugins");
 		if(!enablePPs()) return;
+		Bukkit.getScheduler().scheduleSyncDelayedTask(cdpp, new Runnable()
+		{
+			public void run()
+			{
+				cmdRegister.registerBukkitCommands();
+			}
+		}, 0);
 		clog.log("All plugins enabled", this);
 		log.info("[CDPP] All Plugins enabled");
 	}
