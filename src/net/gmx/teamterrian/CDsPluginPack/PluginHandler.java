@@ -74,6 +74,13 @@ public class PluginHandler
 			log.severe(failed + " Plugins failed to load");
 			error();
 		}
+		Bukkit.getScheduler().scheduleSyncDelayedTask(cdpp, new Runnable()
+		{
+			public void run()
+			{
+				cmdRegister.registerBukkitCommands();
+			}
+		}, 0);
 	}
 	
 	public void enable()

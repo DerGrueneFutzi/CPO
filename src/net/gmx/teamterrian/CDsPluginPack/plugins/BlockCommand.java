@@ -54,8 +54,8 @@ import net.minecraft.server.v1_7_R1.NBTTagString;
 public class BlockCommand extends CDPlugin
 {
 	String mbeg = ChatColor.GOLD + "[BlockCommand] " + ChatColor.AQUA;
-	ConsoleCommandSender ccs = Bukkit.getServer().getConsoleSender();
-	Set<String> ops = toStringSet(Bukkit.getOperators());
+	ConsoleCommandSender ccs;
+	Set<String> ops;
 	Log clog;
 	Dependencys d;
 	
@@ -66,6 +66,8 @@ public class BlockCommand extends CDPlugin
 		super(handler);
 		clog = handler.clog;
 		d = handler.dependencys;
+		ops = toStringSet(Bukkit.getOperators());
+		ccs = Bukkit.getServer().getConsoleSender();
 	}
 
 	public Permission[] getPermissions()

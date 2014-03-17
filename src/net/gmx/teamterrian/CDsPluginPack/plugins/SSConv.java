@@ -25,9 +25,6 @@ public class SSConv extends CDPlugin
 		super(handler);
 		clog = handler.clog;
 	}
-
-
-	
 	
 	@CDPluginCommand(commands = { "ssc cdpp.ssc 1" })
 	public void loadSigns(CommandEvent e)

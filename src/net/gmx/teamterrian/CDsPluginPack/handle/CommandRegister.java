@@ -78,12 +78,17 @@ public class CommandRegister
 				}
 			}
 		sortCalls();
+		registerBukkitCommands();
+		clog.log("Done", this);
+	}
+	
+	public void registerBukkitCommands()
+	{
 		Method m;
 		try { m = clistener.getClass().getMethod("onCommand", CommandEvent.class); }
 		catch (NoSuchMethodException x) { clog.log("Method CommandListener.onCommand(CommandEvent) not found. Commands are not registered", this); return; }
 		registerBukkitCommands(parseToCommands(clistener.commands.keySet()), m);
 		registerBukkitCommand("cdpp", m);
-		clog.log("Done", this);
 	}
 	
 	private boolean checkCommand(String cmd)
