@@ -114,7 +114,7 @@ public class BetterJump extends CDPlugin
 	}
 	private void removeRunnable(Player p)
 	{
-		for(Runnable r : protect.keySet())
+		for(Runnable r : new CDHashMap<Runnable, Player>(protect).keySet())
 			if(protect.get(r).equals(p)) {
 				clog.log("Removing " + p.getName() + " of the Protect list", this);
 				protect.remove(r);

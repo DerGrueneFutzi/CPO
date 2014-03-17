@@ -78,8 +78,8 @@ public class BlockCommand extends CDPlugin
 			new Permission("cdpp.bc.add", PermissionDefault.OP),
 			new Permission("cdpp.bc.show", PermissionDefault.OP),
 			new Permission("cdpp.bc.reloadop", PermissionDefault.OP),
-			new Permission("cdpp.bc.use.move", PermissionDefault.OP),
-			new Permission("cdpp.bc.use.click", PermissionDefault.OP),
+			new Permission("cdpp.bc.use.move", PermissionDefault.TRUE),
+			new Permission("cdpp.bc.use.click", PermissionDefault.TRUE),
 			new Permission("cdpp.bc.io", PermissionDefault.OP),
 			new Permission("cdpp.bc", PermissionDefault.OP)
 		};
