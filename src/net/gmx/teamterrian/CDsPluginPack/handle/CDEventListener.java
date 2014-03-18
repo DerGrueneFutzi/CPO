@@ -10,6 +10,6 @@ public class CDEventListener extends RegisteredListener
 {
 	public CDEventListener(Listener listener, EventExecutor executor, Plugin plugin)
 	{
-		super(listener, executor, EventPriority.NORMAL, plugin, true);
+		super(listener, executor, EventPriority.LOWEST, plugin, true);
 	}
 }

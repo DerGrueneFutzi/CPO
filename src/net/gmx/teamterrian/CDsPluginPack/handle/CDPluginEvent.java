@@ -7,5 +7,5 @@ import java.lang.annotation.RetentionPolicy;
 public @interface CDPluginEvent
 {
 	boolean ignoreCancelled() default false;
-	int priority() default 5;
+	int priority() default 100;
 }

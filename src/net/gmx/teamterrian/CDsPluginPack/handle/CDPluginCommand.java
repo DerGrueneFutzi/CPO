@@ -7,5 +7,5 @@ import java.lang.annotation.RetentionPolicy;
 public @interface CDPluginCommand
 {
 	String[] commands();
-	int priority() default 5;
+	int priority() default 100;
 }
