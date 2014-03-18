@@ -43,7 +43,7 @@ import com.comphenix.protocol.wrappers.EnumWrappers.ClientCommand;
 public class HealingStones extends CDPlugin
 {
 	Log clog;
-	Inventory tinv = Bukkit.createInventory(null, 9);
+	Inventory tinv;
 	public List<Entity> invulnerableAll = new CDArrayList<Entity>();
 	public List<Entity> invulnerableEntity = new CDArrayList<Entity>();
 	public Map<String, Location> reviveData = new CDHashMap<String, Location>();
@@ -68,6 +68,7 @@ public class HealingStones extends CDPlugin
 	{
 		try
 		{
+			tinv = Bukkit.createInventory(null, 9);
 			clog.log("Scheduling Healing Task", this);
 			Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(handler.getCDPP(), getHealingTask(), 200, 40);
 			clog.log("Success", this);

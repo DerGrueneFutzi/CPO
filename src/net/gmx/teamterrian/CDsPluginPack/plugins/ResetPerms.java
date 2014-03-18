@@ -35,7 +35,8 @@ public class ResetPerms extends CDPlugin
 	{
 		return new Permission[]
 		{
-			new Permission("cdpp.resetperms", PermissionDefault.TRUE)
+			new Permission("cdpp.resetperms", PermissionDefault.TRUE),
+			new Permission("cdpp.resetperms.io", PermissionDefault.OP)
 		};
 	}
 	
@@ -68,7 +69,7 @@ public class ResetPerms extends CDPlugin
 	{
 		try
 		{
-			if(!sender.hasPermission("cdpp.resetperms.load")) throw new CDNoPermissionException(false);
+			if(!sender.hasPermission("cdpp.resetperms.io")) throw new CDNoPermissionException(false);
 			load();
 			sender.sendMessage(ChatColor.GREEN + "[ResetPerms] File reloaded");
 		}

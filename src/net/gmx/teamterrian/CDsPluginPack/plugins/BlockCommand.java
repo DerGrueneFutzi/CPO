@@ -54,8 +54,8 @@ import net.minecraft.server.v1_7_R1.NBTTagString;
 public class BlockCommand extends CDPlugin
 {
 	String mbeg = ChatColor.GOLD + "[BlockCommand] " + ChatColor.AQUA;
-	ConsoleCommandSender ccs = Bukkit.getServer().getConsoleSender();
-	Set<String> ops = toStringSet(Bukkit.getOperators());
+	ConsoleCommandSender ccs;
+	Set<String> ops;
 	Log clog;
 	Dependencys d;
 	
@@ -78,8 +78,8 @@ public class BlockCommand extends CDPlugin
 			new Permission("cdpp.bc.add", PermissionDefault.OP),
 			new Permission("cdpp.bc.show", PermissionDefault.OP),
 			new Permission("cdpp.bc.reloadop", PermissionDefault.OP),
-			new Permission("cdpp.bc.use.move", PermissionDefault.OP),
-			new Permission("cdpp.bc.use.click", PermissionDefault.OP),
+			new Permission("cdpp.bc.use.move", PermissionDefault.TRUE),
+			new Permission("cdpp.bc.use.click", PermissionDefault.TRUE),
 			new Permission("cdpp.bc.io", PermissionDefault.OP),
 			new Permission("cdpp.bc", PermissionDefault.OP)
 		};
@@ -96,6 +96,8 @@ public class BlockCommand extends CDPlugin
 	public void onEnable(CDPluginEnableEvent e)
 	{
 		try {
+			ops = toStringSet(Bukkit.getOperators());
+			ccs = Bukkit.getServer().getConsoleSender();
 			clog.log("Loading locations", this);
 			load();
 			clog.log("Success", this);

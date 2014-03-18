@@ -11,16 +11,19 @@ import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 
 import net.gmx.teamterrian.CDsPluginPack.CDPlugin;
+import net.gmx.teamterrian.CDsPluginPack.PluginHandler;
 
 public class DynamicClassFinder
 {
 	String pluginDirectory;
+	PluginHandler handler;
 	
 	private List<Class<? extends CDPlugin>> foundClasses;
 	
-	public DynamicClassFinder(String pluginDirectory)
+	public DynamicClassFinder(String pluginDirectory, PluginHandler handler)
 	{
 		this.pluginDirectory = pluginDirectory;
+		this.handler = handler;
 	}
 	
 	public List<Class<? extends CDPlugin>> getFoundClasses() throws ZipException, IOException
@@ -45,6 +48,7 @@ public class DynamicClassFinder
 			{
 				if((entry = entries.nextElement()).isDirectory()) continue;
 				entryName = entry.getName();
+				if(!entryName.startsWith("net/gmx/teamterrian/CDsPluginPack/plugins")) continue;
 				try
 				{
 					entryName = entryName.substring(entryName.lastIndexOf('/') + 1);
@@ -52,6 +56,7 @@ public class DynamicClassFinder
 					c = Class.forName(packageName + "." + entryName).asSubclass(CDPlugin.class);
 				}
 				catch (Exception x) { continue; }
+				handler.clog.log("Found class " + c.getName(), this);
 				foundClasses.add(c);
 				found = true;
 			}
