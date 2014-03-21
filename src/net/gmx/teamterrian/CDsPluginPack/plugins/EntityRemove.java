@@ -52,6 +52,7 @@ public class EntityRemove extends CDPlugin
 	}
 	private void process(String[] args, CommandSender sender) throws CDException
 	{
+		if(args.length == 0) throw new CDInvalidArgsException("eremove");
 		Map<EntityType, Integer> counter;
 		World w = Bukkit.getWorld(args[args.length - 1]);
 		if(w == null) throw new CDWorldNotFoundException(args[args.length - 1]);
