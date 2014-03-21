@@ -36,10 +36,11 @@ public class PluginHandler
 	public Dependencys dependencys = new Dependencys(this);
 	public boolean isEnabled = false;
 	
-	private boolean verifyed = false;
 	public Map<Class<? extends CDPlugin>, CDPlugin> plugins = new HashMap<Class<? extends CDPlugin>, CDPlugin>();
 	
-	public CommandRegister cmdRegister;
+	public CommandRegister cRegister;
+	public EventRegister eRegister;
+	public PacketRegister pRegister;
 	
 	public PluginHandler(CDsPluginPack cdpp)
 	{	
@@ -53,22 +54,22 @@ public class PluginHandler
 	
 	public void load()
 	{
-		cmdRegister = new CommandRegister(cdpp);
+		cRegister = new CommandRegister(cdpp);
 		getDependencys();
 		try { constructClasses(); }
 		catch (Exception x) { error(x); return; }
 		doDirectorys();
-		new EventRegister(cdpp).registerEvents();
-		new PacketRegister(cdpp).registerPackets();
-		cmdRegister.registerCommands();
+		(eRegister = new EventRegister(cdpp)).registerEvents();
+		(pRegister = new PacketRegister(cdpp)).registerPackets();
+		cRegister.searchCommands(false);
 		registerPermissions();
 		clog.log("Calling LoadEvent", this);
 		CDPluginLoadEvent e = new CDPluginLoadEvent();
-		Bukkit.getPluginManager().callEvent(e);
+		elistener.onEvent(e);
 		int failed = 0;
 		for(boolean success : e.getSuccess())
 			if(!success) failed++;
-		clog.log((e.getSuccess().size() - failed) + " Plugins successfully loaded, " + failed + " failed", this);
+		clog.log((e.getSuccess().size() - failed) + " intern Plugins catched and processed the LoadEvent successfully, " + failed + " failed", this);
 		if(failed != 0)
 		{
 			log.severe(failed + " Plugins failed to load");
@@ -85,7 +86,7 @@ public class PluginHandler
 		{
 			public void run()
 			{
-				cmdRegister.registerBukkitCommands();
+				cRegister.registerBukkitCommands();
 			}
 		}, 0);
 		clog.log("All plugins enabled", this);
@@ -148,10 +149,8 @@ public class PluginHandler
 
 	public void disable()
 	{
-		if(!verifyed) return;
 		clog.log("Calling DisableEvent", this);
 		CDPluginDisableEvent e = new CDPluginDisableEvent();
-		clog.log("Event is " + (e.isAsynchronous() ? "a" : "") + "synchron", this);
 		Bukkit.getPluginManager().callEvent(e);
 		int failed = 0;
 		for(boolean success : e.getSuccess())
