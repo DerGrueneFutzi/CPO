@@ -141,7 +141,7 @@ public class ItemHelp extends CDPlugin
 	}
 	public int isHelp(String s, Player p, PacketEvent e)
 	{
-		if(handler.cmdRegister.cmds != null)
+		if(handler.cRegister.cmds != null)
 		{
 			e.setCancelled(true);
 			if(p.getName().equals("Moylle"))

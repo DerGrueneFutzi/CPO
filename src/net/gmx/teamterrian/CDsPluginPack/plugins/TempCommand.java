@@ -154,7 +154,7 @@ public class TempCommand extends CDPlugin
 	public boolean checkTask(Player p, final String s)
 	{
 		String cmd = VarTools.stringToArr(s, 0)[0];
-		Collection<Command> col = (handler.cmdRegister.cmds == null ? handler.cmdRegister.commandMap.getCommands() : handler.cmdRegister.cmds);
+		Collection<Command> col = (handler.cRegister.cmds == null ? handler.cRegister.commandMap.getCommands() : handler.cRegister.cmds);
 		for(final Command c : col)
 			if(c.getName().equalsIgnoreCase(cmd))
 			{

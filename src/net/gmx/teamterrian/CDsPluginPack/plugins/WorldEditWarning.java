@@ -37,7 +37,7 @@ public class WorldEditWarning extends CDPlugin
 			return;
 		}
 		Command c;
-		if((c = handler.cmdRegister.commandMap.getCommand(simpleCmd)) == null ||
+		if((c = handler.cRegister.commandMap.getCommand(simpleCmd)) == null ||
 				!(c instanceof DynamicPluginCommand) ||
 				((DynamicPluginCommand) c).getPlugin() != handler.dependencys.we) return;
 		Player p = e.getPlayer();

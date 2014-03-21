@@ -223,8 +223,8 @@ public class GroupMail extends CDPlugin
 	@SuppressWarnings("unchecked")
 	public void pDel(String name, CommandSender sender)
 	{
-		SimpleCommandMap cmdmap = handler.cmdRegister.commandMap;
-		handler.cmdRegister.cmds = VarTools.cloneCollection(((SimpleCommandMap) handler.cmdRegister.commandMap).getCommands());
+		SimpleCommandMap cmdmap = handler.cRegister.commandMap;
+		handler.cRegister.cmds = VarTools.cloneCollection(((SimpleCommandMap) handler.cRegister.commandMap).getCommands());
 		Map<String, Command> knownCommands;
 		try {
 			Field f = cmdmap.getClass().getDeclaredField("knownCommands");
