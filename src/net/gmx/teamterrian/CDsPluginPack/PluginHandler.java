@@ -14,13 +14,14 @@ import net.gmx.teamterrian.CDsPluginPack.handle.PacketRegister;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CDPluginDisableEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CDPluginEnableEvent;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CDPluginLoadEvent;
+import net.gmx.teamterrian.CDsPluginPack.handle.hardDependencys.IEMStop;
 import net.gmx.teamterrian.CDsPluginPack.handle.listener.CommandListener;
 import net.gmx.teamterrian.CDsPluginPack.handle.listener.EventListener;
 import net.gmx.teamterrian.CDsPluginPack.handle.listener.PacketListener;
-import net.gmx.teamterrian.CDsPluginPack.plugins.*;
 import net.gmx.teamterrian.CDsPluginPack.tools.Dependencys;
-import net.gmx.teamterrian.CDsPluginPack.tools.DynamicClassFinder;
+import net.gmx.teamterrian.CDsPluginPack.tools.DynamicClassLoader;
 import net.gmx.teamterrian.CDsPluginPack.tools.Log;
+
 import org.bukkit.Bukkit;
 import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.PluginManager;
@@ -117,12 +118,26 @@ public class PluginHandler
 		return true;
 	}
 	
+	public CDPlugin getPlugin(Class<? extends CDPlugin> clazz)
+	{
+		return plugins.get(clazz);
+	}
+	public CDPlugin getPlugin(String name)
+	{
+		for(Class<? extends CDPlugin> c : plugins.keySet())
+			if(c.getSimpleName().equals(name))
+				return plugins.get(c);
+		return null;
+	}
+	
 	private void constructClasses() throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, ZipException, IOException
 	{
+		clog.log("Clearing Plugins", this);
+		plugins.clear();
 		clog.log("Finding Plugins and calling Constructors of it", this);
-		DynamicClassFinder finder = new DynamicClassFinder("./plugins", this);
-		for(Class<? extends CDPlugin> c : finder.getFoundClasses())
-			plugins.put(c, c.getConstructor(PluginHandler.class).newInstance(this));
+		for(CDPlugin cdp : new DynamicClassLoader(this).loadDir(new File("./plugins/CDsPluginPack/")))
+			plugins.put(cdp.getClass(), cdp);
+		clog.log("Found " + plugins.size() + " CDPlugins", this);
 		clog.log("Done", this);
 	}
 	private void doDirectorys()
@@ -190,7 +205,7 @@ public class PluginHandler
 		log.severe("Error while enabling/loading Plugins");
 		log.severe("The Server would not start, and the Plugin would not work");
 		clog.log("The Server would be killed now. Or if its not Linux, immediatly shut down on finishing start", this);
-		EMStop.doKill(clog, this);
+		((IEMStop) getPlugin("EMStop")).doKill(clog, this);
 		Bukkit.getServer().shutdown();
 	}
 }

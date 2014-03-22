@@ -539,6 +539,12 @@ public class VarTools
 		return pc;
 	}
 	
+	public static String cutEnd(String input, int cut)
+	{
+		if(input.length() <= cut) return "";
+		return input.substring(0, input.length() - cut);
+	}
+	
 	public static String[] combineArray(String[] a1, String[] a2)
 	{
 		String[] back = new String[a1.length + a2.length];

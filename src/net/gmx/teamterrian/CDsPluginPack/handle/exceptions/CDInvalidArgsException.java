@@ -4,7 +4,7 @@ import org.bukkit.ChatColor;
 
 import net.gmx.teamterrian.CDsPluginPack.PluginHandler;
 import net.gmx.teamterrian.CDsPluginPack.handle.events.CommandEvent;
-import net.gmx.teamterrian.CDsPluginPack.plugins.Man;
+import net.gmx.teamterrian.CDsPluginPack.handle.hardDependencys.IMan;
 import net.gmx.teamterrian.CDsPluginPack.tools.VarTools;
 
 public class CDInvalidArgsException extends CDException
@@ -27,6 +27,6 @@ public class CDInvalidArgsException extends CDException
 	{
 		e.getSender().sendMessage(VarTools.getExclamation(ChatColor.GOLD) + ChatColor.GOLD + "The Plugin don´t accept that count or kind of arguments");
 		if(handler.clistener.checkCommand(e.getCommand().getName(), e.getSender()))
-			((Man) handler.plugins.get(Man.class)).printUsage(e.getSender(), e.getCommand().getName(), false);
+			((IMan) handler.getPlugin("Man")).printUsage(e.getSender(), e.getCommand().getName(), false);
 	}
 }

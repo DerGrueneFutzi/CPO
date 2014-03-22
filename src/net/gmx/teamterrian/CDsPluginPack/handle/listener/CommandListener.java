@@ -55,12 +55,12 @@ public class CommandListener
 					for(Entry<Object, Method> entry : commands.get(key))
 						try {
 							try { entry.getValue().invoke(entry.getKey(), e); }
-							catch (InvocationTargetException x) { handleException((Exception) x.getCause(), e, false, true); }
+							catch (InvocationTargetException x) { handleException(x.getCause(), e, false, true); }
 						}
-						catch (Exception x) { handleException(x, e, false, true); }
+						catch (Throwable x) { handleException(x, e, false, true); }
 				}
 			}
-			catch (Exception x) { handleException(x, e, false, false); } 
+			catch (Throwable x) { handleException(x, e, false, false); } 
 	}
 	private CommandEvent checkCommand(CommandEvent e)
 	{
@@ -71,7 +71,7 @@ public class CommandListener
 		return e;
 	}
 	
-	private void handleException(Exception x, CommandEvent e, boolean wasHandled, boolean innerLoop)
+	private void handleException(Throwable x, CommandEvent e, boolean wasHandled, boolean innerLoop)
 	{
 		try
 		{
@@ -92,7 +92,7 @@ public class CommandListener
 			else if(x instanceof CDException) { ((CDException) x).handle(handler, e); }
 			else handleException(x, e, true, innerLoop);
 		}
-		catch (Exception ex)
+		catch (Throwable ex)
 		{
 			handleException(ex, e, false, innerLoop);
 		}
