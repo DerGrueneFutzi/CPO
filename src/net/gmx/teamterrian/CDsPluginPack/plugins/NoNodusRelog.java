@@ -12,6 +12,8 @@ import org.bukkit.event.player.PlayerLoginEvent.Result;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 
+import ru.tehkode.permissions.bukkit.PermissionsEx;
+
 public class NoNodusRelog extends CDPlugin
 {
 	Log clog;
@@ -30,7 +32,7 @@ public class NoNodusRelog extends CDPlugin
 		};
 	}
 		
-	@CDPluginEvent
+	@CDPluginEvent(priority = 10, ignoreCancelled = true)
 	public void onPlayerLogin(PlayerLoginEvent e)
 	{
 		Player p = e.getPlayer();
@@ -45,7 +47,7 @@ public class NoNodusRelog extends CDPlugin
 				clog.log("Disallowed connecting of " + s + " because he was already logged in", this);
 				return;
 			}
-		if(!p.isBanned() && p.hasPermission("cdpp.everjoin")) {
+		if(!p.isBanned() && PermissionsEx.getUser(p).has("cdpp.everjoin")) {
 			clog.log("Allowed joining for " + p.getName() + (Bukkit.getServer().getMaxPlayers() <= Bukkit.getServer().getOnlinePlayers().length ? " althought the Server is full" : ""), this);
 			e.allow();
 		}

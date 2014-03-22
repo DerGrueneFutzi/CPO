@@ -8,7 +8,6 @@ import org.bukkit.entity.Player;
 public class CDArrayList<E> extends ArrayList<E>
 {
 	private static final long serialVersionUID = -1198161659015956750L;
-	private Boolean isPlayer = null;
 	
 	public CDArrayList() { }
 	public CDArrayList(Collection<E> col)
@@ -59,7 +58,6 @@ public class CDArrayList<E> extends ArrayList<E>
 	private boolean checkType(Object o)
 	{
 		if(o == null) return false;
-		if(isPlayer != null) return isPlayer;
-		return (isPlayer = o instanceof Player);
+		return o instanceof Player;
 	}
 }

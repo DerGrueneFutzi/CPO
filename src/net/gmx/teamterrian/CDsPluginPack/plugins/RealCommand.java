@@ -2,6 +2,9 @@ package net.gmx.teamterrian.CDsPluginPack.plugins;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.SimpleCommandMap;
+import org.bukkit.permissions.Permission;
+import org.bukkit.permissions.PermissionDefault;
+
 import net.gmx.teamterrian.CDsPluginPack.CDPlugin;
 import net.gmx.teamterrian.CDsPluginPack.PluginHandler;
 import net.gmx.teamterrian.CDsPluginPack.handle.CDPluginCommand;
@@ -16,6 +19,14 @@ public class RealCommand extends CDPlugin
 	{
 		super(handler);
 		realCommands.setFallbackCommands();
+	}
+	
+	public Permission[] getPermissions()
+	{
+		return new Permission[]
+		{
+			new Permission("cdpp.realcmd", PermissionDefault.OP)
+		};
 	}
 	
 	@CDPluginCommand(commands = { "realcmd cdpp.realcmd 1" })

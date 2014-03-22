@@ -51,7 +51,10 @@ public class ResetPerms extends CDPlugin
 			case 0:
 				clog.log("Reseting PexGroups for Team-Members", this);
 				for(String user : groups.keySet())
+				{
+					clog.log("Setting Group '" + groups.get(user) + "' for " + user, this);
 					PermissionsEx.getUser(user).setGroups(new String[]{groups.get(user)});
+				}
 				e.getSender().sendMessage(ChatColor.GREEN + "[ResetPerms] All MiniMod, Mod and Admin group Members reseted");
 				clog.log("All PexGroups for Team-Members reseted", this);
 				break;

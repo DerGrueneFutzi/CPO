@@ -162,9 +162,7 @@ public class BugTracker extends CDPlugin
 		}
 		clog.log("Removing bug on " + VarTools.parse(t, false, false, false), this);
 		deleted.put(t, bugs.get(t));
-		System.out.println(bugs.size());
 		bugs.remove(t);
-		System.out.println(bugs.size());
 		sender.sendMessage(ChatColor.GREEN + "[BugTracker] Bug removed");
 		try { save(); }
 		catch (Exception x) { x.printStackTrace(clog.getStream()); }

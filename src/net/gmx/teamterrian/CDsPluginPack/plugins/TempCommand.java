@@ -184,7 +184,7 @@ public class TempCommand extends CDPlugin
 		Object[] o;
 		String pl;
 		command cm;
-		for(Runnable rn : data.keySet())
+		for(Runnable rn : new CDHashMap<Runnable, Object[]>(data).keySet())
 		{
 			o = data.get(rn);
 			pl = (String) o[0];
